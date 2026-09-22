@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "ElyLeads",
+    "slug": "elyleads",
+    "scheme": "elyleads",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logo.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F97316"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.elyleads.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "ElyLeads needs your location to record your attendance check-in and check-out location.",
+        "LSApplicationQueriesSchemes": ["whatsapp", "tel"]
+      }
+    },
+    "android": {
+      "package": "com.elyleads.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo.png",
+        "backgroundColor": "#F97316"
+      },
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "CALL_PHONE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/logo.png"
+    }
+  }
+}

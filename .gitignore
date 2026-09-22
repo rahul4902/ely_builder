@@ -1,0 +1,127 @@
+# ==============================================================================
+# Root .gitignore for PropFin Monorepo (3 Projects Combined)
+# Projects:
+#   1. propfincrm (Laravel Backend & CRM)
+#   2. propfin_mobile (React Native / Expo Mobile App)
+#   3. profin_solution_new_theme (Android / Gradle Application)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Operating System & IDE Files
+# ------------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ------------------------------------------------------------------------------
+# Database Files & Backups
+# ------------------------------------------------------------------------------
+*.sqlite
+# Ignore general SQL dumps, but explicitly KEEP small/seeded backup SQL files
+*.sql
+!/central_db_backup.sql
+!database_backup/*.sql
+!*/database/seeds/*.sql
+
+# ------------------------------------------------------------------------------
+# Environment, Keys & Secrets (Never commit credentials)
+# ------------------------------------------------------------------------------
+# .env
+# .env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.jks
+*.p8
+*.p12
+*.mobileprovision
+
+# ------------------------------------------------------------------------------
+# General Package & Build Dependencies
+# ------------------------------------------------------------------------------
+node_modules/
+vendor/
+!**/public/vendor/**
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# ------------------------------------------------------------------------------
+# 1. propfincrm (Laravel CRM) Specific Ignores
+# ------------------------------------------------------------------------------
+/propfincrm/vendor/
+/propfincrm/node_modules/
+/propfincrm/.env
+/propfincrm/.env.backup
+/propfincrm/.env.production
+/propfincrm/public/storage
+/propfincrm/public/hot
+/propfincrm/public/build
+/propfincrm/storage/*.key
+/propfincrm/.phpunit.result.cache
+/propfincrm/Homestead.json
+/propfincrm/Homestead.yaml
+/propfincrm/laravel.log
+
+# Laravel Storage & Cache folders
+/propfincrm/storage/framework/cache/data/*
+!/propfincrm/storage/framework/cache/data/.gitignore
+/propfincrm/storage/framework/cache/*
+!/propfincrm/storage/framework/cache/.gitignore
+/propfincrm/storage/framework/sessions/*
+!/propfincrm/storage/framework/sessions/.gitignore
+/propfincrm/storage/framework/views/*
+!/propfincrm/storage/framework/views/.gitignore
+/propfincrm/storage/framework/testing/*
+!/propfincrm/storage/framework/testing/.gitignore
+/propfincrm/storage/logs/*
+!/propfincrm/storage/logs/.gitignore
+/propfincrm/storage/bulkLeads/*
+!/propfincrm/storage/bulkLeads/.gitignore
+
+# ------------------------------------------------------------------------------
+# 2. propfin_mobile (React Native / Expo) Specific Ignores
+# ------------------------------------------------------------------------------
+/propfin_mobile/node_modules/
+/propfin_mobile/.expo/
+/propfin_mobile/dist/
+/propfin_mobile/web-build/
+/propfin_mobile/expo-env.d.ts
+/propfin_mobile/.kotlin/
+/propfin_mobile/*.orig.*
+/propfin_mobile/.metro-health-check*
+/propfin_mobile/*.tsbuildinfo
+/propfin_mobile/ios/
+/propfin_mobile/android/
+/propfin_mobile/.env*.local
+
+# ------------------------------------------------------------------------------
+# 3. profin_solution_new_theme (Android / Gradle) Specific Ignores
+# ------------------------------------------------------------------------------
+/profin_solution_new_theme/*.iml
+/profin_solution_new_theme/.gradle/
+/profin_solution_new_theme/local.properties
+/profin_solution_new_theme/.idea/
+/profin_solution_new_theme/build/
+/profin_solution_new_theme/*/build/
+/profin_solution_new_theme/captures/
+/profin_solution_new_theme/.externalNativeBuild/
+/profin_solution_new_theme/.cxx/

@@ -1,0 +1,54 @@
+/vendor
+
+# Production database exports must never be committed.
+*.sql
+/node_modules
+/public/storage
+/public/hot
+/public/build
+/storage/*.key
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+laravel.log
+*.sql
+*.log
+
+# Storage
+/storage/framework/cache/data/*
+!/storage/framework/cache/data/.gitignore
+/storage/framework/cache/*
+!/storage/framework/cache/.gitignore
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitignore
+/storage/framework/views/*
+!/storage/framework/views/.gitignore
+/storage/framework/testing/*
+!/storage/framework/testing/.gitignore
+/storage/logs/*
+!/storage/logs/.gitignore
+/storage/bulkLeads/*
+!/storage/bulkLeads/.gitignore
+
+# IDEs, Editors & OS Files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Server logs & backups
+PleskVhosts/
+cgi-bin/
+.docker/flarepoint-db/*
+bower_components/

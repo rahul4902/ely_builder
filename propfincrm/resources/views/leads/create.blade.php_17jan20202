@@ -1,0 +1,170 @@
+
+@extends('layouts.master')
+@section('heading')
+    <h1>{{ __('Create lead') }}</h1>
+ 
+
+@stop
+
+@section('content')
+    <script>
+        function checkOther() {
+            var val = $('select[name="project"]').val();
+             if(val == 'other'){
+                 var ot = $('#other_project').val();
+
+                 var o = new Option(ot, ot);
+                 o.selected=true;
+                 $('select[name="project"]').append(o);
+
+             }
+            var val = $('select[name="source"]').val();
+            if(val == 'other'){
+                var ot = $('#other_source').val();
+
+                var o = new Option(ot, ot);
+                o.selected=true;
+                $('select[name="source"]').append(o);
+
+            }
+            var val = $('select[name="Budget"]').val();
+            if(val == 'other'){
+                var ot = $('#other_budget').val();
+
+                var o = new Option(ot, ot);
+                o.selected=true;
+                $('select[name="Budget"]').append(o);
+
+            }
+            var val = $('select[name="requirement"]').val();
+            if(val == 'other'){
+                var ot = $('#other_requirement').val();
+
+                var o = new Option(ot, ot);
+                o.selected=true;
+                $('select[name="requirement"]').append(o);
+
+            }
+        }
+    </script>
+    @if(isset($user))
+<!--        --><?php //print_r($user); exit; ?>
+{!! Form::model($user, ['url' => 'update_lead','files' => true]) !!}
+@else
+    {!! Form::open([
+            'route' => 'leads.store', 'onsubmit' => 'return checkOther()'
+            ]) !!}
+    @endif
+
+  <div class="form-group">
+        {!! Form::label('title', __('Name'), ['class' => 'control-label']) !!}
+        {!! Form::text('name', null, ['class' => 'form-control']) !!}
+     </div>
+@if(isset($user))
+<input type="hidden" name="update_id" value="{{$user->id}}">
+@endif
+    <div class="form-group">
+        {!! Form::label('title', __('Mobile No'), ['class' => 'control-label']) !!}
+        {!! Form::text('contact_no', null, [ 'pattern'=>'[789][0-9]{9}','maxlength'=>'10','class' => 'form-control','placeholder'=> ' Enter Only Digit','required' =>'required']) !!}
+        @if(isset($flag))
+            <p style="color: red">Number Is Already Register</p>
+            @endif
+     </div>
+
+ <div class="form-group">
+        {!! Form::label('title', __('Email'), ['class' => 'control-label']) !!}
+        {!! Form::email('email', null, ['class' => 'form-control']) !!}
+</div>
+<div class="form-group">
+        {!! Form::label('title', __('Source'), ['class' => 'control-label']) !!}
+        {!! Form::select('source',$source, null, ['class' => 'form-control']) !!}
+     </div>
+    <div id="src">
+
+    </div>
+<div class="form-group">
+        {!! Form::label('title', __('Country'), ['class' => 'control-label']) !!}
+
+    {!! Form::select('country',$countries, "India", ['class' => 'form-control']) !!}
+     </div>
+     <div class="form-group">
+        {!! Form::label('title', __('State'), ['class' => 'control-label']) !!}
+    <select name="state" id="state" class="form-control" >
+                </select>
+        
+     </div>
+       <div class="form-group">
+        {!! Form::label('title', __('City'), ['class' => 'control-label']) !!}
+          {!! Form::text('city',null, ['class' => 'form-control']) !!}
+     </div>
+        <div class="form-group">
+        {!! Form::label('title', __('Location'), ['class' => 'control-label']) !!}
+        {!! Form::text('location', null, ['class' => 'form-control']) !!}
+     </div>
+     <div class="form-group">
+        {!! Form::label('title', __('Pin/Zip Code'), ['class' => 'control-label']) !!}
+        {!! Form::text('pin', null, ['pattern'=>'[0-9]{6}','maxlength'=>'6' ,'class' => 'form-control', 'placeholder'=>'Enter Only Digit Minimum 6']) !!}
+     </div>
+        <div class="form-group">
+        {!! Form::label('title', __('Project'), ['class' => 'control-label']) !!}
+
+           {!! Form::select('project',$project, null, ['class' => 'form-control']) !!}
+     </div>
+    <div id="project">
+
+    </div>
+      <div class="form-group">
+        {!! Form::label('title', __('Requirement'), ['class' => 'control-label']) !!}
+        {!! Form::select('requirement',$requirement, null, ['class' => 'form-control']) !!}
+     </div>
+     <div id="req">
+     </div>
+         <div class="form-group">
+        {!! Form::label('title', __('Budget'), ['class' => 'control-label']) !!}
+        {!! Form::select('Budget',$budget, null, ['class' => 'form-control']) !!}
+     </div>
+    <div id="budget">
+
+    </div>
+
+      <div class="form-inline">
+        <div class="form-group col-lg-3 removeleft">
+            {!! Form::label('status', __('Status'), ['class' => 'control-label']) !!}
+            {!! Form::select('status', array(
+            '1' => 'Contact Client', '2' => 'Completed'), null, ['class' => 'form-control'] )
+         !!}
+        </div>
+        <div class="form-group col-lg-4 removeleft">
+            {!! Form::label('contact_date', __('Deadline'), ['class' => 'control-label']) !!}
+            {!! Form::date('contact_date', \Carbon\Carbon::now()->addDays(7), ['class' => 'form-control']) !!}
+        </div>
+        <div class="form-group col-lg-5 removeleft removeright">
+            {!! Form::label('contact_time', __('Time'), ['class' => 'control-label']) !!}
+            {!! Form::time('contact_time', '11:00', ['class' => 'form-control']) !!}
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+        {!! Form::label('user_assigned_id', __('Assign user'), ['class' => 'control-label']) !!}
+        {!! Form::select('user_assigned_id', $users, null, ['class' => 'form-control']) !!}
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('lead_type', __('Lead Type'), ['class' => 'control-label']) !!}
+        {!! Form::select('lead_type', ['Hot'=>'Hot','Cold'=>'Cold'], null, ['class' => 'form-control']) !!}
+    </div>
+   <div class="form-group">
+     
+            {!! Form::hidden('client_id', 1) !!}
+       
+    </div>
+
+    {!! Form::submit(__('Create new Lead'), ['class' => 'btn btn-primary']) !!}
+
+    {!! Form::close() !!}
+
+
+@stop
+

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EB1111"
+  >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/mobile_logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:src="@drawable/mobileicon"/>
+
+        <TextView
+            android:textSize="16sp"
+            android:id="@+id/text_mbl"
+            android:textColor="@color/white"
+            android:layout_marginTop="50sp"
+            android:layout_marginStart="30dp"
+            android:layout_below="@id/mobile_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mobile Number Verification"/>
+
+        <TextView
+            android:layout_marginTop="8sp"
+            android:id="@+id/on"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:layout_marginStart="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_mbl"
+            android:text="We will send you an otp on"/>
+        <TextView
+            android:id="@+id/last_txt"
+            android:text="this mobile number"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            android:layout_marginStart="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/on"/>
+
+
+
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:id="@+id/line1"
+            android:orientation="horizontal"
+            android:layout_width="230sp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="40dp">
+
+            <ImageView
+                android:background="@drawable/mblcircleicon"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content" />
+
+            <com.cyber.vishwakarma.otp.CountrySpinner
+                android:id="@+id/spinner"
+                android:layout_width="100dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"/>
+
+            <EditText
+                android:id="@+id/mobile_number_verification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Mobile Number"
+                android:textColor="@color/white"
+                android:maxLength="10"
+                android:textColorHint="@color/white"
+                android:inputType="phone"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_centerHorizontal="true"
+            android:id="@+id/get_otp"
+            android:layout_width="230dp"
+            android:layout_height="45dp"
+            android:layout_below="@id/line1"
+            android:layout_marginTop="44dp"
+            android:background="@drawable/category_draw"
+            android:text="GET OTP"
+            android:onClick="get_otp"
+            android:textColor="@color/light_black"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

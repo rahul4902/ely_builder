@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1056941398913",
+    "project_id": "propfin26sep",
+    "storage_bucket": "propfin26sep.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056941398913:android:b40adda53d8f727656a680",
+        "android_client_info": {
+          "package_name": "propfinsolutions.realstate.app.com.propfinsolutions"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_bWTlSOTuCwXj-GlycIfnrCf5uWTBCmk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

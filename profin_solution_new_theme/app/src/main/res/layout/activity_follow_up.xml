@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ddd">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <include android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+<!--        -->
+<!--        <include android:id="@+id/user"-->
+<!--            layout="@layout/user"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+<FrameLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        >
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:gravity="center_vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                         android:text="Lead Status"
+                        android:gravity="center_vertical"
+                        style="@style/subtitle1"
+                        android:textColor="@color/app_color" />
+
+                    <Spinner
+                        android:id="@+id/spnLeadStatus"
+                        android:layout_width="match_parent"
+                        style="@style/subtitle1"
+                        android:layout_height="35dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    android:id="@+id/datetimeLayout">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text="Next Follow Up"
+                       style="@style/subtitle1"
+                        android:textColor="@color/app_color" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Select Date"
+                                style="@style/subtitle2"
+                                android:textColor="@color/app_color" />
+                            <ImageView
+                                android:id="@+id/btnDatePicker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/date_icon" />
+                            <TextView
+                                android:id="@+id/lblDate"
+                                android:gravity="center"
+                                android:padding="3dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                 />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Select Time"
+                                style="@style/subtitle2"
+                                android:textColor="@color/app_color" />
+
+                            <ImageView
+                                android:id="@+id/btnTimePicker"
+                                android:onClick="showTimePickerDialog"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/time_icon" />
+                            <TextView
+                                android:id="@+id/lblTime"
+                                android:padding="3dp"
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="Comment"
+                        style="@style/subtitle1"
+                        android:layout_marginBottom="5dp"
+                        android:padding="5dp"
+                        android:textColor="@color/app_color" />
+                    <EditText
+                        android:id="@+id/idCommentET"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:paddingLeft="8dp"
+                        style="@style/subtitle1"
+                        android:paddingTop="5dp"
+                        android:background="@drawable/cell_shape_rect"
+                        android:gravity="start"
+                        />
+
+                </LinearLayout>
+                <Button
+                    android:id="@+id/idSubmitBTN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    style="@style/button"
+                    android:background="@drawable/button_gradient"
+                    android:text="Submit"
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+    </ScrollView>
+</FrameLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>

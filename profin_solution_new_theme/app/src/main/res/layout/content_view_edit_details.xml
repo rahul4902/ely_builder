@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ddd">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <include android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+<!--       -->
+<!--        <include android:id="@+id/user"-->
+<!--            layout="@layout/user"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+     <FrameLayout
+            android:id="@+id/idViewDetailContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_marginTop="5dp"
+             android:layout_height="wrap_content">
+             <TextView
+                 android:id="@+id/lead_title"
+                 android:layout_width="fill_parent"
+                 android:gravity="center"
+                 android:textSize="25dp"
+                 android:text="Lead Profile Update"
+             android:layout_height="wrap_content"></TextView>
+
+       <ScrollView
+           android:layout_above="@+id/btnLoginSubmit"
+           android:layout_width="match_parent"
+           android:layout_below="@+id/lead_title"
+                android:layout_height="wrap_content">
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <LinearLayout
+                   android:layout_margin="5dp"
+                   android:orientation="vertical"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                  <TextView
+                   android:inputType="textCapWords"
+                   android:padding="5dp"
+                   android:textStyle="bold"
+                   android:text="Name"
+                   android:textSize="16dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"/>
+                   <EditText
+                       android:id="@+id/inputName"
+                       android:editable="true"
+                       android:layout_width="fill_parent"
+                       android:background="@drawable/round"
+                       android:hint="Enter Name"
+                       android:gravity="left|center"
+                       android:paddingLeft="5dp"
+                       android:lines="1"
+                       android:maxLength="250"
+                       android:layout_height="40dp"></EditText>
+              <TextView
+                  android:inputType="textCapWords"
+                   android:padding="5dp"
+                   android:textStyle="bold"
+                   android:text="Email"
+                   android:textSize="16dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"/>
+                   <EditText
+                       android:id="@+id/inputEmail"
+                       android:editable="true"
+                       android:layout_width="fill_parent"
+                       android:background="@drawable/round"
+                       android:hint="Enter Email"
+                       android:gravity="left|center"
+                       android:paddingLeft="5dp"
+                       android:lines="1"
+                       android:maxLength="250"
+                       android:layout_height="40dp"></EditText>
+                <TextView
+                   android:padding="5dp"
+                   android:inputType="textCapWords"
+                   android:textStyle="bold"
+                   android:text="Mobile"
+                   android:textSize="16dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"/>
+                  <EditText
+                       android:id="@+id/inputMobile"
+                       android:editable="false"
+                       android:layout_width="fill_parent"
+                       android:background="@drawable/round"
+                       android:hint="Enter Mobile"
+                       android:gravity="left|center"
+                       android:paddingLeft="5dp"
+                       android:lines="1"
+                       android:maxLength="250"
+                       android:layout_height="40dp"></EditText>
+
+                   <TextView
+                       android:padding="5dp"
+                       android:textStyle="bold"
+                       android:inputType="textCapWords"
+                       android:text="Country"
+                       android:textSize="16dp"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"/>
+                   <EditText
+                       android:id="@+id/inputCountary"
+                       android:editable="false"
+                       android:layout_width="fill_parent"
+                       android:background="@drawable/round"
+                       android:hint="Enter Country "
+                       android:gravity="left|center"
+                       android:paddingLeft="5dp"
+                       android:lines="1"
+                       android:maxLength="250"
+                       android:layout_height="40dp"/>
+                   <TextView
+                       android:padding="5dp"
+                       android:textStyle="bold"
+                       android:inputType="textCapWords"
+                       android:text="State"
+                       android:textSize="16dp"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"/>
+                   <EditText
+                       android:id="@+id/inputState"
+                       android:editable="false"
+                       android:layout_width="fill_parent"
+                       android:background="@drawable/round"
+                       android:hint="Enter State"
+                       android:gravity="left|center"
+                       android:paddingLeft="5dp"
+                       android:lines="1"
+                       android:maxLength="250"
+                       android:layout_height="40dp"></EditText>
+
+                   <TextView
+                       android:padding="5dp"
+                       android:textStyle="bold"
+                       android:inputType="textCapWords"
+                       android:text="City"
+                       android:textSize="16dp"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"/>
+                   <EditText
+                       android:id="@+id/inputCity"
+                       android:editable="false"
+                       android:layout_width="fill_parent"
+                       android:background="@drawable/round"
+                       android:hint="Enter City"
+                       android:gravity="left|center"
+                       android:paddingLeft="5dp"
+                       android:lines="1"
+                       android:maxLength="250"
+                       android:layout_height="40dp"></EditText>
+
+
+                   <TextView
+                       android:padding="5dp"
+                       android:textStyle="bold"
+                       android:inputType="textCapWords"
+                       android:text="Pincode"
+                       android:textSize="16dp"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"/>
+                   <EditText
+                       android:id="@+id/inputPincode"
+                       android:editable="false"
+                       android:layout_width="fill_parent"
+                       android:background="@drawable/round"
+                       android:hint="Enter pincode"
+                       android:gravity="left|center"
+                       android:paddingLeft="5dp"
+                       android:lines="1"
+                       android:maxLength="250"
+                       android:layout_height="40dp"></EditText>
+
+
+
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:inputType="textCapWords"
+                       android:textStyle="bold"
+                       android:text="Source"
+                       android:padding="5dp"
+
+                       android:textSize="16dp"
+                     />
+
+                   <EditText
+                       android:id="@+id/inputSource"
+                       android:editable="false"
+                       android:layout_width="fill_parent"
+                       android:background="@drawable/round"
+                       android:hint="Enter Source"
+                       android:gravity="left|center"
+                       android:paddingLeft="5dp"
+                       android:lines="1"
+                       android:maxLength="250"
+                       android:layout_height="40dp"></EditText>
+
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:inputType="textCapWords"
+                       android:textStyle="bold"
+                       android:text="Location"
+                       android:padding="5dp"
+
+                       android:textSize="16dp"
+                       />
+
+                   <EditText
+                       android:id="@+id/inputLocation"
+                       android:editable="false"
+                       android:layout_width="fill_parent"
+                       android:background="@drawable/round"
+                       android:hint="Enter Location"
+                       android:gravity="left|center"
+                       android:paddingLeft="5dp"
+                       android:lines="1"
+                       android:maxLength="250"
+                       android:layout_height="40dp"></EditText>
+
+                   <TextView
+                       android:padding="5dp"
+                       android:textStyle="bold"
+                       android:inputType="textCapWords"
+                       android:text="Project"
+                       android:textSize="16dp"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"/>
+                   <EditText
+                       android:id="@+id/project"
+                       android:editable="false"
+                       android:layout_width="fill_parent"
+                       android:background="@drawable/round"
+                       android:hint="Enter Project"
+                       android:gravity="left|center"
+                       android:paddingLeft="5dp"
+                       android:lines="1"
+                       android:maxLength="250"
+                       android:layout_height="40dp"></EditText>
+
+                   <TextView
+                       android:padding="5dp"
+                       android:textStyle="bold"
+                       android:inputType="textCapWords"
+                       android:text="Requirement"
+                       android:textSize="16dp"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"/>
+                   <EditText
+                       android:id="@+id/requirement"
+                       android:editable="false"
+                       android:layout_width="fill_parent"
+                       android:background="@drawable/round"
+                       android:hint="Enter Requirement"
+                       android:gravity="left|center"
+                       android:paddingLeft="5dp"
+                       android:lines="1"
+                       android:maxLength="250"
+                       android:layout_height="40dp"></EditText>
+               <TextView
+                   android:padding="5dp"
+                   android:textStyle="bold"
+                   android:inputType="textCapWords"
+                   android:text="Budget"
+                   android:textSize="16dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"/>
+                   <EditText
+                       android:id="@+id/inputBugget"
+                       android:editable="false"
+                       android:layout_width="fill_parent"
+                       android:background="@drawable/round"
+                       android:hint="Enter Budget"
+                       android:gravity="left|center"
+                       android:paddingLeft="5dp"
+                       android:lines="1"
+                       android:maxLength="250"
+                       android:layout_height="40dp"></EditText>
+
+
+                   <TextView
+                       android:padding="5dp"
+                       android:textStyle="bold"
+                       android:inputType="textCapWords"
+                       android:text="Lead Type"
+                       android:textSize="16dp"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"/>
+                   <RelativeLayout
+                       android:layout_width="wrap_content"
+                       android:background="@drawable/round"
+                       android:layout_height="wrap_content">
+                       <Spinner
+                           android:id="@+id/leattype"
+                           android:layout_width="fill_parent"
+                           android:gravity="left|center"
+                           android:lines="1"
+                           android:maxLength="250"
+                           android:layout_height="40dp"></Spinner>
+                   </RelativeLayout>
+
+
+                   <Button
+                       android:id="@+id/btnSubmit"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="UPDATE"
+                       android:layout_marginTop="25dp"
+                       android:layout_marginBottom="25dp"
+                       android:layout_alignParentBottom="true"
+                       android:textColor="@color/white"
+                       android:background="@drawable/cell_shape_round"
+                       android:layout_marginLeft="64dp"
+                       android:layout_marginRight="64dp"
+                       />
+
+               </LinearLayout>
+           </RelativeLayout>
+
+     </ScrollView>
+
+
+
+         </RelativeLayout>
+
+      </FrameLayout>
+
+    </LinearLayout>
+
+  </FrameLayout>

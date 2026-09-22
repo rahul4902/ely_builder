@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+    <ImageView
+        android:tint="@color/colorPrimary"
+        android:id="@+id/mobile_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/smsmblicon"/>
+
+    <TextView
+        android:textSize="15sp"
+        android:id="@+id/text_mbl"
+        android:textColor="@color/light_black"
+        android:layout_marginTop="55dp"
+        android:layout_marginStart="30dp"
+        android:layout_below="@id/mobile_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mobile Number Verification"/>
+
+    <TextView
+        android:layout_marginTop="8sp"
+        android:id="@+id/on"
+        android:textSize="12sp"
+        android:textColor="@color/light_black"
+        android:layout_marginStart="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_mbl"
+        android:text="We will send you an OTP on"/>
+    <TextView
+        android:id="@+id/last_txt"
+        android:text="this mobile number"
+        android:textColor="@color/light_black"
+        android:textSize="12dp"
+        android:layout_marginStart="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/on"/>
+
+    <TextView
+        android:id="@+id/title_mobile"
+        android:layout_marginTop="35dp"
+        android:textColor="@color/white"
+        android:textSize="13dp"
+        android:layout_marginStart="30dp"
+        android:layout_below="@id/last_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mobile Number"/>
+
+
+    <TextView
+        android:id="@+id/mobil_number"
+        android:layout_marginStart="30dp"
+        android:textColor="@color/light_black"
+        android:layout_below="@id/title_mobile"
+        android:ems="10"
+        android:inputType="number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="123456789"/>
+
+    <TextView
+        android:id="@+id/progressText"
+        android:textColor="@color/light_black"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/last_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resend"/>
+
+    <View
+        android:layout_marginEnd="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/progressText"
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"/>
+
+    <LinearLayout
+        android:id="@+id/linear_otp"
+        android:layout_marginTop="16sp"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/mobil_number"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:textColor="@color/light_black"
+                android:gravity="center"
+                android:id="@+id/otp1"
+                android:hint="auto read otp"
+                android:maxLength="6"
+                android:textColorHint="@color/light_black"
+                android:backgroundTint="@color/light_black"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_log_submit"
+        android:textColor="@color/light_black"
+        android:textSize="20sp"
+        android:text="SUBMIT"
+        android:visibility="visible"
+        android:background="@drawable/category_draw"
+        android:layout_marginTop="45dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/linear_otp"
+        android:layout_width="230dp"
+        android:layout_height="45dp" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_below="@id/btn_log_submit"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:id="@+id/progressIndicator"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:indeterminate="false"
+            android:indeterminateDrawable="@drawable/progress"
+            android:indeterminateDuration="3000"
+            android:visibility="gone"/>
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

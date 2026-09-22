@@ -1,0 +1,94 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">PROPFIN SOLUTIONS</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="datepicker">DatePicker</string>
+    <string name="timepicker">TimePicker</string>
+    <!-- Label for button to confirm chosen date or layout.time [CHAR LIMIT=30] -->
+    <string name="done_label">Done</string>
+    <!--
+         Content description for the hour selector in the layout.time picker, which displays
+         selectable hours of the day along the inside edge of a circle, as in an analog clock.
+         [CHAR LIMIT=50]
+    -->
+    <string name="hour_picker_description">Hours circular slider</string>
+    <!--
+         Content description for the minute selector in the layout.time picker, which displays
+         selectable five-minute intervals along the inside edge of a circle, as in an analog clock.
+         [CHAR LIMIT=50]
+    -->
+    <string name="minute_picker_description">Minutes circular slider</string>
+    <!-- Accessibility announcement for hour circular picker [CHAR LIMIT=NONE] -->
+    <string name="select_hours">Select hours</string>
+    <!-- Accessibility announcement for minute circular picker [CHAR LIMIT=NONE] -->
+    <string name="select_minutes">Select minutes</string>
+
+    <!--
+        Content description for the month and day selector in the date picker, which displays
+        a selectable grid of days laid out by month.
+        [CHAR LIMIT=50]
+     -->
+    <string name="day_picker_description">Month grid of days</string>
+    <!--
+        Content description for the year selector in the date picker, which displays
+        a scrolling, vertical list of years.
+        [CHAR LIMIT=50]
+     -->
+    <string name="year_picker_description">Year list</string>
+    <!-- Accessibility announcement for the day picker [CHAR LIMIT=NONE] -->
+    <string name="select_day">Select month and day</string>
+    <!-- Accessibility announcement for the year picker [CHAR LIMIT=NONE] -->
+    <string name="select_year">Select year</string>
+    <!-- Accessibility description for the item that is currently selected. -->
+    <string name="item_is_selected"><xliff:g example="2013" id="item">%1$s</xliff:g> selected</string>
+    <!-- Accessibility announcement when a number that had been typed in is deleted [CHAR_LIMIT=NONE] -->
+    <string name="deleted_key"><xliff:g example="4" id="key">%1$s</xliff:g> deleted</string>
+
+    <!-- DO NOT TRANSLATE -->
+    <string name="time_placeholder">--</string>
+    <!-- DO NOT TRANSLATE -->
+    <string name="time_separator">:</string>
+
+    <!-- DO NOT TRANSLATE -->
+    <string name="radial_numbers_typeface">sans-serif</string>
+    <!-- DO NOT TRANSLATE -->
+    <string name="sans_serif">sans-serif</string>
+
+    <!-- DO NOT TRANSLATE -->
+    <string name="day_of_week_label_typeface">sans-serif</string>
+    <string name="totle_lead_staus">Today Lead Status :</string>
+    <string name="view_more">More info</string>
+    <string name="today_status">Today\'s Lead Status</string>g>
+    <color name="login_mn_bg">#eeefef</color>
+
+    <string name="notification_channel_id">101</string>
+    <string name="notifications_admin_channel_name">notifications_admin_channel_name</string>
+    <string name="notifications_admin_channel_description">notifications_admin_channel_description</string>
+    <string name="failed">Failed</string>
+    <string name="sendotp_key">293727AUgiddsmaJcM5d7a0a45</string>
+    <string name="view_edit_details">View Edit</string>
+    <string name="view_edit_name">name</string>
+    <string name="view_edit_email">email</string>
+    <string name="view_edit_source">source</string>
+    <string name="view_edit_location">location</string>
+    <string name="view_edit_project">project</string>
+    <string name="view_edit_budget">budget</string>
+    <string name="view_edit_requirement">requirement</string>
+    <string name="view_edit_country">country</string>
+    <string name="view_edit_state">state</string>
+    <string name="view_edit_city">city</string>
+    <string name="view_edit_pincode">pincode</string>
+    <string name="view_edit_mobile">mobile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="upcoming_events_for_today">Upcoming events for today</string>
+    <string name="total_lead_status">Total Lead Status</string>
+    <string name="leadSummary">Leads Summary</string>
+
+    <string name="back"><![CDATA[<-]]></string>
+    <string name="forward"><![CDATA[->]]></string>
+
+
+    <!--name,email,source,location,project,budget,requirement,country,state,city,pincode,mobile;-->
+</resources>
