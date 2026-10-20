@@ -31,7 +31,7 @@ if(isset($_POST['key']))
    $status=mysqli_real_escape_string($con,$_POST['status']);
   
   
-  if($num1= mysqli_num_rows( $res_token) == 1)
+  if($num1= mysqli_num_rows($res_token) >= 1)
   {
     
 	if ($status==4)

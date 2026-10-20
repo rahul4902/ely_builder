@@ -181,7 +181,9 @@ class User extends Authenticatable
 
     public function getNameAndDepartmentAttribute()
     {
-        return $this->name . ' ' . '(' . $this->department()->first()->name . ')';
+        $department = $this->department()->first();
+
+        return $department ? $this->name . ' (' . $department->name . ')' : $this->name;
     }
     
     public function moveTasks($user_id)

@@ -54,51 +54,52 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    height: 32px;
-    padding: 0 11px;
+    height: 36px;
+    padding: 0 16px;
     border: 1px solid #dbe3ee;
-    border-radius: 6px;
+    border-radius: 9999px;
     background: #fff;
     color: #475569;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
     font-family: 'Outfit', sans-serif;
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
-    transition: background .15s, border-color .15s, color .15s;
+    transition: background .15s, border-color .15s, color .15s, transform .15s, box-shadow .15s;
     line-height: 1;
 }
-.crm-btn:hover            { background: #f8fafc; border-color: #cbd5e1; color: #1e293b; text-decoration: none; }
+.crm-btn:hover            { background: #f8fafc; border-color: #cbd5e1; color: #1e293b; text-decoration: none; transform: translateY(-1px); }
+.crm-btn:active           { transform: scale(0.96); }
 .crm-btn:focus            { outline: none; box-shadow: 0 0 0 2px rgba(249,115,22,.18); }
 
-.crm-btn-primary          { border-color: #f97316; background: #f97316; color: #fff; }
-.crm-btn-primary:hover    { border-color: #ea580c; background: #ea580c; color: #fff; }
+.crm-btn-primary          { border-color: var(--crm-primary, #0b57d0); background: var(--crm-primary, #0b57d0); color: var(--crm-on-primary, #fff); }
+.crm-btn-primary:hover    { border-color: var(--crm-primary-hover, #0842a0); background: var(--crm-primary-hover, #0842a0); color: var(--crm-on-primary, #fff); }
 
 .crm-btn-danger           { border-color: #fecaca; background: #fff; color: #dc2626; }
 .crm-btn-danger:hover     { background: #fef2f2; border-color: #fca5a5; }
 
-.crm-btn-icon { width: 32px; height: 32px; padding: 0; }
-.crm-btn svg, .crm-btn i { width: 14px; height: 14px; font-size: 13px; flex-shrink: 0; }
+.crm-btn-icon { width: 36px; height: 36px; padding: 0; border-radius: 9999px; }
+.crm-btn svg, .crm-btn i { width: 15px; height: 15px; font-size: 14px; flex-shrink: 0; }
 
 /* ─── CARD ───────────────────────────────────────────────────────────────── */
 .crm-card {
     background: #fff;
     border: 1px solid #e2e8f0;
-    border-radius: 8px;
+    border-radius: 24px;
     padding: 20px;
 }
 .crm-card + .crm-card { margin-top: 16px; }
 
 /* Card section header (replaces .sidebarheader) */
 .crm-card-header {
-    padding: 10px 16px;
+    padding: 12px 20px;
     border-bottom: 1px solid #e2e8f0;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: #475569;
     background: #f7f9fc;
-    border-radius: 7px 7px 0 0;
+    border-radius: 24px 24px 0 0;
 }
 
 /* ─── FORM ELEMENTS ──────────────────────────────────────────────────────── */
@@ -271,12 +272,12 @@
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    min-width: 30px;
-    height: 30px;
-    margin: 0 1px !important;
-    padding: 0 9px !important;
+    min-width: 32px;
+    height: 32px;
+    margin: 0 2px !important;
+    padding: 0 12px !important;
     border: 1px solid #e2e8f0 !important;
-    border-radius: 6px !important;
+    border-radius: 9999px !important;
     background: #fff !important;
     color: #475569 !important;
     font-size: 12px !important;
@@ -285,22 +286,24 @@
     box-shadow: none !important;
     cursor: pointer;
     text-decoration: none !important;
+    transition: all 0.15s ease !important;
 }
 .crm-dt-page .dataTables_paginate .paginate_button:hover:not(.current):not(.disabled),
 .crm-dt-page .dt-paging .dt-paging-button:hover:not(.current):not(.disabled) {
     background: #f8fafc !important;
     border-color: #cbd5e1 !important;
     color: #0f172a !important;
+    transform: translateY(-1px);
 }
 .crm-dt-page .dataTables_paginate .paginate_button.current,
 .crm-dt-page .dataTables_paginate .paginate_button.current:hover,
 .crm-dt-page .dt-paging .dt-paging-button.current,
 .crm-dt-page .dt-paging .dt-paging-button.current:hover {
-    border-color: #f97316 !important;
-    background: #f97316 !important;
-    color: #fff !important;
+    border-color: var(--crm-primary, #0b57d0) !important;
+    background: var(--crm-primary, #0b57d0) !important;
+    color: var(--crm-on-primary, #fff) !important;
     font-weight: 600;
-    box-shadow: 0 1px 2px rgba(249,115,22,.25) !important;
+    box-shadow: 0 2px 6px rgba(11, 87, 208, 0.25) !important;
 }
 .crm-dt-page .dataTables_paginate .paginate_button.disabled,
 .crm-dt-page .dataTables_paginate .paginate_button.disabled:hover,

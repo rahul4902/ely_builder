@@ -158,8 +158,17 @@ public function saveBudgetRange(Request $request){
 }
 
 public function sourceList(Request $request){
-    $source_list = SourceMasterTableModel::where('status', '=', '1')->where('source_name','!=','other')->get();
-    return view('master.source_list_page',['source_lists'=>$source_list]);
+    return $this->sourceListView();
+}
+
+private function sourceListView(array $extra = [])
+{
+    $sourceList = SourceMasterTableModel::where('status', '=', '1')->where('source_name','!=','other')->get();
+    return view('master.source_list_page', array_merge([
+        'source_lists' => $sourceList,
+        'providers' => config('lead_providers', []),
+        'integrations' => \App\Models\CompanyIntegration::with('source')->latest()->get(),
+    ], $extra));
 }
 
 public function deleteSource(Request $request)
@@ -167,8 +176,7 @@ public function deleteSource(Request $request)
     DB::table('source_master')
         ->where('id', $request->input('id'))
         ->update(['status' => 0]);
-    $source_list = SourceMasterTableModel::where('status', '=', '1')->where('source_name','!=','other')->get();
-    return view('master.source_list_page',['source_lists'=>$source_list]);
+    return $this->sourceListView();
 }
 
 public function editSource(Request $request){
@@ -181,8 +189,7 @@ public function saveEditSource(Request $request)
         ->where('id', $request->input('source_edit_id'))
         ->update(['source_name' => $request->input('source_name')
         ]);
-    $source_list = SourceMasterTableModel::where('status', '=', '1')->where('source_name','!=','other')->get();
-    return view('master.source_list_page',['source_lists'=>$source_list]);
+    return $this->sourceListView();
 }
 
 public function saveSourceName(Request $request)
@@ -190,16 +197,14 @@ public function saveSourceName(Request $request)
 $data = SourceMasterTableModel::where('source_name','=',$request->input('source_name'))->get();
 $count = count($data);
 if($count>0){
-    $source_list = SourceMasterTableModel::where('status', '=', '1')->where('source_name','!=','other')->get();
     $msg = "Source Name Already Exist";
-    return view('master.source_list_page',['source_lists'=>$source_list,'msg'=>$msg])->render();
+    return $this->sourceListView(['msg' => $msg]);
 
 }
     $source_data = new SourceMasterTableModel();
     $source_data->source_name = $request->input('source_name');
     $source_data->save();
-    $source_list = SourceMasterTableModel::where('status', '=', '1')->where('source_name','!=','other')->get();
-    return view('master.source_list_page',['source_lists'=>$source_list]);
+    return $this->sourceListView();
 }
 
 }

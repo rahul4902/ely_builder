@@ -1,0 +1,2852 @@
+/* ==========================================================================
+   ElyLeads - Google Pixel OS / Material You (Material Design 3) Design System
+   Full aesthetic transformation: Squircles (24px-28px), Pill capsules (9999px),
+   AMOLED Dark Mode, Tonal Surface Layers, Spring Physics & Tactile Interactions.
+   ========================================================================== */
+
+:root {
+    font-size: 100% !important;
+
+    /* Google Pixel / Material You Core Colors */
+    --crm-primary: #0b57d0;
+    --crm-primary-rgb: 11, 87, 208;
+    --crm-primary-hover: #0842a0;
+    --crm-on-primary: #ffffff;
+    --crm-primary-container: #d3e3fd;
+    --crm-on-primary-container: #041e49;
+
+    /* Pixel OS Tonal Surface Hierarchy (Light Mode) */
+    --crm-bg: #f8fafd;
+    --crm-surface: #ffffff;
+    --crm-surface-container-low: #f3f6fc;
+    --crm-surface-container: #edf2fa;
+    --crm-surface-container-high: #e7edf6;
+    --crm-surface-container-highest: #dfe5ef;
+    --crm-surface-muted: #edf2fa;
+    --crm-surface-raised: #ffffff;
+    --crm-surface-header: rgba(255, 255, 255, 0.88);
+
+    /* Hairline borders & Outlines */
+    --crm-border: #e0e4ec;
+    --crm-border-strong: #c3c7d2;
+    --crm-outline-variant: #e0e4ec;
+
+    /* Material 3 Typography Colors */
+    --crm-text: #1b1c1f;
+    --crm-text-secondary: #44474e;
+    --crm-text-muted: #74777f;
+    --crm-icon: #44474e;
+    --crm-icon-hover: #1b1c1f;
+    --crm-hover-surface: rgba(11, 87, 208, 0.08);
+
+    /* Semantic Tonal Accents */
+    --crm-success: #146c2e;
+    --crm-success-container: #c4eed0;
+    --crm-on-success-container: #072710;
+    --crm-warning: #7c5800;
+    --crm-warning-container: #ffdf9e;
+    --crm-on-warning-container: #261900;
+    --crm-danger: #b3261e;
+    --crm-danger-container: #f9dedc;
+    --crm-on-danger-container: #410e0b;
+
+    /* Pixel OS Geometry Tokens */
+    --crm-radius-xs: 8px;
+    --crm-radius-sm: 12px;
+    --crm-radius-md: 16px;   /* Form inputs */
+    --crm-radius-lg: 24px;   /* Cards, panels, tables */
+    --crm-radius-xl: 28px;   /* Dialogs, modals, drawers */
+    --crm-radius-pill: 9999px; /* Buttons, chips, search bars, nav pills */
+
+    /* Pixel OS Elevation Shadows */
+    --crm-shadow-sm: 0 1px 3px 0 rgba(60, 64, 67, 0.08), 0 1px 2px 0 rgba(60, 64, 67, 0.04);
+    --crm-shadow-md: 0 4px 14px 0 rgba(60, 64, 67, 0.10), 0 2px 6px 0 rgba(60, 64, 67, 0.06);
+    --crm-shadow-lg: 0 12px 32px 0 rgba(60, 64, 67, 0.14), 0 4px 12px 0 rgba(60, 64, 67, 0.08);
+    --crm-shadow-floating: 0 16px 40px rgba(11, 87, 208, 0.16);
+    --crm-focus: 0 0 0 3px rgba(11, 87, 208, 0.25);
+
+    /* Pixel Motion & Spring Curves */
+    --crm-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+    --crm-easing-spring: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --crm-easing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --crm-transition-fast: 0.15s cubic-bezier(0.2, 0, 0, 1);
+    --crm-transition-normal: 0.24s cubic-bezier(0.2, 0, 0, 1);
+    --crm-transition-spring: 0.35s cubic-bezier(0.05, 0.7, 0.1, 1);
+
+    color-scheme: light;
+}
+
+/* ==========================================================================
+   Google Pixel AMOLED Dark Mode
+   Pure pitch black background (#000000) with elevated slate tonal surfaces.
+   ========================================================================== */
+html[data-theme="dark"] {
+    --crm-primary: #a8c7fa;
+    --crm-primary-rgb: 168, 199, 250;
+    --crm-primary-hover: #c2e7ff;
+    --crm-on-primary: #041e49;
+    --crm-primary-container: #0842a0;
+    --crm-on-primary-container: #d3e3fd;
+
+    /* Google Pixel Android 16 AMOLED Canvas & Tonal Surface Layers */
+    --crm-bg: #000000;
+    --crm-surface: #111318;
+    --crm-surface-container-low: #15171d;
+    --crm-surface-container: #1b1e25;
+    --crm-surface-container-high: #242731;
+    --crm-surface-container-highest: #2d313d;
+    --crm-surface-muted: #1b1e25;
+    --crm-surface-raised: #1b1e25;
+    --crm-surface-header: rgba(17, 19, 24, 0.92);
+
+    /* Hairline borders & Outlines (Android 16 M3 Expressive) */
+    --crm-border: #282b34;
+    --crm-border-strong: #3d414d;
+    --crm-outline-variant: #282b34;
+
+    /* Material 3 Expressive Android 16 High-Contrast Typography */
+    --crm-text: #ffffff;
+    --crm-text-secondary: #e2e4ea;
+    --crm-text-muted: #9ca3af;
+    --crm-icon: #e2e4ea;
+    --crm-icon-hover: #ffffff;
+    --crm-hover-surface: rgba(168, 199, 250, 0.12);
+
+    /* Semantic Tonal Accents */
+    --crm-success: #6dd58c;
+    --crm-success-container: #0f5223;
+    --crm-on-success-container: #c4eed0;
+    --crm-warning: #ffba28;
+    --crm-warning-container: #5d4200;
+    --crm-on-warning-container: #ffdf9e;
+    --crm-danger: #f2b8b5;
+    --crm-danger-container: #8c1d18;
+    --crm-on-danger-container: #f9dedc;
+
+    /* Elevation Shadows for Dark Surfaces */
+    --crm-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+    --crm-shadow-md: 0 4px 14px 0 rgba(0, 0, 0, 0.5);
+    --crm-shadow-lg: 0 12px 32px 0 rgba(0, 0, 0, 0.6);
+    --crm-shadow-floating: 0 16px 40px rgba(0, 0, 0, 0.7);
+    --crm-focus: 0 0 0 3px rgba(168, 199, 250, 0.3);
+
+    color-scheme: dark;
+}
+
+/* ==========================================================================
+   Global Resets & Base Elements
+   ========================================================================== */
+html {
+    font-size: 100% !important;
+    -webkit-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+}
+
+html, body {
+    background: var(--crm-bg) !important;
+    color: var(--crm-text) !important;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    font-size: 100% !important;
+    line-height: 1.5;
+}
+
+body * {
+    scrollbar-color: var(--crm-border-strong) transparent;
+}
+
+body *:focus-visible {
+    outline: none !important;
+    box-shadow: var(--crm-focus) !important;
+}
+
+/* ==========================================================================
+   Google Pixel Motion Physics, Springs & Ripples
+   ========================================================================== */
+@keyframes pixelFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pixelDropdownFade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pixelRippleWave {
+    0% {
+        transform: scale(0);
+        opacity: 0.38;
+    }
+    100% {
+        transform: scale(2.8);
+        opacity: 0;
+    }
+}
+
+@keyframes pixelPillScale {
+    0% {
+        transform: scale(0.92);
+    }
+    50% {
+        transform: scale(1.03);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Ripple host positioning */
+.pixel-ripple-host {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.pixel-ripple {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    background: rgba(var(--crm-primary-rgb), 0.28);
+    transform: scale(0);
+    animation: pixelRippleWave 0.6s cubic-bezier(0.2, 0, 0, 1) forwards;
+    z-index: 10;
+}
+
+html[data-theme="dark"] .pixel-ripple {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Interactive click compression (haptic press feel) */
+.btn:active,
+button:not(.btn-close):active,
+.crm-btn:active,
+.crm-menu-item:active,
+.crm-submenu-item:active,
+.topbar-action-icon:active,
+.page-link:active,
+.paginate_button:active,
+.dropdown-item:active,
+.badge:active {
+    transform: scale(0.95) !important;
+    transition-duration: 0.08s !important;
+}
+
+/* Cards & larger containers slight press compression */
+.card:active,
+.crm-card:active {
+    transform: scale(0.995);
+    transition-duration: 0.1s !important;
+}
+
+/* Smooth universal spring transitions for interactive elements */
+button, .btn, .crm-btn, a, .card, .crm-card, .form-control, .form-select, select, input,
+.topbar-action-icon, .crm-menu-item, .crm-submenu-item, .dropdown-item, .badge {
+    transition: background-color var(--crm-transition-fast),
+                border-color var(--crm-transition-fast),
+                color var(--crm-transition-fast),
+                box-shadow var(--crm-transition-normal),
+                transform var(--crm-transition-spring) !important;
+}
+
+/* ==========================================================================
+   Header / Topbar - Pixel OS Glass Status Bar
+   ========================================================================== */
+#page-content-wrapper > header {
+    height: 52px !important;
+    min-height: 52px !important;
+    background: var(--crm-surface-header) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid var(--crm-border) !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-shadow: none !important;
+}
+
+#page-content-wrapper > header h4 {
+    color: var(--crm-text) !important;
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.01em !important;
+}
+
+#page-content-wrapper > header h4 + span {
+    color: var(--crm-text-muted) !important;
+    font-size: 12.5px !important;
+}
+
+/* Pixel Circular Action Buttons in Topbar */
+.topbar-action-icon,
+.topbar-icon-btn,
+#sidebarToggle,
+.btn-toggle-sidebar {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    border-radius: var(--crm-radius-pill) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    color: var(--crm-icon) !important;
+    border: none !important;
+    cursor: pointer !important;
+    position: relative !important;
+}
+
+.topbar-action-icon :is(svg, i),
+.topbar-icon-btn :is(svg, i),
+#sidebarToggle :is(svg, i),
+.btn-toggle-sidebar :is(svg, i) {
+    color: inherit !important;
+    stroke: currentColor !important;
+    width: 18px !important;
+    height: 18px !important;
+}
+
+@media (hover: hover) {
+    .topbar-action-icon:hover,
+    .topbar-icon-btn:hover,
+    #sidebarToggle:hover,
+    .btn-toggle-sidebar:hover {
+        background: var(--crm-surface-container) !important;
+        color: var(--crm-icon-hover) !important;
+        transform: scale(1.06) !important;
+    }
+}
+
+/* ==========================================================================
+   Sidebar - Material 3 Navigation Drawer with Pill Items
+   ========================================================================== */
+#sidebar-wrapper.app-sidebar {
+    background: var(--crm-surface) !important;
+    border-right: 1px solid var(--crm-border) !important;
+    color: var(--crm-text-secondary) !important;
+    box-shadow: none !important;
+    width: 236px !important;
+    min-width: 236px !important;
+    transition: width var(--crm-transition-spring), min-width var(--crm-transition-spring), transform var(--crm-transition-spring) !important;
+}
+
+#page-content-wrapper {
+    margin-left: 236px !important;
+    width: calc(100% - 236px) !important;
+    flex: 0 0 calc(100% - 236px) !important;
+}
+
+#sidebar-wrapper.app-sidebar > a:first-child,
+#sidebar-wrapper.app-sidebar > div:first-child {
+    background: var(--crm-surface) !important;
+    border-bottom: 1px solid var(--crm-border) !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+}
+
+#sidebar-wrapper .sidebar-brand-mini span {
+    border-radius: var(--crm-radius-pill) !important;
+    background: var(--crm-primary) !important;
+    color: var(--crm-on-primary) !important;
+}
+
+#sidebar-wrapper.app-sidebar nav {
+    padding: 14px 10px !important;
+}
+
+#sidebar-wrapper .sidebar-section-title {
+    color: var(--crm-text-muted) !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    padding-left: 14px !important;
+    margin-top: 14px !important;
+    margin-bottom: 6px !important;
+    text-transform: uppercase !important;
+}
+
+/* Material 3 Navigation Drawer Capsule Pill Items */
+#sidebar-wrapper.app-sidebar nav a,
+#sidebar-wrapper.app-sidebar nav button,
+.crm-menu-item,
+.crm-submenu-item {
+    border-radius: var(--crm-radius-pill) !important;
+    color: var(--crm-text-secondary) !important;
+    height: 40px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    margin: 3px 0 !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    display: flex !important;
+    align-items: center !important;
+    text-decoration: none !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+@media (hover: hover) {
+    #sidebar-wrapper.app-sidebar nav a:hover,
+    #sidebar-wrapper.app-sidebar nav button:hover,
+    .crm-menu-item:hover,
+    .crm-submenu-item:hover {
+        background: var(--crm-surface-container) !important;
+        color: var(--crm-text) !important;
+        transform: translateX(3px) !important;
+    }
+}
+
+/* Material 3 Active Pill Indicator with Spring Bounce */
+#sidebar-wrapper .crm-menu-active,
+#sidebar-wrapper .crm-submenu-active {
+    border-radius: var(--crm-radius-pill) !important;
+    background: var(--crm-primary-container) !important;
+    color: var(--crm-on-primary-container) !important;
+    font-weight: 600 !important;
+    border: none !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+    animation: pixelPillScale 0.3s var(--crm-easing-spring);
+}
+
+#sidebar-wrapper .crm-menu-active :is(span, i, svg),
+#sidebar-wrapper .crm-submenu-active :is(span, i, svg) {
+    color: var(--crm-on-primary-container) !important;
+}
+
+#sidebar-wrapper .collapse {
+    border-left: 2px solid var(--crm-border) !important;
+    margin-left: 20px !important;
+    padding-left: 10px !important;
+}
+
+#sidebar-wrapper .crm-user-card,
+#sidebar-wrapper .dropup .dropdown-menu {
+    background: var(--crm-surface-raised) !important;
+    border: 1px solid var(--crm-border) !important;
+    border-radius: var(--crm-radius-md) !important;
+    box-shadow: var(--crm-shadow-md) !important;
+}
+
+/* ==========================================================================
+   Cards & Panels - Pixel OS Squircles (24px)
+   ========================================================================== */
+.card,
+.crm-card,
+.panel,
+.panel-default,
+.box,
+.c-dashboardInfo .wrap,
+.graph,
+.settings-panel,
+.provider-card {
+    background: var(--crm-surface) !important;
+    border: 1px solid var(--crm-border) !important;
+    border-radius: var(--crm-radius-lg) !important;
+    color: var(--crm-text) !important;
+    box-shadow: var(--crm-shadow-sm) !important;
+    overflow: hidden;
+    animation: pixelFadeInUp 0.3s var(--crm-easing-standard);
+}
+
+@media (hover: hover) {
+    .card:hover,
+    .crm-card:hover,
+    .provider-card:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: var(--crm-shadow-md) !important;
+        border-color: var(--crm-border-strong) !important;
+    }
+}
+
+.card-header,
+.crm-card-header,
+.panel-heading {
+    background: var(--crm-surface-container-low) !important;
+    border-bottom: 1px solid var(--crm-border) !important;
+    color: var(--crm-text) !important;
+    font-weight: 600 !important;
+    padding: 14px 20px !important;
+}
+
+.card-footer,
+.panel-footer {
+    background: var(--crm-surface-container-low) !important;
+    border-top: 1px solid var(--crm-border) !important;
+    padding: 14px 20px !important;
+}
+
+/* ==========================================================================
+   Buttons - Material 3 Pill Capsules (9999px)
+   ========================================================================== */
+.btn,
+.crm-btn,
+button.btn,
+button[type="submit"]:not(.topbar-action-icon):not(#sidebarToggle),
+.settings-save,
+.topbar-share-btn {
+    border-radius: var(--crm-radius-pill) !important;
+    font-weight: 600 !important;
+    font-size: 13.5px !important;
+    letter-spacing: 0.015em !important;
+    min-height: 38px !important;
+    padding: 8px 20px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    border: 1px solid transparent !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    line-height: 1.2 !important;
+}
+
+@media (hover: hover) {
+    .btn:hover,
+    .crm-btn:hover,
+    button[type="submit"]:hover {
+        transform: translateY(-2px) !important;
+    }
+}
+
+/* Primary Button (Vibrant Pill with glowing lift) */
+.btn-primary,
+.crm-btn-primary,
+.bg-primary,
+.bg-orange-500,
+button.bg-orange-500,
+a.bg-orange-500,
+.settings-save {
+    background-color: var(--crm-primary) !important;
+    background: var(--crm-primary) !important;
+    border-color: var(--crm-primary) !important;
+    color: var(--crm-on-primary) !important;
+    box-shadow: 0 1px 3px rgba(var(--crm-primary-rgb), 0.25) !important;
+}
+
+@media (hover: hover) {
+    .btn-primary:hover,
+    .crm-btn-primary:hover,
+    .bg-orange-500:hover,
+    button.bg-orange-500:hover,
+    a.bg-orange-500:hover,
+    .settings-save:hover {
+        background-color: var(--crm-primary-hover) !important;
+        background: var(--crm-primary-hover) !important;
+        border-color: var(--crm-primary-hover) !important;
+        color: var(--crm-on-primary) !important;
+        box-shadow: 0 4px 14px rgba(var(--crm-primary-rgb), 0.35) !important;
+    }
+}
+
+/* Secondary / Tonal Buttons */
+.btn-secondary,
+.btn-light,
+.btn-default {
+    background: var(--crm-surface-container) !important;
+    border-color: transparent !important;
+    color: var(--crm-text) !important;
+}
+
+@media (hover: hover) {
+    .btn-secondary:hover,
+    .btn-light:hover,
+    .btn-default:hover {
+        background: var(--crm-surface-container-high) !important;
+        color: var(--crm-text) !important;
+    }
+}
+
+/* Outlined Buttons */
+.btn-outline-primary {
+    background: transparent !important;
+    border: 1.5px solid var(--crm-primary) !important;
+    color: var(--crm-primary) !important;
+}
+
+@media (hover: hover) {
+    .btn-outline-primary:hover {
+        background: var(--crm-primary-container) !important;
+        color: var(--crm-on-primary-container) !important;
+        border-color: var(--crm-primary) !important;
+    }
+}
+
+.btn-danger,
+.crm-btn-danger {
+    background: var(--crm-danger) !important;
+    border-color: var(--crm-danger) !important;
+    color: #ffffff !important;
+}
+
+@media (hover: hover) {
+    .btn-danger:hover,
+    .crm-btn-danger:hover {
+        background: #96201a !important;
+        box-shadow: 0 4px 12px rgba(179, 38, 30, 0.3) !important;
+    }
+}
+
+/* ==========================================================================
+   Form Inputs & Selects - Pixel OS Squircle (16px) & Tonal Surfaces
+   ========================================================================== */
+.form-control,
+.form-select,
+select,
+input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="range"]),
+textarea,
+.crm-search,
+.select2-container--bootstrap-5 .select2-selection,
+.select2-container--default .select2-selection {
+    background: var(--crm-surface-container) !important;
+    border: 1px solid var(--crm-border) !important;
+    border-radius: var(--crm-radius-md) !important;
+    color: var(--crm-text) !important;
+    box-shadow: none !important;
+    padding: 9px 16px !important;
+    font-size: 13.5px !important;
+    line-height: 1.5 !important;
+    transition: all var(--crm-transition-fast) !important;
+}
+
+/* Pill Search Bars */
+.crm-search,
+#leadSearchInput,
+.dataTables_filter input,
+.dt-search input,
+header input[type="search"] {
+    border-radius: var(--crm-radius-pill) !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    background: var(--crm-surface-container) !important;
+}
+
+.form-control::placeholder,
+input::placeholder,
+textarea::placeholder {
+    color: var(--crm-text-muted) !important;
+    opacity: 0.85;
+}
+
+.form-control:focus,
+.form-select:focus,
+select:focus,
+input:focus,
+textarea:focus,
+.crm-search:focus,
+.select2-container--bootstrap-5.select2-container--focus .select2-selection {
+    background: var(--crm-surface) !important;
+    border-color: var(--crm-primary) !important;
+    box-shadow: var(--crm-focus) !important;
+    outline: none !important;
+}
+
+label,
+.form-label,
+.control-label {
+    color: var(--crm-text-secondary) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    margin-bottom: 6px !important;
+}
+
+/* Material Switch / Checkbox styling */
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--crm-primary) !important;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   Modals & Dialogs - Pixel OS Squircle System Dialogs (28px)
+   ========================================================================== */
+.modal-dialog {
+    display: flex;
+    align-items: center;
+    min-height: calc(100% - 3.5rem);
+}
+
+.modal-content,
+.offcanvas {
+    background: var(--crm-surface) !important;
+    border: 1px solid var(--crm-border) !important;
+    border-radius: var(--crm-radius-xl) !important;
+    color: var(--crm-text) !important;
+    box-shadow: var(--crm-shadow-lg) !important;
+    overflow: hidden;
+    animation: pixelFadeInUp 0.25s var(--crm-easing-standard);
+}
+
+.offcanvas-end {
+    border-radius: var(--crm-radius-xl) 0 0 var(--crm-radius-xl) !important;
+}
+
+.offcanvas-start {
+    border-radius: 0 var(--crm-radius-xl) var(--crm-radius-xl) 0 !important;
+}
+
+.modal-backdrop.show {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    background-color: rgba(0, 0, 0, 0.45) !important;
+}
+
+.modal-header,
+.offcanvas-header {
+    border-bottom: 1px solid var(--crm-border) !important;
+    padding: 18px 24px !important;
+    background: var(--crm-surface-container-low) !important;
+}
+
+.modal-body,
+.offcanvas-body {
+    padding: 24px !important;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--crm-border) !important;
+    padding: 16px 24px !important;
+    background: var(--crm-surface-container-low) !important;
+}
+
+.btn-close {
+    border-radius: var(--crm-radius-pill) !important;
+    padding: 8px !important;
+    opacity: 0.7;
+    transition: opacity var(--crm-transition-fast), transform var(--crm-transition-fast) !important;
+}
+
+.btn-close:hover {
+    opacity: 1;
+    transform: scale(1.1) !important;
+}
+
+html[data-theme="dark"] .btn-close {
+    filter: invert(1) grayscale(1) brightness(2);
+}
+
+/* ==========================================================================
+   Dropdowns & Popovers - Pixel OS Squircle Popovers (18px)
+   ========================================================================== */
+.dropdown-menu,
+.popover,
+.select2-dropdown {
+    background: var(--crm-surface-raised) !important;
+    border: 1px solid var(--crm-border) !important;
+    border-radius: 18px !important;
+    box-shadow: var(--crm-shadow-lg) !important;
+    padding: 8px !important;
+    animation: pixelDropdownFade 0.16s var(--crm-easing-standard);
+}
+
+.dropdown-item,
+.select2-results__option {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    width: 100% !important;
+    border-radius: var(--crm-radius-pill) !important;
+    color: var(--crm-text) !important;
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    margin: 2px 0 !important;
+    gap: 10px !important;
+    min-height: 36px !important;
+    border: none !important;
+    background: transparent;
+    transition: background-color var(--crm-transition-fast), color var(--crm-transition-fast), transform var(--crm-transition-fast) !important;
+}
+
+.dropdown-item :is(svg, i) {
+    width: 16px !important;
+    height: 16px !important;
+    flex-shrink: 0 !important;
+    color: var(--crm-icon) !important;
+}
+
+.dropdown-item span {
+    text-align: left !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus,
+.select2-results__option--highlighted {
+    background: var(--crm-surface-container) !important;
+    color: var(--crm-primary) !important;
+}
+
+.dropdown-item:hover :is(svg, i),
+.dropdown-item:focus :is(svg, i) {
+    color: var(--crm-primary) !important;
+}
+
+/* Form buttons inside dropdown menus (e.g. switch company) */
+.dropdown-menu form button[type="submit"].dropdown-item,
+.dropdown-menu form button[type="submit"] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    text-align: left !important;
+    width: 100% !important;
+    padding: 7px 14px !important;
+    border-radius: var(--crm-radius-pill) !important;
+    font-size: 12.5px !important;
+    font-weight: 500 !important;
+    min-height: 34px !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.dropdown-menu form button[type="submit"]:hover {
+    background: var(--crm-surface-container) !important;
+    color: var(--crm-text) !important;
+    transform: none !important;
+}
+
+.dropdown-divider {
+    border-color: var(--crm-border) !important;
+    margin: 6px 0 !important;
+}
+
+/* ==========================================================================
+   Google Pixel Material 3 Profile Popover (Sidebar & Topbar)
+   ========================================================================== */
+.crm-profile-popover {
+    background: var(--crm-surface-raised) !important;
+    border: 1px solid var(--crm-border) !important;
+    border-radius: 20px !important;
+    padding: 8px !important;
+    box-shadow: var(--crm-shadow-lg) !important;
+    animation: pixelDropdownFade 0.16s var(--crm-easing-standard) !important;
+}
+
+html[data-theme="dark"] .crm-profile-popover {
+    background: #1e2025 !important;
+    border-color: #2c2e35 !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* User identity header tile */
+.crm-profile-user-tile {
+    background: var(--crm-surface-container) !important;
+    border: 1px solid var(--crm-border) !important;
+    border-radius: 16px !important;
+    padding: 10px 12px !important;
+    margin-bottom: 6px !important;
+}
+
+html[data-theme="dark"] .crm-profile-user-tile {
+    background: #282a2f !important;
+    border-color: #383a42 !important;
+}
+
+.crm-tile-avatar {
+    background: var(--crm-primary) !important;
+    color: var(--crm-on-primary) !important;
+    font-weight: 700 !important;
+}
+
+.crm-user-name {
+    color: var(--crm-text) !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+}
+
+html[data-theme="dark"] .crm-user-name {
+    color: #f1f3f8 !important;
+}
+
+.crm-user-email {
+    color: var(--crm-text-secondary) !important;
+    font-size: 11px !important;
+}
+
+html[data-theme="dark"] .crm-user-email {
+    color: #c4c6cf !important;
+}
+
+/* Profile menu items */
+.crm-profile-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 8px 14px !important;
+    border-radius: var(--crm-radius-pill) !important;
+    color: var(--crm-text) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    transition: background-color var(--crm-transition-fast), color var(--crm-transition-fast), transform var(--crm-transition-fast) !important;
+}
+
+html[data-theme="dark"] .crm-profile-item {
+    color: #e2e2e6 !important;
+}
+
+.crm-profile-item:hover,
+.crm-profile-item:focus {
+    background: var(--crm-surface-container) !important;
+    color: var(--crm-primary) !important;
+    transform: translateX(2px) !important;
+}
+
+html[data-theme="dark"] .crm-profile-item:hover,
+html[data-theme="dark"] .crm-profile-item:focus {
+    background: #33353b !important;
+    color: #ffffff !important;
+}
+
+.crm-profile-item :is(i, svg) {
+    color: var(--crm-icon) !important;
+    width: 16px !important;
+    height: 16px !important;
+    flex-shrink: 0 !important;
+}
+
+html[data-theme="dark"] .crm-profile-item :is(i, svg) {
+    color: #c4c6cf !important;
+}
+
+.crm-profile-item:hover :is(i, svg),
+.crm-profile-item:focus :is(i, svg) {
+    color: var(--crm-primary) !important;
+}
+
+html[data-theme="dark"] .crm-profile-item:hover :is(i, svg),
+html[data-theme="dark"] .crm-profile-item:focus :is(i, svg) {
+    color: #a8c7fa !important;
+}
+
+/* Platform Admin Item */
+.crm-platform-admin-item {
+    color: var(--crm-primary) !important;
+}
+
+.crm-platform-admin-item :is(i, svg) {
+    color: var(--crm-primary) !important;
+}
+
+/* Company Switcher items */
+.crm-section-label {
+    color: var(--crm-text-muted) !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    padding: 6px 12px 2px !important;
+}
+
+html[data-theme="dark"] .crm-section-label {
+    color: #8e9199 !important;
+}
+
+.crm-switch-company-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    padding: 7px 12px !important;
+    border-radius: var(--crm-radius-pill) !important;
+    color: var(--crm-text) !important;
+    font-size: 12.5px !important;
+    font-weight: 500 !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-align: left !important;
+}
+
+html[data-theme="dark"] .crm-switch-company-btn {
+    color: #e2e2e6 !important;
+}
+
+.crm-switch-company-btn:hover {
+    background: var(--crm-surface-container) !important;
+    color: var(--crm-text) !important;
+}
+
+html[data-theme="dark"] .crm-switch-company-btn:hover {
+    background: #33353b !important;
+    color: #ffffff !important;
+}
+
+.crm-switch-company-btn.is-active {
+    background: var(--crm-primary-container) !important;
+    color: var(--crm-on-primary-container) !important;
+    font-weight: 600 !important;
+}
+
+/* Logout Item */
+.crm-logout-item {
+    color: var(--crm-danger) !important;
+}
+
+html[data-theme="dark"] .crm-logout-item {
+    color: #f2b8b5 !important;
+}
+
+.crm-logout-item :is(i, svg) {
+    color: var(--crm-danger) !important;
+}
+
+html[data-theme="dark"] .crm-logout-item :is(i, svg) {
+    color: #f2b8b5 !important;
+}
+
+.crm-logout-item:hover,
+.crm-logout-item:focus {
+    background: var(--crm-danger-container) !important;
+    color: var(--crm-on-danger-container) !important;
+}
+
+html[data-theme="dark"] .crm-logout-item:hover,
+html[data-theme="dark"] .crm-logout-item:focus {
+    background: #8c1d18 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .crm-logout-item:hover :is(i, svg) {
+    color: #ffffff !important;
+}
+
+/* User Profile Card & Dropup in Sidebar */
+#sidebar-wrapper .dropup {
+    position: relative !important;
+    background: var(--crm-surface) !important;
+    border-color: var(--crm-border) !important;
+}
+
+html[data-theme="dark"] #sidebar-wrapper .dropup {
+    background: #111318 !important;
+    border-color: #2c2e35 !important;
+}
+
+#sidebar-wrapper .crm-user-card {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    width: 100% !important;
+    border-radius: 16px !important;
+    padding: 8px 10px !important;
+    min-height: unset !important;
+    border: 1px solid var(--crm-border) !important;
+    background: var(--crm-surface) !important;
+    color: var(--crm-text) !important;
+    box-shadow: var(--crm-shadow-sm) !important;
+    cursor: pointer !important;
+    transition: background-color var(--crm-transition-fast), border-color var(--crm-transition-fast) !important;
+}
+
+#sidebar-wrapper .crm-user-card:hover {
+    background: var(--crm-surface-container) !important;
+    border-color: var(--crm-border-strong) !important;
+    box-shadow: var(--crm-shadow-md) !important;
+}
+
+html[data-theme="dark"] #sidebar-wrapper .crm-user-card {
+    background: #191c20 !important;
+    border-color: #2c2e35 !important;
+    color: #e2e2e6 !important;
+}
+
+html[data-theme="dark"] #sidebar-wrapper .crm-user-card:hover {
+    background: #282a2f !important;
+    border-color: #44474f !important;
+}
+
+.crm-avatar-badge {
+    background: var(--crm-primary) !important;
+    color: var(--crm-on-primary) !important;
+    font-weight: 700 !important;
+}
+
+.crm-user-card-name {
+    color: var(--crm-text) !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+}
+
+html[data-theme="dark"] .crm-user-card-name {
+    color: #f1f3f8 !important;
+}
+
+.crm-user-card-role {
+    background: var(--crm-surface-container) !important;
+    color: var(--crm-text-secondary) !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+}
+
+html[data-theme="dark"] .crm-user-card-role {
+    background: #33353b !important;
+    color: #c4c6cf !important;
+}
+
+.crm-user-card-chevron {
+    color: var(--crm-icon) !important;
+}
+
+html[data-theme="dark"] .crm-user-card-chevron {
+    color: #c4c6cf !important;
+}
+
+/* Sidebar Dropup Exact Positioning (Eliminates clipping and off-screen issue) */
+#sidebar-wrapper .dropup .dropdown-menu.crm-profile-popover {
+    position: absolute !important;
+    bottom: calc(100% + 8px) !important;
+    top: auto !important;
+    left: 8px !important;
+    right: 8px !important;
+    width: calc(100% - 16px) !important;
+    max-width: calc(100% - 16px) !important;
+    transform: none !important;
+    z-index: 1060 !important;
+    margin: 0 !important;
+}
+
+body.sidebar-mini #sidebar-wrapper .dropup .dropdown-menu.crm-profile-popover {
+    position: fixed !important;
+    left: 64px !important;
+    bottom: 12px !important;
+    top: auto !important;
+    right: auto !important;
+    width: 240px !important;
+    max-width: 240px !important;
+    transform: none !important;
+    z-index: 1060 !important;
+    margin: 0 !important;
+}
+
+/* Topbar Theme Toggle Button - Google Pixel OS Pill/Circle */
+.topbar-theme-toggle {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    border-radius: var(--crm-radius-pill) !important;
+    background: var(--crm-surface-container) !important;
+    border: 1px solid var(--crm-border) !important;
+    color: var(--crm-icon) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    transition: all var(--crm-transition-spring) !important;
+}
+
+.topbar-theme-toggle:hover {
+    background: var(--crm-surface-container-high) !important;
+    color: var(--crm-text) !important;
+    transform: scale(1.08) rotate(12deg) !important;
+}
+
+html[data-theme="dark"] .topbar-theme-toggle {
+    background: rgba(255, 186, 40, 0.16) !important;
+    border-color: rgba(255, 186, 40, 0.35) !important;
+    color: #ffba28 !important;
+    box-shadow: 0 0 12px rgba(255, 186, 40, 0.25) !important;
+}
+
+html[data-theme="dark"] .topbar-theme-toggle:hover {
+    background: rgba(255, 186, 40, 0.25) !important;
+    color: #ffd066 !important;
+    transform: scale(1.08) rotate(-15deg) !important;
+    box-shadow: 0 0 16px rgba(255, 186, 40, 0.4) !important;
+}
+
+
+/* ==========================================================================
+   Tables & DataTables - Minimalist Pixel Workspace
+   ========================================================================== */
+.table-responsive,
+#tableViewContainer,
+.dataTables_wrapper {
+    background: var(--crm-surface) !important;
+    border: 1px solid var(--crm-border) !important;
+    border-radius: var(--crm-radius-lg) !important;
+    overflow: hidden !important;
+    box-shadow: var(--crm-shadow-sm) !important;
+}
+
+table,
+.table {
+    --bs-table-bg: var(--crm-surface);
+    --bs-table-color: var(--crm-text);
+    --bs-table-border-color: var(--crm-border);
+    color: var(--crm-text) !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    width: 100% !important;
+    margin-bottom: 0 !important;
+}
+
+.table thead th,
+table thead th,
+div.dataTables_scrollHead table thead th,
+div.dt-scroll-head table thead th,
+#registration thead th {
+    background: var(--crm-surface-container-low) !important;
+    color: var(--crm-text-secondary) !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    border-bottom: 1px solid var(--crm-border) !important;
+    padding: 13px 16px !important;
+}
+
+.table td,
+table td,
+#registration tbody td {
+    border-bottom: 1px solid var(--crm-border) !important;
+    color: var(--crm-text) !important;
+    padding: 13px 16px !important;
+    font-size: 13px !important;
+    vertical-align: middle !important;
+}
+
+.table-hover > tbody > tr:hover > *,
+table tbody tr:hover td,
+#registration tbody tr:hover td {
+    background-color: var(--crm-surface-container) !important;
+}
+
+/* DataTables Pagination Pill Controls */
+.dataTables_paginate,
+.dt-paging,
+.dt-page-nav {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 12px 16px !important;
+}
+
+.dataTables_paginate button,
+.dataTables_paginate a,
+.dataTables_paginate .paginate_button,
+.dt-paging button,
+.dt-paging a,
+.dt-paging .dt-paging-button,
+.page-link {
+    border-radius: var(--crm-radius-pill) !important;
+    background: var(--crm-surface-container) !important;
+    border: 1px solid transparent !important;
+    color: var(--crm-text-secondary) !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    min-width: 32px !important;
+    height: 32px !important;
+    padding: 0 10px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+}
+
+@media (hover: hover) {
+    .dataTables_paginate button:hover,
+    .dataTables_paginate .paginate_button:hover,
+    .dt-paging button:hover,
+    .page-link:hover {
+        background: var(--crm-surface-container-high) !important;
+        color: var(--crm-text) !important;
+        transform: translateY(-1px) !important;
+    }
+}
+
+.dataTables_paginate .current,
+.dt-paging .current,
+.dt-page-nav .current,
+button.dt-paging-button.current,
+.paginate_button.current,
+.page-item.active .page-link {
+    background: var(--crm-primary) !important;
+    border-color: var(--crm-primary) !important;
+    color: var(--crm-on-primary) !important;
+    box-shadow: 0 1px 3px rgba(var(--crm-primary-rgb), 0.3) !important;
+}
+
+/* ==========================================================================
+   Badges & Status Chips - Pixel OS Tonal Pills
+   ========================================================================== */
+.badge,
+.crm-badge,
+.tag {
+    border-radius: var(--crm-radius-pill) !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+    padding: 4px 12px !important;
+    line-height: 1.3 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+}
+
+.badge.bg-success,
+.bg-success {
+    background-color: var(--crm-success-container) !important;
+    color: var(--crm-on-success-container) !important;
+    border: 1px solid transparent !important;
+}
+
+.badge.bg-danger,
+.bg-danger {
+    background-color: var(--crm-danger-container) !important;
+    color: var(--crm-on-danger-container) !important;
+    border: 1px solid transparent !important;
+}
+
+.badge.bg-warning,
+.bg-warning {
+    background-color: var(--crm-warning-container) !important;
+    color: var(--crm-on-warning-container) !important;
+    border: 1px solid transparent !important;
+}
+
+.badge.bg-info,
+.bg-info,
+.badge.bg-primary {
+    background-color: var(--crm-primary-container) !important;
+    color: var(--crm-on-primary-container) !important;
+}
+
+.alert-success {
+    background: var(--crm-success-container) !important;
+    border-color: transparent !important;
+    color: var(--crm-on-success-container) !important;
+    border-radius: var(--crm-radius-md) !important;
+}
+
+.alert-danger {
+    background: var(--crm-danger-container) !important;
+    border-color: transparent !important;
+    color: var(--crm-on-danger-container) !important;
+    border-radius: var(--crm-radius-md) !important;
+}
+
+.alert-warning {
+    background: var(--crm-warning-container) !important;
+    border-color: transparent !important;
+    color: var(--crm-on-warning-container) !important;
+    border-radius: var(--crm-radius-md) !important;
+}
+
+/* ==========================================================================
+   Google Android 16 (Material You / M3 Expressive) Dark Mode System
+   High-Contrast Crystal-Clear Typography & AMOLED Surface Hierarchy
+   ========================================================================== */
+
+/* --- 1. Global Contrast & Typography Foundations --- */
+html[data-theme="dark"] {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] body {
+    color: #ffffff !important;
+    background-color: #000000 !important;
+}
+
+/* Headings (h1 to h6) - Pure Brilliant White */
+html[data-theme="dark"] :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+/* Prominent Titles, Card Headers, Modal Titles, Section Headings */
+html[data-theme="dark"] :is(
+    .card-title,
+    .card-header,
+    .crm-card-header,
+    .modal-title,
+    .offcanvas-title,
+    .settings-content-title,
+    .dashboard-section-title,
+    .company-settings-toolbar h1,
+    .crm-form-page-header strong,
+    .crm-section-heading h5,
+    .crm-user-card-name,
+    .crm-user-name,
+    .page-title,
+    .fw-bold,
+    .font-bold,
+    .font-semibold,
+    .fw-semibold
+) {
+    color: #ffffff !important;
+}
+
+/* Body Paragraphs, Spans & Inline Elements */
+html[data-theme="dark"] :is(p, span, li, dt, dd, strong, b) {
+    --bs-body-color: #ffffff;
+}
+
+/* Primary High-Emphasis Utility Classes: Forced to Pure Crisp White (#ffffff) */
+html[data-theme="dark"] :is(
+    .text-dark,
+    .text-body,
+    .text-slate-900,
+    .text-slate-800,
+    .text-slate-700,
+    .text-gray-900,
+    .text-gray-800,
+    .text-gray-700,
+    .text-neutral-900,
+    .text-neutral-800,
+    .text-neutral-700,
+    .text-zinc-900,
+    .text-zinc-800,
+    .text-zinc-700
+) {
+    color: #ffffff !important;
+}
+
+/* Secondary High-Legibility Silver White (#e2e4ea - 88% Luminance) */
+html[data-theme="dark"] :is(
+    .text-slate-600,
+    .text-slate-500,
+    .text-gray-600,
+    .text-gray-500,
+    .text-neutral-600,
+    .text-neutral-500,
+    .text-zinc-600,
+    .text-zinc-500,
+    .text-slate-300,
+    .text-gray-300
+) {
+    color: #e2e4ea !important;
+}
+
+/* Tertiary Captions & Subtle Text (#9ca3af - 68% Luminance, Passes WCAG AAA) */
+html[data-theme="dark"] :is(
+    .text-muted,
+    .text-secondary,
+    .text-slate-400,
+    .text-gray-400,
+    .text-neutral-400,
+    .text-zinc-400,
+    small,
+    .small
+) {
+    color: #9ca3af !important;
+}
+
+/* Surface Container Mappings (AMOLED Tonal Architecture) */
+html[data-theme="dark"] :is(.bg-white, .bg-light, .bg-slate-50, .bg-slate-100, .bg-gray-50) {
+    background-color: var(--crm-surface) !important;
+}
+
+html[data-theme="dark"] :is(.bg-slate-200, .bg-gray-100) {
+    background-color: var(--crm-surface-container) !important;
+}
+
+html[data-theme="dark"] :is(.bg-slate-700, .bg-slate-800, .bg-slate-900) {
+    background-color: #1b1e25 !important;
+}
+
+html[data-theme="dark"] :is(.border-slate-100, .border-slate-200, .border-gray-100, .border-gray-200) {
+    border-color: var(--crm-border) !important;
+}
+
+:is(.crm-btn-primary, .text-orange-500, .text-orange-600, .text-orange-700) {
+    color: var(--crm-primary) !important;
+}
+
+:is(.bg-orange-50, .bg-orange-100, .bg-orange-200) {
+    background-color: var(--crm-primary-container) !important;
+}
+
+:is(.border-orange-200, .border-orange-300, .border-orange-400, .border-orange-500) {
+    border-color: var(--crm-primary) !important;
+}
+
+/* --- 2. Sidebar Navigation & Drawer (Android 16 Rail/Drawer) --- */
+html[data-theme="dark"] #sidebar-wrapper.app-sidebar {
+    background: #111318 !important;
+    border-right-color: #282b34 !important;
+}
+
+html[data-theme="dark"] #sidebar-wrapper.app-sidebar nav a,
+html[data-theme="dark"] #sidebar-wrapper.app-sidebar nav button,
+html[data-theme="dark"] .crm-menu-item,
+html[data-theme="dark"] .crm-submenu-item {
+    color: #e2e4ea !important;
+}
+
+html[data-theme="dark"] #sidebar-wrapper.app-sidebar nav a :is(i, svg, span),
+html[data-theme="dark"] #sidebar-wrapper.app-sidebar nav button :is(i, svg, span),
+html[data-theme="dark"] .crm-menu-item :is(i, svg, span),
+html[data-theme="dark"] .crm-submenu-item :is(i, svg, span) {
+    color: #e2e4ea !important;
+}
+
+html[data-theme="dark"] #sidebar-wrapper.app-sidebar nav a:hover,
+html[data-theme="dark"] #sidebar-wrapper.app-sidebar nav button:hover,
+html[data-theme="dark"] .crm-menu-item:hover,
+html[data-theme="dark"] .crm-submenu-item:hover {
+    color: #ffffff !important;
+    background: #242834 !important;
+}
+
+html[data-theme="dark"] #sidebar-wrapper.app-sidebar nav a:hover :is(i, svg, span),
+html[data-theme="dark"] #sidebar-wrapper.app-sidebar nav button:hover :is(i, svg, span),
+html[data-theme="dark"] .crm-menu-item:hover :is(i, svg, span),
+html[data-theme="dark"] .crm-submenu-item:hover :is(i, svg, span) {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] #sidebar-wrapper .crm-menu-active,
+html[data-theme="dark"] #sidebar-wrapper .crm-submenu-active {
+    background: var(--crm-primary-container) !important;
+    color: var(--crm-on-primary-container) !important;
+    font-weight: 600 !important;
+}
+
+html[data-theme="dark"] #sidebar-wrapper .crm-menu-active :is(span, i, svg),
+html[data-theme="dark"] #sidebar-wrapper .crm-submenu-active :is(span, i, svg) {
+    color: var(--crm-on-primary-container) !important;
+}
+
+html[data-theme="dark"] #sidebar-wrapper .sidebar-section-title {
+    color: #9ca3af !important;
+}
+
+html[data-theme="dark"] #sidebar-wrapper .collapse {
+    border-left-color: #282b34 !important;
+}
+
+/* --- 3. Forms, Labels & Inputs (Android 16 High-Legibility) --- */
+html[data-theme="dark"] :is(
+    label,
+    .form-label,
+    .setting-label,
+    .crm-form-label,
+    .col-form-label,
+    .custom-control-label,
+    .form-check-label
+) {
+    color: #ffffff !important;
+    font-weight: 500;
+}
+
+html[data-theme="dark"] :is(.form-text, .setting-help, .crm-form-help, .help-block) {
+    color: #e2e4ea !important;
+}
+
+html[data-theme="dark"] :is(
+    .form-control,
+    .form-select,
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="search"],
+    input[type="number"],
+    input[type="date"],
+    input[type="tel"],
+    textarea,
+    select,
+    .crm-form-control,
+    .setting-control,
+    .selector
+) {
+    color: #ffffff !important;
+    background-color: #1b1e25 !important;
+    border-color: #282b34 !important;
+}
+
+html[data-theme="dark"] :is(
+    .form-control:focus,
+    .form-select:focus,
+    input:focus,
+    textarea:focus,
+    select:focus
+) {
+    color: #ffffff !important;
+    background-color: #222630 !important;
+    border-color: var(--crm-primary) !important;
+    box-shadow: 0 0 0 3px rgba(168, 199, 250, 0.25) !important;
+}
+
+html[data-theme="dark"] .input-group-text {
+    background: #15171d !important;
+    border-color: #282b34 !important;
+    color: #e2e4ea !important;
+}
+
+html[data-theme="dark"] ::placeholder {
+    color: #9ca3af !important;
+    opacity: 1 !important;
+}
+
+html[data-theme="dark"] .form-check-input {
+    background-color: #1b1e25 !important;
+    border-color: #3d414d !important;
+}
+
+html[data-theme="dark"] .form-check-input:checked {
+    background-color: var(--crm-primary) !important;
+    border-color: var(--crm-primary) !important;
+}
+
+/* --- 4. Tables & DataTables (Crystal Clear High Contrast) --- */
+html[data-theme="dark"] :is(
+    table tbody td,
+    table.dataTable tbody td,
+    #registration tbody td,
+    .table tbody td,
+    .crm-dt-page table.dataTable tbody td
+) {
+    color: #ffffff !important;
+    background-color: #111318 !important;
+    border-bottom: 1px solid #282b34 !important;
+}
+
+html[data-theme="dark"] :is(
+    table tbody td a,
+    table.dataTable tbody td a,
+    #registration tbody td a,
+    .table tbody td a,
+    .crm-dt-page table.dataTable tbody td a
+) {
+    color: #ffffff !important;
+    font-weight: 500;
+}
+
+html[data-theme="dark"] :is(
+    table tbody td a:hover,
+    table.dataTable tbody td a:hover,
+    #registration tbody td a:hover,
+    .table tbody td a:hover
+) {
+    color: var(--crm-primary) !important;
+}
+
+html[data-theme="dark"] :is(
+    table tbody tr:hover td,
+    #registration tbody tr:hover td,
+    .table-hover > tbody > tr:hover > *
+) {
+    background-color: #1b1e25 !important;
+    background: #1b1e25 !important;
+}
+
+html[data-theme="dark"] :is(
+    table thead th,
+    table.dataTable thead th,
+    #registration thead th,
+    .table thead th,
+    div.dataTables_scrollHead table thead th,
+    div.dt-scroll-head table thead th
+) {
+    background-color: #15171d !important;
+    color: #e2e4ea !important;
+    border-bottom: 1px solid #282b34 !important;
+    font-weight: 600;
+}
+
+html[data-theme="dark"] :is(
+    table thead th *,
+    table.dataTable thead th *,
+    #registration thead th *,
+    .table thead th *,
+    div.dataTables_scrollHead table thead th *,
+    div.dt-scroll-head table thead th *
+) {
+    color: #e2e4ea !important;
+}
+
+html[data-theme="dark"] div.dataTables_scrollHead {
+    border-bottom: 1px solid #282b34 !important;
+}
+
+html[data-theme="dark"] :is(
+    .dataTables_wrapper .dataTables_info,
+    .dt-info,
+    .dataTables_length,
+    .dt-length
+) {
+    color: #e2e4ea !important;
+}
+
+html[data-theme="dark"] :is(
+    .dataTables_filter input,
+    .dt-search input,
+    .dataTables_length select,
+    .dt-length select
+) {
+    background: #1b1e25 !important;
+    border: 1px solid #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] :is(
+    .dataTables_paginate button,
+    .dataTables_paginate a,
+    .dataTables_paginate .paginate_button,
+    .dt-paging button,
+    .dt-paging a,
+    .dt-paging .dt-paging-button,
+    .dt-page-nav button,
+    .page-link
+) {
+    background: #1b1e25 !important;
+    color: #ffffff !important;
+    border: 1px solid #282b34 !important;
+}
+
+html[data-theme="dark"] :is(
+    .dataTables_paginate button:hover:not(.current):not(.disabled),
+    .dataTables_paginate a:hover:not(.current):not(.disabled),
+    .dt-paging button:hover:not(.current):not(.disabled),
+    .dt-page-nav button:hover:not(.current):not(.disabled),
+    .page-link:hover
+) {
+    background: #242834 !important;
+    border-color: #3d414d !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] :is(
+    .dataTables_paginate .disabled,
+    .dt-paging .disabled,
+    .dt-page-nav .disabled,
+    .paginate_button.disabled
+) {
+    background: #15171d !important;
+    border-color: #282b34 !important;
+    color: #6b7280 !important;
+    opacity: 0.5 !important;
+}
+
+/* --- 5. Select2 Dropdowns (AMOLED Elevated Styling) --- */
+html[data-theme="dark"] :is(
+    .select2-container .select2-selection--single,
+    .select2-container .select2-selection--multiple,
+    .select2-container--bootstrap-5 .select2-selection,
+    .select2-container--default .select2-selection
+) {
+    background-color: #1b1e25 !important;
+    background: #1b1e25 !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] :is(
+    .select2-container .select2-selection--single .select2-selection__rendered,
+    .select2-container--bootstrap-5 .select2-selection--single .select2-selection__rendered,
+    .select2-container--default .select2-selection--single .select2-selection__rendered
+) {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] :is(
+    .select2-container .select2-selection--single .select2-selection__placeholder,
+    .select2-container--bootstrap-5 .select2-selection--single .select2-selection__placeholder,
+    .select2-container--default .select2-selection--single .select2-selection__placeholder
+) {
+    color: #9ca3af !important;
+}
+
+html[data-theme="dark"] :is(
+    .select2-container .select2-selection--single .select2-selection__arrow b,
+    .select2-container--bootstrap-5 .select2-selection--single .select2-selection__arrow b,
+    .select2-container--default .select2-selection--single .select2-selection__arrow b
+) {
+    border-color: #e2e4ea transparent transparent transparent !important;
+}
+
+html[data-theme="dark"] .select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent #e2e4ea transparent !important;
+}
+
+html[data-theme="dark"] :is(
+    .select2-dropdown,
+    .select2-container--bootstrap-5 .select2-dropdown,
+    .select2-container--default .select2-dropdown
+) {
+    background-color: #1e212b !important;
+    background: #1e212b !important;
+    border-color: #383c48 !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75) !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .select2-search--dropdown .select2-search__field {
+    background-color: #15171d !important;
+    background: #15171d !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .select2-results__option {
+    color: #ffffff !important;
+    background: transparent !important;
+}
+
+html[data-theme="dark"] :is(
+    .select2-results__option--highlighted,
+    .select2-container--bootstrap-5 .select2-results__option--highlighted[aria-selected],
+    .select2-container--default .select2-results__option--highlighted[aria-selected]
+) {
+    background-color: var(--crm-primary-container) !important;
+    background: var(--crm-primary-container) !important;
+    color: var(--crm-on-primary-container) !important;
+    font-weight: 600 !important;
+}
+
+html[data-theme="dark"] :is(
+    .select2-results__option[aria-selected="true"],
+    .select2-container--bootstrap-5 .select2-results__option--selected,
+    .select2-container--default .select2-results__option--selected
+) {
+    background-color: var(--crm-primary-container) !important;
+    background: var(--crm-primary-container) !important;
+    color: var(--crm-on-primary-container) !important;
+    font-weight: 600 !important;
+}
+
+html[data-theme="dark"] :is(
+    .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__choice,
+    .select2-container--default .select2-selection--multiple .select2-selection__choice
+) {
+    background-color: #2d313d !important;
+    background: #2d313d !important;
+    border-color: #3d414d !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .select2-container .select2-selection--multiple .select2-search--inline .select2-search__field {
+    color: #ffffff !important;
+}
+
+/* --- 6. Flatpickr Datepicker Calendar (Dark Material 3) --- */
+html[data-theme="dark"] .flatpickr-calendar {
+    background: #1e212b !important;
+    background-color: #1e212b !important;
+    border: 1px solid #383c48 !important;
+    border-radius: 20px !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75) !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .flatpickr-calendar.arrowTop:before,
+html[data-theme="dark"] .flatpickr-calendar.arrowTop:after {
+    border-bottom-color: #1e212b !important;
+}
+
+html[data-theme="dark"] .flatpickr-calendar.arrowBottom:before,
+html[data-theme="dark"] .flatpickr-calendar.arrowBottom:after {
+    border-top-color: #1e212b !important;
+}
+
+html[data-theme="dark"] .flatpickr-months {
+    background: transparent !important;
+    border-bottom: 1px solid #282b34 !important;
+    padding-bottom: 6px !important;
+}
+
+html[data-theme="dark"] :is(
+    .flatpickr-months .flatpickr-month,
+    .flatpickr-current-month,
+    .flatpickr-current-month .cur-month,
+    .flatpickr-current-month input.cur-year
+) {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    font-weight: 600 !important;
+}
+
+html[data-theme="dark"] :is(
+    .flatpickr-months .flatpickr-prev-month,
+    .flatpickr-months .flatpickr-next-month
+) {
+    color: #e2e4ea !important;
+    fill: #e2e4ea !important;
+}
+
+html[data-theme="dark"] .flatpickr-weekdays,
+html[data-theme="dark"] span.flatpickr-weekday {
+    background: transparent !important;
+    color: #9ca3af !important;
+    font-weight: 600 !important;
+}
+
+html[data-theme="dark"] .flatpickr-day {
+    color: #ffffff !important;
+    border-radius: 9999px !important;
+    border: none !important;
+}
+
+html[data-theme="dark"] :is(.flatpickr-day:hover, .flatpickr-day:focus) {
+    background: #2d313d !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .flatpickr-day.today {
+    border: 1.5px solid var(--crm-primary) !important;
+    color: var(--crm-primary) !important;
+}
+
+html[data-theme="dark"] :is(
+    .flatpickr-day.selected,
+    .flatpickr-day.startRange,
+    .flatpickr-day.endRange
+) {
+    background: var(--crm-primary) !important;
+    color: var(--crm-on-primary) !important;
+    font-weight: 700 !important;
+}
+
+html[data-theme="dark"] .flatpickr-day.inRange {
+    background: var(--crm-primary-container) !important;
+    color: var(--crm-on-primary-container) !important;
+}
+
+html[data-theme="dark"] :is(
+    .flatpickr-day.prevMonthDay,
+    .flatpickr-day.nextMonthDay,
+    .flatpickr-day.flatpickr-disabled
+) {
+    color: #6b7280 !important;
+    opacity: 0.45 !important;
+}
+
+html[data-theme="dark"] .flatpickr-time {
+    background: #15171d !important;
+    border-top: 1px solid #282b34 !important;
+    border-radius: 0 0 20px 20px !important;
+}
+
+html[data-theme="dark"] .flatpickr-time input {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .flatpickr-time .flatpickr-am-pm {
+    color: #e2e4ea !important;
+}
+
+/* --- 7. Modals, Drawers & Offcanvas (Android 16 Surfaces) --- */
+html[data-theme="dark"] :is(.modal-content, .offcanvas) {
+    background: #1b1e25 !important;
+    background-color: #1b1e25 !important;
+    border: 1px solid #333642 !important;
+    color: #ffffff !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.8) !important;
+}
+
+html[data-theme="dark"] :is(.modal-header, .modal-footer, .offcanvas-header) {
+    background: #15171d !important;
+    border-color: #282b34 !important;
+}
+
+/* --- 8. Tabs, Navs, Cards & Accordions --- */
+html[data-theme="dark"] .nav-tabs {
+    border-bottom-color: #282b34 !important;
+}
+
+html[data-theme="dark"] .nav-tabs .nav-link {
+    color: #e2e4ea !important;
+    border-color: transparent !important;
+}
+
+html[data-theme="dark"] .nav-tabs .nav-link:hover {
+    border-color: #282b34 #282b34 transparent !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .nav-tabs .nav-link.active {
+    background: #1b1e25 !important;
+    border-color: #282b34 #282b34 #1b1e25 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .list-group-item {
+    background-color: #1b1e25 !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+/* --- 9. Company Settings, Workspaces & KPIs --- */
+#lead-list-workspace,
+#company-settings-page {
+    background: var(--crm-bg) !important;
+    color: var(--crm-text) !important;
+}
+
+#lead-list-workspace > .lead-toolbar,
+#company-settings-page .company-settings-toolbar,
+#company-settings-page .settings-footer {
+    background: var(--crm-surface) !important;
+    border-color: var(--crm-border) !important;
+    border-radius: var(--crm-radius-lg) !important;
+}
+
+#company-settings-page .settings-sidebar,
+#company-settings-page .settings-nav {
+    background: var(--crm-surface-container-low) !important;
+    border-color: var(--crm-border) !important;
+    border-radius: var(--crm-radius-lg) !important;
+}
+
+#company-settings-page .settings-nav-button {
+    border-radius: var(--crm-radius-pill) !important;
+    color: var(--crm-text-secondary) !important;
+}
+
+#company-settings-page .settings-nav-button.is-active {
+    background: var(--crm-primary-container) !important;
+    color: var(--crm-on-primary-container) !important;
+    font-weight: 600 !important;
+}
+
+html[data-theme="dark"] .company-settings-toolbar h1 {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .company-settings-company {
+    background: #1b1e25 !important;
+    border-color: #282b34 !important;
+    color: #e2e4ea !important;
+}
+
+html[data-theme="dark"] .settings-content-title {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .setting-row {
+    border-bottom: 1px solid #282b34 !important;
+}
+
+html[data-theme="dark"] .setting-label {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .setting-help {
+    color: #e2e4ea !important;
+}
+
+html[data-theme="dark"] .setting-control {
+    background: #15171d !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .theme-mode-card {
+    background: #15171d !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .theme-mode-card:hover {
+    border-color: #3d414d !important;
+}
+
+html[data-theme="dark"] .theme-mode-card.is-active {
+    border-color: var(--crm-primary) !important;
+    background: #1b1e25 !important;
+    box-shadow: 0 0 0 1px var(--crm-primary) !important;
+}
+
+html[data-theme="dark"] .theme-mode-card-header {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .theme-swatch-item {
+    background: #15171d !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .theme-swatch-item:hover {
+    border-color: #3d414d !important;
+}
+
+html[data-theme="dark"] .theme-swatch-item.is-active {
+    border-color: var(--crm-primary) !important;
+    background: #1b1e25 !important;
+    box-shadow: 0 0 0 1px var(--crm-primary) !important;
+    color: #ffffff !important;
+}
+
+/* Dashboard AMOLED & Android 16 Layout */
+html[data-theme="dark"] #dashboard-page {
+    background: #000000 !important;
+}
+
+html[data-theme="dark"] #dashboard-page .dashboard-section {
+    border-top-color: #282b34 !important;
+}
+
+html[data-theme="dark"] #dashboard-page :is(.dashboard-kpi .card, .c-dashboardInfo .wrap, .graph) {
+    border-radius: var(--crm-radius-lg) !important;
+    background: #15171d !important;
+    border: 1px solid #282b34 !important;
+    box-shadow: var(--crm-shadow-sm) !important;
+}
+
+html[data-theme="dark"] #dashboard-page :is(.total-lead-status, .total-lead-status b, .total-lead-status span, .dashboard-section-title, .c-dashboardInfo__count) {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] #dashboard-page .c-dashboardInfo__title {
+    color: #e2e4ea !important;
+}
+
+html[data-theme="dark"] #dashboard-page #yearSelect {
+    height: 32px;
+    border: 1px solid #282b34 !important;
+    border-radius: 5px;
+    color: #ffffff !important;
+    background: #1b1e25 !important;
+}
+
+/* ==========================================================================
+   Android 16 / Pixel OS Comprehensive Workspace Dark Mode Overrides
+   Targets page-level embedded IDs, cards, toolbars, and tables across all CRM pages
+   ========================================================================== */
+
+/* 1. Global Shell & Canvas Reset */
+html[data-theme="dark"] :is(body, #page-content-wrapper, main.app-page-body, .min-h-screen) {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+/* 2. All Workspace Page Roots */
+html[data-theme="dark"] :is(
+    #lead-list-workspace,
+    #leads-page,
+    #sell-leads-page,
+    #new-sell-page,
+    #meeting-list-page,
+    #call-logs-page,
+    #bulk-upload-page,
+    #dashboard-page,
+    #users-page,
+    #attendance-page,
+    #roles-page,
+    #departments-page,
+    #clients-page,
+    #tada-page,
+    #leaves-page,
+    #source-master-page,
+    #master-project-page,
+    #budget-master-page,
+    #requirement-master-page,
+    #role-permissions-page,
+    #scheduler-page,
+    #schedulers-page,
+    #invoices-page,
+    #tasks-page,
+    #company-settings-page,
+    .master-data-page,
+    .tickets-container,
+    .billing-container,
+    .platform-container
+) {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+/* 3. Page Toolbars & Action Bars */
+html[data-theme="dark"] :is(
+    .lead-toolbar,
+    .sell-toolbar,
+    .new-sell-toolbar,
+    .meeting-toolbar,
+    .call-toolbar,
+    .bulk-toolbar,
+    .users-toolbar,
+    .attendance-toolbar,
+    .roles-toolbar,
+    .crm-toolbar,
+    .tada-toolbar,
+    .leaves-toolbar,
+    .master-toolbar,
+    .role-permissions-toolbar,
+    .scheduler-toolbar,
+    .company-settings-toolbar,
+    .tickets-card-header,
+    .platform-card-header
+) {
+    background: #15171d !important;
+    background-color: #15171d !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] :is(.roles-toolbar strong, .roles-toolbar p, .role-permissions-toolbar strong, .role-permissions-toolbar p) {
+    color: #ffffff !important;
+}
+
+/* 4. Page Footers & Pagination Containers */
+html[data-theme="dark"] :is(
+    #registration_wrapper .lead-table-footer,
+    #lead-list-workspace .dt-page-nav,
+    .dt-page-nav,
+    .sell-table-footer,
+    .meeting-table-footer,
+    .call-table-footer,
+    .users-footer,
+    .attendance-footer,
+    .roles-footer,
+    .tada-footer,
+    .leaves-footer,
+    .master-footer,
+    .scheduler-table-footer,
+    .crm-dt-footer,
+    .settings-footer
+) {
+    background: #15171d !important;
+    background-color: #15171d !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+/* 5. Surface Cards, Tiles & Hubs */
+html[data-theme="dark"] :is(
+    .card,
+    .crm-card,
+    .new-sell-card,
+    .bulk-upload-card,
+    .bulk-stat,
+    .bulk-history,
+    .tickets-card,
+    .billing-card,
+    .platform-card,
+    .plan-box,
+    .stat-card,
+    .role-panel,
+    .connection-hub,
+    .provider-option,
+    .connection-form,
+    .connection-summary,
+    .panel.panel-primary
+) {
+    background: #15171d !important;
+    background-color: #15171d !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+html[data-theme="dark"] .role-panel-head {
+    background: #1b1e25 !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+html[data-theme="dark"] .role-panel-head h2 {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .bulk-history-head {
+    background: #1b1e25 !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .connection-hub {
+    background: #15171d !important;
+    border-color: #282b34 !important;
+}
+
+html[data-theme="dark"] .provider-option {
+    background: #1b1e25 !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+html[data-theme="dark"] .provider-option b {
+    color: #ffffff !important;
+}
+html[data-theme="dark"] .provider-option small {
+    color: #e2e4ea !important;
+}
+html[data-theme="dark"] .provider-option.is-selected {
+    background: #252832 !important;
+    border-color: var(--crm-primary) !important;
+}
+
+html[data-theme="dark"] .callback-url,
+html[data-theme="dark"] .google-setup {
+    background: #111318 !important;
+    border-color: #282b34 !important;
+    color: #e2e4ea !important;
+}
+html[data-theme="dark"] .google-setup pre {
+    color: #e2e4ea !important;
+}
+
+html[data-theme="dark"] .plan-box.current {
+    background: #1e222b !important;
+    border-color: var(--crm-primary) !important;
+}
+
+html[data-theme="dark"] :is(.stat-val, .bulk-title, .bulk-results-heading, .bulk-stat-value, .new-sell-heading h1) {
+    color: #ffffff !important;
+}
+html[data-theme="dark"] :is(.stat-label, .bulk-description, .bulk-stat-label, .new-sell-heading p) {
+    color: #e2e4ea !important;
+}
+
+/* 6. High-Specificity Table Headers and Body Cells Across All Pages */
+html[data-theme="dark"] :is(
+    #registration,
+    #attendance-page table.dataTable,
+    #users-page table.dataTable,
+    #roles-page table,
+    #departments-page table.dataTable,
+    #clients-page table.dataTable,
+    #tada-page table.dataTable,
+    #leaves-page table.dataTable,
+    #source-master-page table.dataTable,
+    #master-project-page table.dataTable,
+    #budget-master-page table.dataTable,
+    #requirement-master-page table.dataTable,
+    #sell-leads-page table.dataTable,
+    #meeting-list-page table.dataTable,
+    #call-logs-page table.dataTable,
+    #scheduler-page table.dataTable,
+    #invoices-page table.dataTable,
+    #tasks-page table.dataTable,
+    .bulk-history-table,
+    .custom-table,
+    table.dataTable
+) {
+    border-color: #282b34 !important;
+}
+
+/* Visible ScrollHead and Table Headers */
+html[data-theme="dark"] :is(
+    div.dataTables_scrollHead,
+    div.dt-scroll-head,
+    #lead-list-workspace .dataTables_scrollHead
+) {
+    background: #15171d !important;
+    background-color: #15171d !important;
+    border-bottom: 1px solid #282b34 !important;
+}
+
+html[data-theme="dark"] :is(
+    div.dataTables_scrollHead table thead th,
+    div.dt-scroll-head table thead th,
+    #registration:not(.dataTable) thead th,
+    #registration thead th,
+    #attendance-page .dataTables_scrollHead table thead th,
+    #attendance-page table.dataTable thead th,
+    #users-page table.dataTable thead th,
+    #roles-page th,
+    #departments-page table.dataTable thead th,
+    #clients-page table.dataTable thead th,
+    #tada-page .dataTables_scrollHead table thead th,
+    #tada-page table.dataTable thead th,
+    #leaves-page .dataTables_scrollHead table thead th,
+    #leaves-page table.dataTable thead th,
+    #source-master-page .dataTables_scrollHead table thead th,
+    #source-master-page table.dataTable thead th,
+    #master-project-page .dataTables_scrollHead table thead th,
+    #master-project-page table.dataTable thead th,
+    #budget-master-page .dataTables_scrollHead table thead th,
+    #budget-master-page table.dataTable thead th,
+    #requirement-master-page .dataTables_scrollHead table thead th,
+    #requirement-master-page table.dataTable thead th,
+    #sell-leads-page .dataTables_scrollHead table thead th,
+    #sell-leads-page table.dataTable thead th,
+    #meeting-list-page .dataTables_scrollHead table thead th,
+    #meeting-list-page table.dataTable thead th,
+    #call-logs-page .dataTables_scrollHead table thead th,
+    #call-logs-page table.dataTable thead th,
+    #scheduler-page .dataTables_scrollHead table thead th,
+    #scheduler-page table.dataTable thead th,
+    #invoices-page table.dataTable thead th,
+    #tasks-page table.dataTable thead th,
+    .custom-table th,
+    table.dataTable thead th
+) {
+    background: #15171d !important;
+    background-color: #15171d !important;
+    color: #e2e4ea !important;
+    border-color: #282b34 !important;
+    border-top: none !important;
+    border-bottom: 1px solid #282b34 !important;
+}
+
+html[data-theme="dark"] div.dataTables_scrollHead table thead th * {
+    color: #e2e4ea !important;
+}
+
+/* Table Body Rows & Cells */
+html[data-theme="dark"] :is(
+    #registration tbody td,
+    #attendance-page table.dataTable tbody td,
+    #users-page table.dataTable tbody td,
+    #roles-page td,
+    #departments-page table.dataTable tbody td,
+    #clients-page table.dataTable tbody td,
+    #tada-page table.dataTable tbody td,
+    #leaves-page table.dataTable tbody td,
+    #source-master-page table.dataTable tbody td,
+    #master-project-page table.dataTable tbody td,
+    #budget-master-page table.dataTable tbody td,
+    #requirement-master-page table.dataTable tbody td,
+    #sell-leads-page table.dataTable tbody td,
+    #meeting-list-page table.dataTable tbody td,
+    #call-logs-page table.dataTable tbody td,
+    #scheduler-page table.dataTable tbody td,
+    #invoices-page table.dataTable tbody td,
+    #tasks-page table.dataTable tbody td,
+    .bulk-history-table td,
+    .custom-table td,
+    table.dataTable tbody td
+) {
+    background-color: #111318 !important;
+    background: #111318 !important;
+    color: #ffffff !important;
+    border-color: #282b34 !important;
+    border-bottom: 1px solid #282b34 !important;
+}
+
+/* Table Row Hover State */
+html[data-theme="dark"] :is(
+    #registration tbody tr:hover td,
+    #attendance-page table.dataTable tbody tr:hover td,
+    #users-page table.dataTable tbody tr:hover td,
+    #roles-page tr:hover td,
+    #departments-page table.dataTable tbody tr:hover td,
+    #clients-page table.dataTable tbody tr:hover td,
+    #tada-page table.dataTable tbody tr:hover td,
+    #leaves-page table.dataTable tbody tr:hover td,
+    #source-master-page table.dataTable tbody tr:hover td,
+    #master-project-page table.dataTable tbody tr:hover td,
+    #budget-master-page table.dataTable tbody tr:hover td,
+    #requirement-master-page table.dataTable tbody tr:hover td,
+    #sell-leads-page table.dataTable tbody tr:hover td,
+    #meeting-list-page table.dataTable tbody tr:hover td,
+    #call-logs-page table.dataTable tbody tr:hover td,
+    #scheduler-page table.dataTable tbody tr:hover td,
+    #invoices-page table.dataTable tbody tr:hover td,
+    #tasks-page table.dataTable tbody tr:hover td,
+    .bulk-history-table tr:hover td,
+    .custom-table tr:hover td,
+    table.dataTable tbody tr:hover td
+) {
+    background-color: #1b1e25 !important;
+    background: #1b1e25 !important;
+}
+
+/* Table Links & Key Column Text */
+html[data-theme="dark"] :is(
+    #registration tbody td a,
+    #users-page table.dataTable tbody td:first-child a,
+    #clients-page table.dataTable tbody td:first-child a,
+    #tasks-page table.dataTable tbody td:first-child a,
+    #departments-page table.dataTable tbody td:first-child,
+    #roles-page .role-name,
+    table.dataTable tbody td a
+) {
+    color: #ffffff !important;
+    font-weight: 500 !important;
+}
+
+html[data-theme="dark"] :is(
+    #users-page table.dataTable tbody td:first-child a:hover,
+    #clients-page table.dataTable tbody td:first-child a:hover,
+    #tasks-page table.dataTable tbody td:first-child a:hover,
+    table.dataTable tbody td a:hover
+) {
+    color: var(--crm-primary) !important;
+}
+
+/* 7. Pagination Controls & Info Across All Tables */
+html[data-theme="dark"] :is(
+    .dataTables_info,
+    .dt-info,
+    .dt-page-nav .dataTables_info,
+    #attendance-page .dataTables_info,
+    #users-page .dataTables_info,
+    #departments-page .dataTables_info,
+    #clients-page .dataTables_info,
+    #tada-page .dataTables_info,
+    #leaves-page .dataTables_info,
+    #source-master-page .dataTables_info,
+    #master-project-page .dataTables_info,
+    #budget-master-page .dataTables_info,
+    #requirement-master-page .dataTables_info,
+    #sell-leads-page .dataTables_info,
+    #meeting-list-page .dataTables_info,
+    #call-logs-page .dataTables_info,
+    #scheduler-page .dataTables_info,
+    #invoices-page .dataTables_info,
+    #tasks-page .dataTables_info
+) {
+    color: #e2e4ea !important;
+}
+
+html[data-theme="dark"] :is(
+    .dataTables_paginate .paginate_button,
+    .dataTables_paginate button,
+    .dataTables_paginate a,
+    .dt-paging .dt-paging-button,
+    .dt-paging button,
+    .dt-paging a,
+    .dt-page-nav .paginate_button,
+    .dt-page-nav button,
+    .dt-page-nav a,
+    #attendance-page .dataTables_paginate .paginate_button,
+    #users-page .dataTables_paginate .paginate_button,
+    #departments-page .dataTables_paginate .paginate_button,
+    #clients-page .dataTables_paginate .paginate_button,
+    #tada-page .dataTables_paginate .paginate_button,
+    #leaves-page .dataTables_paginate .paginate_button,
+    #source-master-page .dataTables_paginate .paginate_button,
+    #master-project-page .dataTables_paginate .paginate_button,
+    #budget-master-page .dataTables_paginate .paginate_button,
+    #requirement-master-page .dataTables_paginate .paginate_button,
+    #sell-leads-page .dataTables_paginate .paginate_button,
+    #meeting-list-page .dataTables_paginate .paginate_button,
+    #call-logs-page .dataTables_paginate .paginate_button,
+    #scheduler-page .dataTables_paginate .paginate_button,
+    #invoices-page .dataTables_paginate .paginate_button,
+    #tasks-page .dataTables_paginate .paginate_button
+) {
+    background-color: #1b1e25 !important;
+    background: #1b1e25 !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] :is(
+    .dataTables_paginate .paginate_button:hover:not(.current):not(.disabled),
+    .dt-paging .dt-paging-button:hover:not(.current):not(.disabled),
+    .dt-page-nav button:hover:not(.current):not(.disabled)
+) {
+    background-color: #252832 !important;
+    background: #252832 !important;
+    border-color: #3d414d !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] :is(
+    .dataTables_paginate .paginate_button.current,
+    .dataTables_paginate button.current,
+    .dt-paging .dt-paging-button.current,
+    .dt-paging button.current,
+    .dt-page-nav .current
+) {
+    background-color: var(--crm-primary) !important;
+    background: var(--crm-primary) !important;
+    border-color: var(--crm-primary) !important;
+    color: var(--crm-on-primary, #ffffff) !important;
+    -webkit-text-fill-color: var(--crm-on-primary, #ffffff) !important;
+}
+
+html[data-theme="dark"] :is(
+    .dataTables_paginate .paginate_button.disabled,
+    .dt-paging .dt-paging-button.disabled,
+    .dt-page-nav .disabled
+) {
+    background-color: #15171d !important;
+    background: #15171d !important;
+    border-color: #22252c !important;
+    color: #555b68 !important;
+}
+
+/* 8. Inputs, Search Bars, and Dropdowns Across Pages */
+html[data-theme="dark"] :is(
+    #leadSearchInput,
+    #sell-table-search,
+    .sell-search,
+    #meeting-table-search,
+    .meeting-search,
+    #call-log-search,
+    #users-search,
+    #attendance-page .attendance-month,
+    #roles-search,
+    #dept-search,
+    .crm-search,
+    #clients-search,
+    #invoices-search,
+    #tasks-search,
+    .form-control,
+    .form-select,
+    .selector,
+    input[type="search"],
+    input[type="month"]
+) {
+    background-color: #1b1e25 !important;
+    background: #1b1e25 !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] :is(
+    #leadSearchInput:focus,
+    .sell-search:focus-within,
+    .meeting-search:focus-within,
+    .crm-search:focus,
+    .form-control:focus,
+    .form-select:focus
+) {
+    border-color: var(--crm-primary) !important;
+    box-shadow: 0 0 0 2px var(--crm-primary-container) !important;
+    color: #ffffff !important;
+}
+
+/* Checkboxes Across Workspace */
+html[data-theme="dark"] :is(
+    input[type="checkbox"].lead-checkbox,
+    #selectAllLeads,
+    input[type="checkbox"]
+) {
+    border-color: #3d414d !important;
+    background-color: #1b1e25 !important;
+}
+html[data-theme="dark"] :is(
+    input[type="checkbox"].lead-checkbox:checked,
+    #selectAllLeads:checked,
+    input[type="checkbox"]:checked
+) {
+    background-color: var(--crm-primary) !important;
+    border-color: var(--crm-primary) !important;
+}
+
+/* 9. Buttons Across Workspace */
+html[data-theme="dark"] :is(
+    .ui-btn:not(.primary),
+    .master-btn:not(.master-btn-primary),
+    .bulk-action,
+    .sell-action:not(.sell-action-primary),
+    .meeting-action:not(.apply-filter),
+    .scheduler-action:not(.scheduler-action-primary),
+    .scheduler-row-link,
+    .role-view,
+    .manage-roles,
+    .new-sell-back,
+    #refreshTableBtn,
+    #toggleSidebarBtn,
+    #exportDropdownBtn,
+    #users-refresh,
+    #call-filter-toggle,
+    #call-refresh,
+    #sell-table-refresh
+) {
+    background: #1b1e25 !important;
+    background-color: #1b1e25 !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] :is(
+    .ui-btn:not(.primary):hover,
+    .master-btn:not(.master-btn-primary):hover,
+    .bulk-action:hover,
+    .sell-action:not(.sell-action-primary):hover,
+    .meeting-action:not(.apply-filter):hover,
+    .scheduler-row-link:hover,
+    .role-view:hover,
+    .manage-roles:hover,
+    .new-sell-back:hover,
+    #refreshTableBtn:hover,
+    #toggleSidebarBtn:hover,
+    #exportDropdownBtn:hover,
+    #users-refresh:hover,
+    #call-filter-toggle:hover,
+    #call-refresh:hover
+) {
+    background: #252832 !important;
+    border-color: #3d414d !important;
+    color: #ffffff !important;
+}
+
+/* 10. Drawers & Offcanvas Filter Panels */
+html[data-theme="dark"] :is(
+    .offcanvas,
+    #leadFilterOffcanvas,
+    #meeting-filter-offcanvas,
+    #call-filter-offcanvas,
+    #scheduler-filter-offcanvas,
+    #role-permissions-offcanvas
+) {
+    background: #15171d !important;
+    background-color: #15171d !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] :is(
+    .offcanvas-header,
+    #leadFilterOffcanvas .offcanvas-header,
+    #meeting-filter-offcanvas .offcanvas-header,
+    #call-filter-offcanvas .offcanvas-header,
+    #scheduler-filter-offcanvas .offcanvas-header,
+    #role-permissions-offcanvas .offcanvas-header
+) {
+    border-bottom: 1px solid #282b34 !important;
+    background: #15171d !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] :is(
+    .offcanvas-body,
+    #leadFilterOffcanvas .offcanvas-body,
+    #meeting-filter-offcanvas .offcanvas-body,
+    #call-filter-offcanvas .offcanvas-body,
+    #scheduler-filter-offcanvas .offcanvas-body,
+    #role-permissions-offcanvas .offcanvas-body
+) {
+    background: #111318 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] :is(.offcanvas-title, .offcanvas-header h5) {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .offcanvas-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* Role Permissions Grid in Offcanvas & Page */
+html[data-theme="dark"] :is(
+    .permission-grid,
+    .role-permission-list,
+    .permission-cell,
+    .permission-option
+) {
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .permission-cell {
+    background: #15171d !important;
+}
+
+html[data-theme="dark"] .permission-option {
+    background: #111318 !important;
+}
+
+/* 11. Dropdown Menus Across Workspace */
+html[data-theme="dark"] :is(
+    .dropdown-menu,
+    .sell-links-menu,
+    .crm-action-menu
+) {
+    background: #1b1e25 !important;
+    background-color: #1b1e25 !important;
+    border: 1px solid #282b34 !important;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5) !important;
+}
+
+html[data-theme="dark"] :is(.dropdown-item, .sell-links-menu a) {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] :is(.dropdown-item:hover, .sell-links-menu a:hover) {
+    background: #252832 !important;
+    color: #ffffff !important;
+}
+
+/* 12. Modal Windows Across Workspace */
+html[data-theme="dark"] :is(.modal-content, #user-delete-modal .modal-content) {
+    background: #15171d !important;
+    border: 1px solid #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] :is(.modal-header, .modal-footer) {
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .modal-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+html[data-theme="dark"] label {
+    color: #e2e4ea !important;
+}
+
+/* 13. Stat Badges & Pills in Dark Mode */
+html[data-theme="dark"] .badge-status.open {
+    background: #3c1417 !important;
+    color: #fca5a5 !important;
+}
+html[data-theme="dark"] .badge-status.in_progress {
+    background: #3b280c !important;
+    color: #fcd34d !important;
+}
+html[data-theme="dark"] .badge-status.resolved,
+html[data-theme="dark"] .badge-status.active {
+    background: #0f351f !important;
+    color: #86efac !important;
+}
+html[data-theme="dark"] .badge-status.closed,
+html[data-theme="dark"] .badge-status.expired {
+    background: #232730 !important;
+    color: #cbd5e1 !important;
+}
+
+/* File Drop Zone (Bulk Upload) */
+html[data-theme="dark"] .bulk-drop-zone {
+    background: #15171d !important;
+    border-color: #282b34 !important;
+    color: #ffffff !important;
+}
+html[data-theme="dark"] .bulk-drop-zone:hover {
+    background: #1b1e25 !important;
+    border-color: var(--crm-primary) !important;
+}
+
+/* ==========================================================================
+
+   Reduced Motion Accessibility
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ==========================================================================
+   Mobile Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 991.98px) {
+    main.app-page-body:not(.p-0) {
+        padding: 14px !important;
+    }
+    #page-content-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+    #sidebar-wrapper.app-sidebar {
+        border-radius: 0 var(--crm-radius-xl) var(--crm-radius-xl) 0 !important;
+        box-shadow: var(--crm-shadow-lg) !important;
+    }
+    .card, .crm-card {
+        border-radius: 20px !important;
+    }
+}

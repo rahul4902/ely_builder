@@ -19,7 +19,7 @@ if(isset($_POST['status'])&& isset($_POST['key']))
 
      }
 
-    if(mysqli_num_rows($res_key) == 1)
+    if(mysqli_num_rows($res_key) >= 1)
     {
 
     $data= array();

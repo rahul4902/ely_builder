@@ -21,10 +21,14 @@ class CompanyAdminController extends Controller
         $company = $request->user()->activeCompany();
         return view('companies.admin', [
             'company' => $company,
-            'settings' => ['timezone' => Setting::query()->first()?->timezone ?? 'Asia/Kolkata'],
+            'settings' => [
+                'timezone' => Setting::query()->first()?->timezone ?? 'Asia/Kolkata',
+                'theme_mode' => Setting::query()->first()?->theme_mode ?? 'light',
+                'theme_accent' => Setting::query()->first()?->theme_accent ?? '#0B57D0',
+            ],
             'integrations' => CompanyIntegration::with('source')->get(),
             'providers' => config('lead_providers', []),
-            'sources' => \App\SourceMasterTableModel::orderBy('name')->get(['id', 'name']),
+            'sources' => \App\SourceMasterTableModel::where('status', 1)->orderBy('source_name')->get(['id', 'source_name']),
         ]);
     }
 
@@ -34,6 +38,8 @@ class CompanyAdminController extends Controller
             'settings' => ['array'],
             'settings.company_name' => ['nullable', 'string', 'max:120'],
             'settings.timezone' => ['nullable', 'timezone'],
+            'settings.theme_mode' => ['nullable', 'in:light,dark'],
+            'settings.theme_accent' => ['nullable', 'string', 'max:10'],
         ]);
         $company = $request->user()->activeCompany();
         $name = trim((string) ($data['settings']['company_name'] ?? $company->name));
@@ -61,7 +67,15 @@ class CompanyAdminController extends Controller
             ]);
         }
         $setting->company = $company->name;
-        $setting->timezone = $data['settings']['timezone'] ?? 'Asia/Kolkata';
+        if (!empty($data['settings']['timezone'])) {
+            $setting->timezone = $data['settings']['timezone'];
+        }
+        if (isset($data['settings']['theme_mode'])) {
+            $setting->theme_mode = $data['settings']['theme_mode'];
+        }
+        if (isset($data['settings']['theme_accent'])) {
+            $setting->theme_accent = $data['settings']['theme_accent'];
+        }
         $setting->save();
         return back()->with('flash_message', 'Company settings updated.');
     }
@@ -76,16 +90,38 @@ class CompanyAdminController extends Controller
 
         $integration = !empty($data['id']) ? CompanyIntegration::findOrFail($data['id']) : new CompanyIntegration();
 
-        if (in_array(strtolower($data['provider']), ['99acres', '99_acres'], true)) {
+        $provider = strtolower($data['provider']);
+        abort_unless(array_key_exists($provider, config('lead_providers', [])), 422, 'Unknown lead provider.');
+        abort_unless((bool) (config('lead_providers.' . $provider . '.enabled') ?? false), 422, 'This lead provider is not available yet.');
+
+        if (in_array($provider, ['99acres', '99_acres'], true)) {
             $request->validate([
                 'credentials.endpoint' => ['required', 'url'],
                 'credentials.username' => ['required', 'string'],
                 'credentials.password' => [$integration->exists ? 'nullable' : 'required', 'string'],
             ]);
         }
+        if ($provider === 'meta_lead_ads') {
+            $request->validate([
+                'credentials.page_id' => ['required', 'string', 'max:80'],
+                'credentials.access_token' => ['required', 'string'],
+                'credentials.app_secret' => ['required', 'string'],
+                'credentials.webhook_verify_token' => ['required', 'string', 'min:16'],
+                'credentials.form_id' => ['nullable', 'string', 'max:80'],
+            ]);
+        }
 
         if ($integration->exists && empty($data['credentials']['password']) && !empty($integration->credentials['password'])) {
             $data['credentials']['password'] = $integration->credentials['password'];
+        }
+        if (in_array($provider, ['website_api', 'generic_webhook', 'google_forms'], true)) {
+            $data['credentials']['webhook_token'] = $integration->credentials['webhook_token'] ?? bin2hex(random_bytes(24));
+        }
+        if (in_array($provider, ['meta_lead_ads', 'website_api', 'generic_webhook', 'google_forms'], true)) {
+            // These sources deliver new leads instantly. They must not be placed
+            // on the polling scheduler (Meta historical imports remain available
+            // through the explicit Test action when a Form ID is configured).
+            $data['sync_frequency'] = 'manual';
         }
 
         $data['name'] = $data['name'] ?: (config('lead_providers.' . $data['provider'] . '.name') ?? $data['provider']);

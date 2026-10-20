@@ -38,7 +38,7 @@ try {
         //	echo $count;
         // exit();
 
-        if ($count == 1) {
+        if ($count >= 1) {
             $row = mysqli_fetch_assoc($res);
             $key = md5(uniqid(mt_rand(), true));
 

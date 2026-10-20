@@ -10,17 +10,28 @@
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet'
           type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
     {{-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-   <link href="{{ asset('css/login.css') }}" rel="stylesheet"> 
+   <link href="{{ asset('css/login.css') }}" rel="stylesheet">
+   <link href="{{ asset('css/auth-system.css') }}?v={{ filemtime(public_path('css/auth-system.css')) }}" rel="stylesheet">
+   <script>
+       (function() {
+           try {
+               var savedTheme = localStorage.getItem('crm_theme');
+               var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+               document.documentElement.dataset.theme = savedTheme || (prefersDark ? 'dark' : 'light');
+               var savedAccent = localStorage.getItem('crm_accent');
+               if (/^#[0-9a-f]{6}$/i.test(savedAccent || '')) document.documentElement.style.setProperty('--auth-primary', savedAccent);
+           } catch(e) {}
+       })();
+   </script>
 
     <style>
-        body {
-            font-family: 'Lato';
-        }
+        html, body { font-size: 100% !important; }
+        body { font-family: 'Outfit', 'Segoe UI', sans-serif; }
 
         .fa-btn {
             margin-right: 6px;
@@ -116,5 +127,25 @@
 {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+<button type="button" class="auth-theme-toggle" id="authThemeToggle" aria-label="Switch color theme" title="Switch color theme"><i class="fa fa-moon-o" aria-hidden="true"></i></button>
+<script>
+    (function() {
+        var toggle = document.getElementById('authThemeToggle');
+        if (!toggle) return;
+        var render = function() {
+            var dark = document.documentElement.dataset.theme === 'dark';
+            toggle.setAttribute('aria-label', dark ? 'Use light theme' : 'Use dark theme');
+            toggle.setAttribute('title', dark ? 'Use light theme' : 'Use dark theme');
+            toggle.innerHTML = '<i class="fa fa-' + (dark ? 'sun-o' : 'moon-o') + '" aria-hidden="true"></i>';
+        };
+        render();
+        toggle.addEventListener('click', function() {
+            var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.dataset.theme = next;
+            try { localStorage.setItem('crm_theme', next); } catch(e) {}
+            render();
+        });
+    })();
+</script>
 </body>
 </html>

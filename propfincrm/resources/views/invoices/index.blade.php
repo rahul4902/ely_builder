@@ -46,7 +46,7 @@
             </tr>
         </thead>
         <tbody>
-            @forelse($invoices as $invoice)
+            @foreach($invoices as $invoice)
                 @php
                     $client = $invoice->clients->first();
                     $totalHours = 0;
@@ -105,13 +105,7 @@
                         </div>
                     </td>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="8" class="text-center text-slate-400" style="padding:24px!important;">
-                        No invoices found.
-                    </td>
-                </tr>
-            @endforelse
+            @endforeach
         </tbody>
     </table>
 </div>

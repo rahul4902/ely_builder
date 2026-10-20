@@ -36,7 +36,7 @@
 <div id="roles-page">
     <div class="roles-toolbar"><div><strong class="text-sm text-slate-800">Roles</strong><p>Create and maintain the existing CRM roles.</p></div><div class="roles-toolbar-actions"><input id="roles-search" class="roles-search" placeholder="Search roles"><a href="{{ route('roles.create') }}" class="roles-add">+ Add role</a></div></div>
     <table id="roles-table"><thead><tr><th>Role</th><th>Description</th><th>Permissions</th><th>Action</th></tr></thead><tbody>
-        @forelse($roles as $role)
+        @foreach($roles as $role)
             <tr><td><span class="role-name">{{ $role->display_name ?: ucfirst($role->name) }}</span>@if($role->id === 1)<span class="role-default">Default</span>@endif</td><td>{{ Str_limit($role->description, 80) ?: '—' }}</td><td>{{ $role->permissions->count() }}</td><td>
                         <div class="crm-row-actions">
                             <div class="dropdown">
@@ -75,9 +75,7 @@
                             </div>
                         </div>
                     </td></tr>
-        @empty
-            <tr><td colspan="4" class="text-center text-slate-400">No roles found.</td></tr>
-        @endforelse
+        @endforeach
     </tbody></table>
     @foreach($roles as $role)
         <template id="role-permission-template-{{ $role->id }}"><div><p class="mb-4 text-xs text-slate-500">Permissions assigned to <strong class="text-slate-700">{{ $role->display_name ?: ucfirst($role->name) }}</strong>.</p><div class="permission-grid">@forelse($role->permissions as $permission)<div class="permission-cell"><i data-lucide="check-circle-2" class="h-4 w-4"></i>{{ $permission->display_name ?: $permission->name }}</div>@empty<div class="permission-cell">No permissions assigned.</div>@endforelse</div></div></template>

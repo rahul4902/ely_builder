@@ -1,4 +1,4 @@
-﻿@section('page-title', 'Departments')
+@section('page-title', 'Departments')
 @section('main-class', 'p-0 bg-white min-h-[calc(100vh-40px)]')
 @extends('layouts.master')
 
@@ -64,7 +64,7 @@
             </tr>
         </thead>
         <tbody>
-            @forelse($department as $dep)
+            @foreach($department as $dep)
                 <tr>
                     <td>{{ $dep->name }}</td>
                     <td>{{ Str_limit($dep->description, 80) ?: '—' }}</td>
@@ -101,13 +101,7 @@
                         </div>
                     </td>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="3" class="text-center text-slate-400" style="padding:24px!important;">
-                        No departments found.
-                    </td>
-                </tr>
-            @endforelse
+            @endforeach
         </tbody>
     </table>
 

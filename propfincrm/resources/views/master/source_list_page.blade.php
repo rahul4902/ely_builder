@@ -22,10 +22,38 @@
     #source-master-page .dataTables_paginate .paginate_button, #source-master-page .dt-paging .dt-paging-button { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 30px; margin: 0 !important; padding: 0 8px !important; border: 1px solid #dbe3ee !important; border-radius: 6px !important; background: #fff !important; color: #475569 !important; font-size: 12px; line-height: 16px; box-shadow: none !important; cursor: pointer; }
     #source-master-page .dataTables_paginate .paginate_button.current, #source-master-page .dataTables_paginate .paginate_button.current:hover, #source-master-page .dt-paging .dt-paging-button.current, #source-master-page .dt-paging .dt-paging-button.current:hover { border-color: #f97316 !important; background: #f97316 !important; color: #fff !important; -webkit-text-fill-color: #fff !important; font-weight: 600; }
     #source-master-page .dataTables_paginate .paginate_button.disabled, #source-master-page .dt-paging .dt-paging-button.disabled { opacity: .45; cursor: not-allowed; }
+    #source-master-page .connection-hub { padding: 20px; background: linear-gradient(135deg, #fffaf5, #fff 55%, #f0f9ff); border-bottom: 1px solid #e2e8f0; }
+    #source-master-page .provider-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:9px; margin-top:14px; }
+    #source-master-page .provider-option { position:relative; min-height:86px; padding:13px; text-align:left; border:1px solid #dce4ee; border-radius:9px; background:#fff; cursor:pointer; transition:.15s ease; }
+    #source-master-page .provider-option:hover { border-color:#fb923c; transform:translateY(-1px); }
+    #source-master-page .provider-option.is-selected { border-color:#f97316; box-shadow:0 0 0 2px rgba(249,115,22,.14); background:#fffaf7; }
+    #source-master-page .provider-option.is-planned { opacity:.55; cursor:not-allowed; }
+    #source-master-page .provider-option b { display:block; color:#1e293b; font-size:12px; margin-top:8px; }
+    #source-master-page .provider-option small { display:block; color:#64748b; font-size:10.5px; line-height:1.35; margin-top:3px; }
+    #source-master-page .provider-status { position:absolute; top:9px; right:9px; font-size:9px; font-weight:700; color:#c2410c; text-transform:uppercase; }
+    #source-master-page .connection-form { display:none; margin-top:18px; padding:18px; border:1px solid #fed7aa; border-radius:10px; background:#fff; }
+    #source-master-page .connection-form.is-visible { display:block; }
+    #source-master-page .connection-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; }
+    #source-master-page .connection-field { min-width:0; }
+    #source-master-page .connection-field.wide { grid-column:1/-1; }
+    #source-master-page .connection-field label { display:block; margin-bottom:5px; color:#475569; font-size:11px; font-weight:600; }
+    #source-master-page .connection-field input, #source-master-page .connection-field select { width:100%; height:35px; padding:0 10px; border:1px solid #cbd5e1; border-radius:6px; color:#334155; font-size:12px; outline:none; }
+    #source-master-page .connection-field input:focus, #source-master-page .connection-field select:focus { border-color:#f97316; box-shadow:0 0 0 2px rgba(249,115,22,.12); }
+    #source-master-page .connection-help { margin:5px 0 0; color:#64748b; font-size:10.5px; line-height:1.4; }
+    #source-master-page .connection-summary { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-top:14px; padding:11px 13px; border:1px solid #e2e8f0; border-radius:8px; background:#fff; }
+    #source-master-page .connection-summary b { font-size:12px; color:#334155; }
+    #source-master-page .connection-summary p { margin:3px 0 0; color:#64748b; font-size:10.5px; }
+    #source-master-page .callback-url { margin-top:7px; padding:7px 9px; border-radius:5px; background:#f8fafc; color:#475569; font:10px ui-monospace,monospace; overflow-wrap:anywhere; }
+    #source-master-page .google-setup { margin-top:9px; border:1px solid #dbeafe; border-radius:7px; background:#f8fbff; color:#334155; font-size:11px; }
+    #source-master-page .google-setup summary { padding:8px 10px; cursor:pointer; font-weight:600; }
+    #source-master-page .google-setup pre { margin:0; padding:0 10px 10px; white-space:pre-wrap; overflow-wrap:anywhere; color:#475569; font:10px/1.5 ui-monospace,monospace; }
     @media (max-width: 640px) {
         #source-master-page .master-toolbar { padding: 12px 14px; flex-direction: column; align-items: stretch; }
         #source-master-page .master-footer { flex-direction: column; align-items: flex-start; }
         #source-master-page .dataTables_paginate { margin-left: 0; max-width: 100%; overflow-x: auto; }
+        #source-master-page .connection-hub { padding:14px; }
+        #source-master-page .connection-fields { grid-template-columns:1fr; }
+        #source-master-page .connection-summary { flex-direction:column; }
     }
 </style>
 @endsection
@@ -42,189 +70,150 @@
         </div>
     @endif
 
-    <div class="master-toolbar">
-        <div class="flex items-center gap-2">
-            <div class="relative w-64 max-w-full">
-                <i data-lucide="search" class="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400"></i>
-                <input id="source-search" type="search" placeholder="Search sources..." autocomplete="off" class="w-full rounded-lg border border-slate-200 bg-slate-50/70 py-1.5 pl-8 pr-3 text-xs text-slate-700 transition hover:bg-slate-100/70 focus:bg-white focus:outline-none focus:ring-1 focus:ring-orange-500">
+    <section class="connection-hub" aria-labelledby="lead-connections-title">
+        <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+                <div class="flex items-center gap-2 text-orange-600"><i data-lucide="plug-zap" class="h-4 w-4"></i><span class="text-[10px] font-bold uppercase tracking-[.14em]">Lead connections</span></div>
+                <h1 id="lead-connections-title" class="mt-1 mb-0 text-base font-semibold text-slate-800">Bring new leads into ElyLeads automatically</h1>
+                <p class="mt-1 mb-0 max-w-2xl text-xs leading-5 text-slate-500">Choose a source, securely add its credentials, then test or activate it. Meta leads arrive instantly by verified webhook; portal APIs sync on your selected schedule.</p>
             </div>
-            <button id="source-refresh" class="inline-flex h-[34px] w-[34px] items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition hover:bg-slate-50 hover:text-slate-800" title="Refresh Table">
-                <i data-lucide="refresh-cw" id="source-refresh-icon" class="h-3.5 w-3.5"></i>
-            </button>
+            <a href="{{ url('settings/company') }}" class="master-btn"><i data-lucide="settings-2" class="h-3.5 w-3.5"></i> Connection settings</a>
         </div>
-        <div class="flex items-center gap-2">
-            <details class="relative">
-                <summary class="master-btn list-none cursor-pointer">
-                    <i data-lucide="layers" class="h-3.5 w-3.5"></i> Masters <i data-lucide="chevron-down" class="h-3 w-3 ms-1 text-slate-400"></i>
-                </summary>
-                <div class="absolute right-0 z-20 mt-1 w-40 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-lg text-xs">
-                    <a class="block px-3 py-2 text-slate-700 hover:bg-slate-50 no-underline" href="{{ url('project_list') }}">Project Master</a>
-                    <a class="block px-3 py-2 text-slate-700 hover:bg-slate-50 no-underline" href="{{ url('requirement_list') }}">Requirement Master</a>
-                    <a class="block px-3 py-2 text-slate-700 hover:bg-slate-50 no-underline" href="{{ url('budget_list') }}">Budget Master</a>
-                </div>
-            </details>
-            <button class="master-btn master-btn-primary" data-bs-toggle="modal" data-bs-target="#sourceModal">
-                <i data-lucide="plus" class="h-3.5 w-3.5"></i> Add Source
-            </button>
-        </div>
-    </div>
 
-    <div class="w-full overflow-x-auto">
-        <table id="source-table" class="w-full">
-            <thead>
-                <tr>
-                    <th>Source Name</th>
-                    <th class="no-sort text-end" style="width: 70px;">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($source_lists as $source)
-                    <tr>
-                        <td>
-                            <div class="flex items-center gap-2.5">
-                                <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-sky-50 text-sky-600">
-                                    <i data-lucide="share-2" class="h-3.5 w-3.5"></i>
-                                </div>
-                                <span class="font-medium text-slate-800">{{ $source->source_name }}</span>
-                            </div>
-                        </td>
-                        <td class="text-end">
-                            <div class="dropdown text-end">
-                                <button type="button" class="inline-flex h-7 w-7 items-center justify-center rounded text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition border-0 bg-transparent cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false" title="Actions">
-                                    <i class="fa-solid fa-ellipsis text-sm"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end shadow-lg border border-slate-100 py-1 rounded-lg text-xs" style="min-width: 140px;">
-                                    <li>
-                                        <button type="button" class="dropdown-item py-1.5 px-3 flex items-center text-slate-700 hover:bg-slate-50 btn-edit-source" data-id="{{ $source->id }}" data-name="{{ $source->source_name }}">
-                                            <i class="fa-regular fa-pen-to-square me-2 text-slate-400"></i> Edit
-                                        </button>
-                                    </li>
-                                    <li><hr class="dropdown-divider my-1 border-slate-100"></li>
-                                    <li>
-                                        <form action="{{ url('delete_source') }}" method="post" class="m-0 p-0">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $source->id }}">
-                                            <button type="submit" class="dropdown-item py-1.5 px-3 flex items-center text-rose-600 hover:bg-rose-50 w-full text-start border-0 bg-transparent" onclick="return confirm('Do you want to delete this source?')">
-                                                <i class="fa-regular fa-trash-can me-2 text-rose-500"></i> Delete
-                                            </button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
-
-{{-- Add Source Modal using shared <x-form.input> --}}
-<div class="modal fade" id="sourceModal" tabindex="-1" aria-labelledby="sourceModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg rounded-xl">
-            <form action="{{ url('save_source_name') }}" method="post">
-                @csrf
-                <div class="modal-header border-b border-slate-200 px-5 py-4">
-                    <h5 class="modal-title text-sm font-semibold text-slate-800" id="sourceModalLabel">Add Source</h5>
-                    <button type="button" class="btn-close text-xs" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-5 space-y-3">
-                    <x-form.input
-                        layout="standard"
-                        label="Source Name *"
-                        name="source_name"
-                        id="add_source_name"
-                        type="text"
-                        placeholder="e.g. Facebook Ads, Referral, Website"
-                        class="w-full rounded-md border border-slate-300 px-3 py-2 text-xs text-slate-700 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
-                        required
-                    />
-                </div>
-                <div class="modal-footer border-t border-slate-200 px-5 py-3">
-                    <button type="button" class="master-btn" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="master-btn master-btn-primary">Save Source</button>
-                </div>
-            </form>
+        <div class="provider-grid" id="lead-provider-grid">
+            @foreach($providers as $key => $provider)
+                <button type="button" class="provider-option {{ !$provider['enabled'] ? 'is-planned' : '' }}" data-provider="{{ $key }}" {{ !$provider['enabled'] ? 'disabled' : '' }}>
+                    <i data-lucide="{{ $provider['icon'] }}" class="h-4 w-4 text-slate-500"></i>
+                    <b>{{ $provider['name'] }}</b><small>{{ $provider['description'] }}</small>
+                    <span class="provider-status">{{ $provider['enabled'] ? ($provider['mode'] === 'webhook' ? 'Real-time' : 'API sync') : 'Soon' }}</span>
+                </button>
+            @endforeach
         </div>
-    </div>
-</div>
 
-{{-- Edit Source Modal using shared <x-form.input> --}}
-<div class="modal fade" id="editSourceModal" tabindex="-1" aria-labelledby="editSourceModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg rounded-xl">
-            <form action="{{ url('save_edit_source') }}" method="post">
-                @csrf
-                <input type="hidden" name="source_edit_id" id="edit_source_id">
-                <div class="modal-header border-b border-slate-200 px-5 py-4">
-                    <h5 class="modal-title text-sm font-semibold text-slate-800" id="editSourceModalLabel">Edit Source</h5>
-                    <button type="button" class="btn-close text-xs" data-bs-dismiss="modal" aria-label="Close"></button>
+        <form method="POST" action="{{ route('settings.company.integrations') }}" class="connection-form" id="lead-connection-form">
+            @csrf @method('PUT')
+            <input type="hidden" name="provider" id="connection-provider">
+            <div class="flex items-start justify-between gap-4 mb-4">
+                <div><h2 class="m-0 text-sm font-semibold text-slate-800" id="connection-title">Connect source</h2><p class="connection-help" id="connection-description"></p></div>
+                <button type="button" class="master-btn" id="close-connection-form">Cancel</button>
+            </div>
+            <div class="connection-fields">
+                <div class="connection-field wide"><label>Connection name</label><input name="name" id="connection-name" placeholder="e.g. Meta - Main Campaign"><p class="connection-help">A clear internal label for this connection.</p></div>
+                <div class="connection-field"><label>Lead source</label><select name="source_id"><option value="">Use provider name</option>@foreach($source_lists as $source)<option value="{{ $source->id }}">{{ $source->source_name }}</option>@endforeach</select></div>
+                <div class="connection-field" id="sync-frequency-wrap"><label>Sync frequency</label><select name="sync_frequency" id="sync-frequency"><option value="every_15_minutes">Every 15 minutes</option><option value="every_30_minutes">Every 30 minutes</option><option value="hourly">Hourly</option><option value="manual">Manual only</option></select><p class="connection-help" id="sync-frequency-help">The server checks active connections automatically.</p></div>
+
+                <div class="connection-field meta-only"><label>Meta Page ID</label><input name="credentials[page_id]" placeholder="e.g. 1234567890"></div>
+                <div class="connection-field meta-only"><label>Meta Instant Form ID <span class="text-slate-400">optional for real-time</span></label><input name="credentials[form_id]" placeholder="For historical test sync"></div>
+                <div class="connection-field meta-only wide"><label>Long-lived Page access token</label><input type="password" name="credentials[access_token]" placeholder="Never shown again after saving"><p class="connection-help">Use a Page token with <code>leads_retrieval</code>. Store this only in this secure connection form.</p></div>
+                <div class="connection-field meta-only"><label>Meta App secret</label><input type="password" name="credentials[app_secret]" placeholder="Used to verify Meta signatures"></div>
+                <div class="connection-field meta-only"><label>Webhook verify token</label><input name="credentials[webhook_verify_token]" minlength="16" placeholder="Create a random 16+ character token"></div>
+                <div class="connection-field meta-only"><label>Meta name field <span class="text-slate-400">optional</span></label><input name="configuration[meta_field_map][name]" placeholder="full_name"></div>
+                <div class="connection-field meta-only"><label>Meta phone field <span class="text-slate-400">optional</span></label><input name="configuration[meta_field_map][phone]" placeholder="phone_number"></div>
+                <div class="connection-field meta-only"><label>Meta email field <span class="text-slate-400">optional</span></label><input name="configuration[meta_field_map][email]" placeholder="email"></div>
+                <div class="connection-field meta-only"><label>Meta project field <span class="text-slate-400">optional</span></label><input name="configuration[meta_field_map][project]" placeholder="project"></div>
+                <div class="connection-field meta-only"><label>Meta location field <span class="text-slate-400">optional</span></label><input name="configuration[meta_field_map][location]" placeholder="city"></div>
+                <div class="connection-field meta-only"><label>Meta requirement field <span class="text-slate-400">optional</span></label><input name="configuration[meta_field_map][requirement]" placeholder="requirement"></div>
+                <div class="connection-field meta-only"><label>Meta budget field <span class="text-slate-400">optional</span></label><input name="configuration[meta_field_map][budget]" placeholder="budget"></div>
+
+                <div class="connection-field acres-only wide"><label>99acres API endpoint</label><input type="url" name="credentials[endpoint]" placeholder="https://www.99acres.com/99api/.../query.xml"></div>
+                <div class="connection-field acres-only"><label>Username / API key</label><input name="credentials[username]"></div>
+                <div class="connection-field acres-only"><label>Password / API secret</label><input type="password" name="credentials[password]"></div>
+
+                <div class="connection-field webhook-only wide"><label>Webhook signing secret <span class="text-slate-400">optional</span></label><input type="password" name="credentials[webhook_secret]" placeholder="Your sender must send this in X-ElyLeads-Signature"><p class="connection-help">Use a secret if your website or automation supports custom headers. A unique endpoint token is always generated.</p></div>
+                <div class="connection-field webhook-only"><label>Lead ID JSON field</label><input name="configuration[field_map][id]" placeholder="id"></div>
+                <div class="connection-field webhook-only"><label>Name JSON field</label><input name="configuration[field_map][name]" placeholder="name"></div>
+                <div class="connection-field webhook-only"><label>Phone JSON field</label><input name="configuration[field_map][phone]" placeholder="phone"></div>
+                <div class="connection-field webhook-only"><label>Email JSON field</label><input name="configuration[field_map][email]" placeholder="email"></div>
+                <div class="connection-field webhook-only"><label>Project JSON field</label><input name="configuration[field_map][project]" placeholder="project"></div>
+                <div class="connection-field webhook-only"><label>Location JSON field</label><input name="configuration[field_map][location]" placeholder="location"></div>
+                <div class="connection-field webhook-only"><label>Requirement JSON field</label><input name="configuration[field_map][requirement]" placeholder="requirement"></div>
+                <div class="connection-field webhook-only"><label>Budget JSON field</label><input name="configuration[field_map][budget]" placeholder="budget"></div>
+            </div>
+            <div class="google-forms-only hidden mt-3 rounded-lg border border-blue-100 bg-blue-50 p-3 text-[11px] leading-5 text-blue-900"><strong>Google Forms setup:</strong> save this connection first. Then copy its generated webhook endpoint into an installable Apps Script submit trigger for your form’s response spreadsheet. Map fields such as <code>answers.Full Name</code> and <code>answers.Phone</code> above.</div>
+            <div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-3"><label class="flex items-center gap-2 text-xs text-slate-700"><input type="checkbox" name="is_active" value="1" checked> Enable this connection</label><button class="master-btn master-btn-primary" type="submit">Save & activate</button></div>
+        </form>
+
+        @foreach($integrations as $integration)
+            <div class="connection-summary">
+                <div><b>{{ $integration->name }}</b> <span class="ml-1 rounded bg-slate-100 px-1.5 py-0.5 text-[9px] font-bold uppercase text-slate-600">{{ $integration->provider }}</span> <span class="ml-1 text-[10px] {{ $integration->is_active ? 'text-emerald-600' : 'text-slate-400' }}">{{ $integration->is_active ? 'Active' : 'Disabled' }}</span>
+                    <p>Last activity: {{ $integration->last_synced_at?->diffForHumans() ?? 'Not received yet' }}{{ $integration->last_error ? ' · Check connection error below' : '' }}</p>
+                    @if($integration->provider === 'meta_lead_ads')<div class="callback-url">Meta callback: {{ route('webhooks.meta.verify', $integration->id) }}</div>@endif
+                    @if(in_array($integration->provider, ['website_api', 'generic_webhook', 'google_forms'], true))<div class="callback-url">Webhook endpoint: {{ route('webhooks.leads.receive', ['integration' => $integration->id, 'token' => $integration->credentials['webhook_token'] ?? '']) }}</div>@endif
+                    @if($integration->provider === 'google_forms')
+                        <details class="google-setup"><summary>Google Forms Apps Script setup</summary><pre>function onFormSubmit(e) {
+  const answers = Object.fromEntries(Object.entries(e.namedValues).map(([key, value]) => [key, value.join(', ')]));
+  const payload = { id: e.range.getSheet().getSheetId() + '-' + e.range.getRow(), answers: answers, submitted_at: new Date().toISOString() };
+  UrlFetchApp.fetch('{{ route('webhooks.leads.receive', ['integration' => $integration->id, 'token' => $integration->credentials['webhook_token'] ?? '']) }}', { method: 'post', contentType: 'application/json', payload: JSON.stringify(payload), muteHttpExceptions: true });
+}</pre></details>
+                    @endif
+                    @if($integration->last_error)<p class="text-rose-600">{{ $integration->last_error }}</p>@endif
                 </div>
-                <div class="modal-body p-5 space-y-3">
-                    <x-form.input
-                        layout="standard"
-                        label="Source Name *"
-                        name="source_name"
-                        id="edit_source_name"
-                        type="text"
-                        placeholder="Source Name"
-                        class="w-full rounded-md border border-slate-300 px-3 py-2 text-xs text-slate-700 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
-                        required
-                    />
+                <div class="flex shrink-0 gap-2">
+                    @if($integration->is_active && ($integration->provider === '99acres' || ($integration->provider === 'meta_lead_ads' && !empty($integration->credentials['form_id']))))<button type="button" class="master-btn test-connection" data-id="{{ $integration->id }}"><i data-lucide="play" class="h-3.5 w-3.5"></i> Test</button>@endif
+                    <form method="POST" action="{{ route('settings.company.integrations.destroy', $integration->id) }}" onsubmit="return confirm('Remove this lead connection?')">@csrf @method('DELETE')<button class="master-btn text-rose-600" type="submit">Remove</button></form>
                 </div>
-                <div class="modal-footer border-t border-slate-200 px-5 py-3">
-                    <button type="button" class="master-btn" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="master-btn master-btn-primary">Update Source</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+            </div>
+        @endforeach
+    </section>
+
+ </div>
 @endsection
 
 @push('scripts')
 <script>
 $(function() {
-    var table = $('#source-table').DataTable({
-        pagingType: 'full_numbers',
-        order: [],
-        pageLength: 10,
-        autoWidth: false,
-        columnDefs: [
-            { targets: 'no-sort', orderable: false, searchable: false }
-        ],
-        dom: '<"w-full overflow-x-auto"t><"master-footer"<"master-footer-content"ip>>',
-        language: {
-            emptyTable: 'No sources found',
-            info: 'Showing _START_ to _END_ of _TOTAL_ entries',
-            infoEmpty: 'Showing 0 to 0 of 0 entries',
-            paginate: { previous: 'Previous', next: 'Next' }
+    var providers = @json($providers);
+    var connectionForm = $('#lead-connection-form');
+    function resetConnectionFields() {
+        connectionForm.find('.meta-only, .acres-only, .webhook-only, .google-forms-only').hide();
+        connectionForm.find('input, select').prop('required', false);
+    }
+
+    $('[data-provider]').on('click', function() {
+        var key = $(this).data('provider');
+        var provider = providers[key];
+        if (!provider || !provider.enabled) return;
+        $('[data-provider]').removeClass('is-selected');
+        $(this).addClass('is-selected');
+        resetConnectionFields();
+        $('#connection-provider').val(key);
+        $('#connection-name').attr('placeholder', provider.name + ' connection');
+        $('#connection-title').text('Connect ' + provider.name);
+        $('#connection-description').text(provider.description + '. ' + provider.requirements.join(' · '));
+        $('#sync-frequency-wrap').toggle(provider.mode === 'polling');
+        $('#sync-frequency').val(provider.mode === 'polling' ? 'every_15_minutes' : 'manual');
+        if (key === 'meta_lead_ads') {
+            connectionForm.find('.meta-only').show();
+            connectionForm.find('[name="credentials[page_id]"], [name="credentials[access_token]"], [name="credentials[app_secret]"], [name="credentials[webhook_verify_token]"]').prop('required', true);
+        } else if (key === '99acres') {
+            connectionForm.find('.acres-only').show();
+            connectionForm.find('[name="credentials[endpoint]"], [name="credentials[username]"], [name="credentials[password]"]').prop('required', true);
+        } else {
+            connectionForm.find('.webhook-only').show();
+            if (key === 'google_forms') connectionForm.find('.google-forms-only').removeClass('hidden').show();
         }
+        connectionForm.addClass('is-visible');
+        if (window.lucide) window.lucide.createIcons();
+        document.getElementById('lead-connection-form').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
 
-    $('#source-search').on('input', function() {
-        table.search(this.value).draw();
+    $('#close-connection-form').on('click', function() {
+        connectionForm.removeClass('is-visible');
+        $('[data-provider]').removeClass('is-selected');
     });
 
-    $('#source-refresh').on('click', function() {
-        var icon = $('#source-refresh-icon');
-        icon.addClass('animate-spin');
-        $('#source-search').val('');
-        table.search('').draw();
-        setTimeout(function() {
-            icon.removeClass('animate-spin');
-        }, 300);
-    });
-
-    $(document).on('click', '.btn-edit-source', function() {
-        var id = $(this).data('id');
-        var name = $(this).data('name');
-
-        $('#edit_source_id').val(id);
-        $('#edit_source_name').val(name);
-
-        new bootstrap.Modal(document.getElementById('editSourceModal')).show();
+    $('.test-connection').on('click', function() {
+        var button = $(this), original = button.html(), id = button.data('id');
+        button.prop('disabled', true).text('Testing…');
+        $.ajax({
+            url: '{{ url('settings/company/integrations') }}/' + id + '/sync', method: 'POST',
+            data: { _token: '{{ csrf_token() }}', now: 1 }
+        }).done(function(response) {
+            alert(response.message || 'Connection test completed.');
+            window.location.reload();
+        }).fail(function(xhr) {
+            alert((xhr.responseJSON && xhr.responseJSON.message) || 'The connection test failed. Check the saved credentials and setup instructions.');
+        }).always(function() { button.prop('disabled', false).html(original); });
     });
 
     if (window.lucide) {

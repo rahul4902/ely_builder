@@ -15,6 +15,13 @@ class Setting extends Model
         'country',
         'company_id',
         'timezone',
+        'theme_mode',
+        'theme_accent',
+    ];
+
+    protected $attributes = [
+        'theme_mode' => 'light',
+        'theme_accent' => '#0B57D0',
     ];
 
     public function user()

@@ -20,7 +20,7 @@ mysqli_set_charset($con,"utf8");
 
      }
 
-    if(mysqli_num_rows($res_key) == 1)
+    if(mysqli_num_rows($res_key) >= 1)
     {
 
     $data= array();

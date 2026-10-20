@@ -27,7 +27,9 @@ class UpdateSettingOverallRequest extends FormRequest
             'task_complete_allowed' => 'required',
             'task_assign_allowed'   => 'required',
             'lead_complete_allowed' => 'required',
-            'lead_assign_allowed'   => 'required'
+            'lead_assign_allowed'   => 'required',
+            'theme_mode'            => 'nullable|in:light,dark',
+            'theme_accent'          => 'nullable|string|max:10',
         ];
     }
 }

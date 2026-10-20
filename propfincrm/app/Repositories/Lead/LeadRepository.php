@@ -48,12 +48,39 @@ class LeadRepository implements LeadRepositoryContract
      */
     public function create($requestData)
     {
-        $client_id = $requestData->get('client_id');
-        $input = $requestData = array_merge(
+        $clientId = $requestData->get('client_id');
+        $validClient = $clientId ? DB::table('clients')->where('id', $clientId)->first() : null;
+        if (!$validClient) {
+            $firstClient = DB::table('clients')->first();
+            if ($firstClient) {
+                $clientId = $firstClient->id;
+            } else {
+                if (!DB::table('industries')->where('id', 1)->exists()) {
+                    DB::table('industries')->insert(['id' => 1, 'name' => 'Real Estate']);
+                }
+                $userId = \Auth::id() ?: DB::table('users')->value('id') ?: 1;
+                $companyId = DB::table('companies')->value('id');
+                $clientId = DB::table('clients')->insertGetId([
+                    'name' => 'Default Client',
+                    'email' => 'client_' . uniqid() . '@elyleads.local',
+                    'company_name' => 'Default Company',
+                    'industry' => 'Real Estate',
+                    'user_id' => $userId,
+                    'industry_id' => 1,
+                    'company_id' => $companyId,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+
+        $input = array_merge(
             $requestData->all(),
-            ['user_created_id' => \Auth::id(),
+            [
+                'client_id' => $clientId,
+                'user_created_id' => \Auth::id() ?: 1,
                 'contact_date' => $requestData->contact_date . " " . $requestData->contact_time . ":00",
-                ]
+            ]
         );
 
         $lead = Lead::create($input);

@@ -5,12 +5,28 @@
  * app/Services/LeadProviders before setting `enabled` to true.
  */
 return [
-    '99acres' => ['name' => '99acres', 'description' => 'Property enquiry API', 'enabled' => true, 'icon' => 'building-2', 'requirements' => ['API endpoint URL', 'Username', 'Password']],
-    'meta_lead_ads' => ['name' => 'Meta Lead Ads', 'description' => 'Facebook & Instagram forms', 'enabled' => false, 'icon' => 'facebook', 'requirements' => ['Meta App ID', 'Long-lived access token', 'Page ID', 'Form ID', 'Webhook verify token']],
-    'google_lead_forms' => ['name' => 'Google Lead Forms', 'description' => 'Google Ads lead forms', 'enabled' => false, 'icon' => 'search', 'requirements' => ['Google Ads customer ID', 'Developer token', 'OAuth client ID', 'OAuth client secret', 'Refresh token']],
-    'magicbricks' => ['name' => 'Magicbricks', 'description' => 'Property portal API', 'enabled' => false, 'icon' => 'buildings', 'requirements' => ['Account ID', 'API key', 'API secret']],
-    'housing' => ['name' => 'Housing.com', 'description' => 'Property portal API', 'enabled' => false, 'icon' => 'house', 'requirements' => ['Account ID', 'API key', 'API secret']],
-    'indiamart' => ['name' => 'IndiaMART', 'description' => 'Marketplace lead API', 'enabled' => false, 'icon' => 'store', 'requirements' => ['CRM key', 'API endpoint URL']],
-    'website_api' => ['name' => 'Website API', 'description' => 'Your website lead endpoint', 'enabled' => false, 'icon' => 'globe-2', 'requirements' => ['Endpoint URL', 'API key or bearer token', 'Webhook secret']],
-    'generic_webhook' => ['name' => 'Generic Webhook', 'description' => 'Custom JSON webhook', 'enabled' => false, 'icon' => 'webhook', 'requirements' => ['Webhook URL', 'Signing secret', 'Expected JSON field mapping']],
+    'meta_lead_ads' => [
+        'name' => 'Meta Lead Ads', 'description' => 'Facebook & Instagram instant forms', 'enabled' => true, 'mode' => 'webhook', 'icon' => 'facebook',
+        'requirements' => ['Page ID', 'Long-lived Page access token', 'App secret', 'Webhook verify token', 'Form ID (optional)'],
+    ],
+    '99acres' => [
+        'name' => '99acres', 'description' => 'Property enquiry API', 'enabled' => true, 'mode' => 'polling', 'icon' => 'building-2',
+        'requirements' => ['API endpoint URL', 'Username', 'Password'],
+    ],
+    'website_api' => [
+        'name' => 'Website form / API', 'description' => 'Receive leads from your website in real time', 'enabled' => true, 'mode' => 'webhook', 'icon' => 'globe-2',
+        'requirements' => ['Webhook signing secret (optional)', 'Field mapping'],
+    ],
+    'generic_webhook' => [
+        'name' => 'Generic webhook', 'description' => 'Any tool that can send a JSON webhook', 'enabled' => true, 'mode' => 'webhook', 'icon' => 'webhook',
+        'requirements' => ['Webhook signing secret (optional)', 'Field mapping'],
+    ],
+    'google_forms' => [
+        'name' => 'Google Forms', 'description' => 'Receive each Google Form response in real time', 'enabled' => true, 'mode' => 'webhook', 'icon' => 'clipboard-pen-line',
+        'requirements' => ['Installable Google Apps Script trigger', 'Unique webhook URL', 'Field mapping'],
+    ],
+    'google_lead_forms' => ['name' => 'Google Ads Lead Forms', 'description' => 'Google Ads lead-form asset API', 'enabled' => false, 'mode' => 'planned', 'icon' => 'search', 'requirements' => ['Google Ads customer ID', 'Developer token', 'OAuth client credentials']],
+    'magicbricks' => ['name' => 'Magicbricks', 'description' => 'Property portal API', 'enabled' => false, 'mode' => 'planned', 'icon' => 'buildings', 'requirements' => ['Account ID', 'API key', 'API secret']],
+    'housing' => ['name' => 'Housing.com', 'description' => 'Property portal API', 'enabled' => false, 'mode' => 'planned', 'icon' => 'house', 'requirements' => ['Account ID', 'API key', 'API secret']],
+    'indiamart' => ['name' => 'IndiaMART', 'description' => 'Marketplace lead API', 'enabled' => false, 'mode' => 'planned', 'icon' => 'store', 'requirements' => ['CRM key', 'API endpoint URL']],
 ];

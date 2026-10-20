@@ -26,7 +26,7 @@ if(isset($_POST['key']))
   
   
   
-  if($num1= mysqli_num_rows( $res_token) == 1)
+  if($num1= mysqli_num_rows($res_token) >= 1)
   {
 	  $sql="SELECT t1.id, t1.follow_up_date, t1.comment, t1.meeting_date, t1.status, COALESCE(t2.name, 'Agent') as user_name 
 	        FROM `lead_follow_up` t1 

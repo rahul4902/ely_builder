@@ -67,6 +67,19 @@
     #company-settings-page .integration-del-btn:hover { background:#fef2f2; border-color:#f87171; }
     @media (max-width:850px) { #company-settings-page .company-settings-layout { grid-template-columns:1fr; } #company-settings-page .settings-sidebar { border-right:0; border-bottom:1px solid #e3e7ec; } #company-settings-page .settings-nav { display:flex; overflow-x:auto; } #company-settings-page .settings-nav-section, #company-settings-page .settings-nav-note { display:none; } #company-settings-page .settings-nav-button { width:auto; min-width:max-content; padding:12px 14px; } #company-settings-page .settings-nav-button.is-active { box-shadow:inset 0 -2px 0 #f97316; } }
     @media (max-width:560px) { #company-settings-page .integration-grid { grid-template-columns:1fr; } #company-settings-page .settings-form-body, #company-settings-page .integration-form { padding:18px; } #company-settings-page .integration-item-top { flex-direction:column; } }
+    .theme-mode-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-top:8px; }
+    .theme-mode-card { display:flex; flex-direction:column; align-items:flex-start; padding:14px; border:2px solid #e2e8f0; border-radius:10px; background:#fff; cursor:pointer; transition:.15s ease; position:relative; }
+    .theme-mode-card:hover { border-color:#94a3b8; }
+    .theme-mode-card.is-active { border-color:var(--crm-primary, #0b57d0); background:var(--crm-surface-muted, #f8fafc); box-shadow:0 0 0 1px var(--crm-primary, #0b57d0); }
+    .theme-mode-card-header { display:flex; align-items:center; gap:8px; font-weight:600; font-size:13px; color:#1e293b; }
+    .theme-mode-card-header svg { width:18px; height:18px; }
+    .theme-mode-badge { position:absolute; top:10px; right:10px; font-size:10px; font-weight:700; padding:2px 6px; border-radius:999px; background:#e0e7ff; color:#3730a3; text-transform:uppercase; letter-spacing:.03em; }
+    .theme-swatches-grid { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+    .theme-swatch-item { display:flex; align-items:center; gap:8px; border:1.5px solid #e2e8f0; border-radius:8px; padding:6px 12px; background:#fff; cursor:pointer; font-size:12px; font-weight:500; color:#334155; transition:.15s ease; }
+    .theme-swatch-item:hover { border-color:#94a3b8; }
+    .theme-swatch-item.is-active { border-color:var(--crm-primary, #0b57d0); background:#f1f5f9; box-shadow:0 0 0 1px var(--crm-primary, #0b57d0); font-weight:600; }
+    .theme-swatch-circle { width:18px; height:18px; border-radius:50%; border:1px solid rgba(0,0,0,0.12); flex-shrink:0; }
+    .theme-preview-box { margin-top:16px; border:1px solid #e2e8f0; border-radius:10px; padding:16px; background:#fafbfc; transition:.2s ease; }
 </style>
 @endsection
 
@@ -82,6 +95,7 @@
             <div class="settings-nav">
                 <div class="settings-nav-section">Company</div>
                 <button class="settings-nav-button is-active" type="button" data-settings-target="general"><i data-lucide="settings"></i>General</button>
+                <button class="settings-nav-button" type="button" data-settings-target="theme"><i data-lucide="palette"></i>Theme &amp; Appearance</button>
                 <div class="settings-nav-section">Lead Management</div>
                 <button class="settings-nav-button" type="button" data-settings-target="integrations"><i data-lucide="plug-zap"></i>Lead Integrations</button>
             </div>
@@ -128,6 +142,114 @@
                         </div>
                         <div class="settings-footer">
                             <button class="settings-save" type="submit">Save Settings</button>
+                        </div>
+                    </form>
+                </div>
+
+                {{-- THEME & APPEARANCE PANE --}}
+                <div id="company-settings-theme" class="settings-pane">
+                    <form method="POST" action="{{ route('settings.company.general') }}" id="themeSettingsForm">
+                        @csrf
+                        @method('PATCH')
+                        <div class="settings-form-body">
+                            {{-- Theme Mode --}}
+                            <div class="setting-row">
+                                <label class="setting-label">Theme Mode</label>
+                                <p class="setting-help">Select between Light and Dark interface modes. Website default is Light Mode.</p>
+                                <input type="hidden" name="settings[theme_mode]" id="settingThemeMode" value="{{ old('settings.theme_mode', $settings['theme_mode'] ?? 'light') }}">
+                                <div class="theme-mode-grid">
+                                    <div class="theme-mode-card {{ ($settings['theme_mode'] ?? 'light') === 'light' ? 'is-active' : '' }}" data-mode="light" id="themeCardLight">
+                                        <div class="theme-mode-card-header">
+                                            <i data-lucide="sun" class="text-amber-500"></i>
+                                            <span>Light Mode</span>
+                                        </div>
+                                        <p class="text-xs text-slate-500 mt-2 mb-0">Clean white and grey surfaces (Website Default)</p>
+                                        <span class="theme-mode-badge">Default</span>
+                                    </div>
+                                    <div class="theme-mode-card {{ ($settings['theme_mode'] ?? 'light') === 'dark' ? 'is-active' : '' }}" data-mode="dark" id="themeCardDark">
+                                        <div class="theme-mode-card-header">
+                                            <i data-lucide="moon" class="text-indigo-400"></i>
+                                            <span>Dark Mode</span>
+                                        </div>
+                                        <p class="text-xs text-slate-500 mt-2 mb-0">Deep AMOLED dark mode for low-light environments</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Accent & Brand Color --}}
+                            <div class="setting-row">
+                                <label class="setting-label">Primary &amp; Accent Color</label>
+                                <p class="setting-help">Select the primary accent color used for buttons, navigation rails, and interactive highlights across the website.</p>
+                                
+                                <div class="theme-swatches-grid">
+                                    @php
+                                        $currentAccent = strtoupper($settings['theme_accent'] ?? '#0B57D0');
+                                        $palette = [
+                                            ['name' => 'CRM Blue', 'color' => '#0B57D0', 'default' => true],
+                                            ['name' => 'Ely Orange', 'color' => '#F97316', 'brand' => true],
+                                            ['name' => 'Teal', 'color' => '#00796B'],
+                                            ['name' => 'Purple', 'color' => '#7E57C2'],
+                                            ['name' => 'Terracotta', 'color' => '#C2410C'],
+                                            ['name' => 'Berry Pink', 'color' => '#C2185B'],
+                                            ['name' => 'Indigo Blue', 'color' => '#2563EB'],
+                                            ['name' => 'Emerald Green', 'color' => '#059669'],
+                                        ];
+                                    @endphp
+                                    @foreach($palette as $p)
+                                        <button type="button" 
+                                                class="theme-swatch-item {{ $currentAccent === strtoupper($p['color']) ? 'is-active' : '' }}" 
+                                                data-accent="{{ $p['color'] }}" 
+                                                title="{{ $p['name'] }}">
+                                            <span class="theme-swatch-circle" style="background-color: {{ $p['color'] }};"></span>
+                                            <span>{{ $p['name'] }}</span>
+                                            @if(!empty($p['default']))
+                                                <span class="text-[10px] bg-blue-100 text-blue-700 font-semibold px-1.5 py-0.5 rounded">Default</span>
+                                            @elseif(!empty($p['brand']))
+                                                <span class="text-[10px] bg-orange-100 text-orange-700 font-semibold px-1.5 py-0.5 rounded">Brand</span>
+                                            @endif
+                                        </button>
+                                    @endforeach
+                                </div>
+
+                                <div class="mt-3 flex items-center gap-3 flex-wrap">
+                                    <div class="flex items-center gap-2">
+                                        <label for="customAccentPicker" class="text-xs font-semibold text-slate-600 m-0">Custom Color:</label>
+                                        <input type="color" id="customAccentPicker" value="{{ $currentAccent }}" class="h-8 w-10 p-0 border border-slate-300 rounded cursor-pointer">
+                                        <input type="text" id="settingThemeAccent" name="settings[theme_accent]" value="{{ $currentAccent }}" class="setting-control font-mono uppercase text-xs" style="width: 100px; max-width: 100px; height: 32px;" pattern="^#[0-9A-Fa-f]{6}$" placeholder="#0B57D0">
+                                    </div>
+                                    <button type="button" id="btnResetThemeDefault" class="text-xs text-slate-600 hover:text-slate-900 border border-slate-300 hover:bg-slate-50 px-2.5 py-1.5 rounded-md font-medium transition inline-flex items-center gap-1.5">
+                                        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset to Website Defaults
+                                    </button>
+                                </div>
+                            </div>
+
+                            {{-- Live Interactive Preview --}}
+                            <div class="setting-row">
+                                <label class="setting-label">Live Theme Preview</label>
+                                <p class="setting-help">Real-time preview of how your theme colors will appear in navigation and buttons.</p>
+                                
+                                <div class="theme-preview-box" id="themePreviewBox">
+                                    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200" id="previewHeader">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-bold text-sm" id="previewBrandText">ElyLeads</span>
+                                            <span class="text-xs text-slate-500">· Workspace</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span id="previewBadge" class="text-xs px-2.5 py-0.5 rounded-full font-semibold" style="background: var(--crm-primary-container, #dbe8ff); color: var(--crm-on-primary-container, #003b8f);">Active Theme</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-3">
+                                        <button type="button" class="settings-save" id="previewPrimaryBtn" style="pointer-events: none;">Primary Button</button>
+                                        <button type="button" class="btn btn-outline-primary text-xs" id="previewOutlineBtn" style="pointer-events: none;">Outline Button</button>
+                                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-semibold" id="previewActiveTab" style="background: var(--crm-primary-container, #dbe8ff); color: var(--crm-on-primary-container, #003b8f); border-left: 3px solid var(--crm-primary, #0B57D0);">
+                                            <i data-lucide="check" class="w-3.5 h-3.5"></i> Active Menu Item
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-footer">
+                            <button class="settings-save" type="submit">Save Theme Settings</button>
                         </div>
                     </form>
                 </div>
@@ -192,7 +314,7 @@
                                 <select class="setting-control" name="source_id" id="integrationSourceId">
                                     <option value="">Default (Auto-mapped to 99acres)</option>
                                     @foreach($sources as $src)
-                                        <option value="{{ $src->id }}">{{ $src->name }}</option>
+                                        <option value="{{ $src->id }}">{{ $src->source_name }}</option>
                                     @endforeach
                                 </select>
                                 <p class="setting-help">Incoming leads will be tagged with this lead source.</p>
@@ -342,10 +464,139 @@
                     pane.classList.toggle('is-active', pane.id === 'company-settings-' + target);
                 });
                 if (paneTitle) {
-                    paneTitle.textContent = target === 'general' ? 'Company General Settings' : 'Lead Integrations';
+                    if (target === 'general') {
+                        paneTitle.textContent = 'Company General Settings';
+                    } else if (target === 'theme') {
+                        paneTitle.textContent = 'Theme & Appearance Settings';
+                    } else {
+                        paneTitle.textContent = 'Lead Integrations';
+                    }
                 }
             });
         });
+
+        if (window.location.hash === '#theme_settings' || window.location.hash === '#theme' || window.location.hash === '#company-settings-theme') {
+            var themeTabBtn = document.querySelector('[data-settings-target="theme"]');
+            if (themeTabBtn) {
+                themeTabBtn.click();
+            }
+        }
+
+        // Theme & Appearance Settings Logic
+        var modeInput = document.getElementById('settingThemeMode');
+        var accentInput = document.getElementById('settingThemeAccent');
+        var accentPicker = document.getElementById('customAccentPicker');
+        var previewPrimaryBtn = document.getElementById('previewPrimaryBtn');
+        var previewOutlineBtn = document.getElementById('previewOutlineBtn');
+        var previewActiveTab = document.getElementById('previewActiveTab');
+        var previewBox = document.getElementById('themePreviewBox');
+
+        function updatePreviewUI(mode, hex) {
+            if (previewBox) {
+                if (mode === 'dark') {
+                    previewBox.style.backgroundColor = '#141519';
+                    previewBox.style.borderColor = '#303136';
+                    previewBox.style.color = '#f1f3f4';
+                } else {
+                    previewBox.style.backgroundColor = '#fafbfc';
+                    previewBox.style.borderColor = '#e2e8f0';
+                    previewBox.style.color = '#1f1f1f';
+                }
+            }
+            if (previewPrimaryBtn && /^#[0-9a-fA-F]{6}$/i.test(hex)) {
+                previewPrimaryBtn.style.backgroundColor = hex;
+                previewPrimaryBtn.style.borderColor = hex;
+            }
+            if (previewOutlineBtn && /^#[0-9a-fA-F]{6}$/i.test(hex)) {
+                previewOutlineBtn.style.color = hex;
+                previewOutlineBtn.style.borderColor = hex;
+            }
+            if (previewActiveTab && /^#[0-9a-fA-F]{6}$/i.test(hex)) {
+                previewActiveTab.style.borderLeftColor = hex;
+            }
+        }
+
+        function setMode(mode) {
+            if (modeInput) modeInput.value = mode;
+            document.querySelectorAll('.theme-mode-card').forEach(function(card) {
+                card.classList.toggle('is-active', card.getAttribute('data-mode') === mode);
+            });
+            if (window.applyCrmTheme) {
+                window.applyCrmTheme(mode);
+            } else {
+                document.documentElement.dataset.theme = mode;
+                try { localStorage.setItem('crm_theme', mode); } catch(e) {}
+            }
+            updatePreviewUI(mode, accentInput ? accentInput.value : '#0B57D0');
+        }
+
+        function setAccent(hex) {
+            if (!/^#[0-9a-fA-F]{6}$/i.test(hex || '')) return;
+            var cleanHex = hex.toUpperCase();
+            if (accentInput) accentInput.value = cleanHex;
+            if (accentPicker) accentPicker.value = cleanHex;
+            document.querySelectorAll('.theme-swatch-item').forEach(function(item) {
+                var itemAccent = (item.getAttribute('data-accent') || '').toUpperCase();
+                item.classList.toggle('is-active', itemAccent === cleanHex);
+            });
+            if (window.applyCrmAccent) {
+                window.applyCrmAccent(cleanHex);
+            } else {
+                document.documentElement.style.setProperty('--crm-primary', cleanHex);
+                try { localStorage.setItem('crm_accent', cleanHex); } catch(e) {}
+            }
+            updatePreviewUI(modeInput ? modeInput.value : 'light', cleanHex);
+        }
+
+        document.querySelectorAll('.theme-mode-card').forEach(function(card) {
+            card.addEventListener('click', function() {
+                setMode(card.getAttribute('data-mode'));
+            });
+        });
+
+        document.querySelectorAll('.theme-swatch-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                setAccent(item.getAttribute('data-accent'));
+            });
+        });
+
+        if (accentPicker) {
+            accentPicker.addEventListener('input', function() {
+                setAccent(accentPicker.value);
+            });
+        }
+
+        if (accentInput) {
+            accentInput.addEventListener('input', function() {
+                if (/^#[0-9a-fA-F]{6}$/i.test(accentInput.value)) {
+                    setAccent(accentInput.value);
+                }
+            });
+        }
+
+        var btnReset = document.getElementById('btnResetThemeDefault');
+        if (btnReset) {
+            btnReset.addEventListener('click', function() {
+                setMode('light');
+                setAccent('#0B57D0');
+            });
+        }
+
+        var themeForm = document.getElementById('themeSettingsForm');
+        if (themeForm) {
+            themeForm.addEventListener('submit', function() {
+                if (modeInput) {
+                    try { localStorage.setItem('crm_theme', modeInput.value); } catch(e) {}
+                }
+                if (accentInput) {
+                    try { localStorage.setItem('crm_accent', accentInput.value); } catch(e) {}
+                }
+            });
+        }
+
+        if (modeInput && accentInput) {
+            updatePreviewUI(modeInput.value, accentInput.value);
+        }
 
         // Provider picker
         var providerPicker = document.getElementById('leadProviderPicker');
@@ -364,6 +615,13 @@
                 var key = card.getAttribute('data-provider');
                 var provider = providers[key];
                 if (!provider) return;
+                // The source hub owns provider-specific credentials, webhooks,
+                // field mapping, and setup instructions. This legacy pane keeps
+                // the compact 99acres form for existing connections.
+                if (key !== '99acres') {
+                    window.location.href = '{{ url('source_list') }}';
+                    return;
+                }
                 document.querySelectorAll('[data-provider]').forEach(function (item) { item.classList.toggle('is-selected', item === card); });
                 integrationSetupForm.style.display = provider.enabled ? 'block' : 'none';
                 if (provider.enabled) {

@@ -23,29 +23,13 @@ if(isset($_POST['status'])&& isset($_POST['key']))
 	//echo $user_id;
     //exit();
 
-	if(mysqli_num_rows($res_key) == 1)
+	if(mysqli_num_rows($res_key) >= 1)
 	{
 		$data = array();
 		global $sql;
 
-		// Resolve user's company and admin status
-		$company_id = 1;
-		$is_admin = false;
-		$comp_q = mysqli_query($con, "SELECT company_id, role FROM company_user WHERE user_id = '$user_id' AND is_active = 1 LIMIT 1");
-		if ($comp_q && ($comp_row = mysqli_fetch_assoc($comp_q))) {
-			$company_id = (int)$comp_row['company_id'];
-			if ($comp_row['role'] === 'company_admin') {
-				$is_admin = true;
-			}
-		}
-		$role_q = mysqli_query($con, "SELECT r.name FROM role_user ru JOIN roles r ON r.id = ru.role_id WHERE ru.user_id = '$user_id' LIMIT 1");
-		if ($role_q && ($role_row = mysqli_fetch_assoc($role_q))) {
-			if (in_array($role_row['name'], ['administrator', 'super_administrator'])) {
-				$is_admin = true;
-			}
-		}
-
-		$scope = "(`leads`.`company_id` = '$company_id' OR `leads`.`user_assigned_id` = '$user_id')";
+		// Member-only scoping: only fetch leads belonging to this specific member/user
+		$scope = "(`leads`.`user_assigned_id` = '$user_id' OR `leads`.`user_created_id` = '$user_id')";
 
         if ($status=='new')
 		{

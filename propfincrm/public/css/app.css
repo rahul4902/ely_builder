@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700,300);
@@ -1385,14 +1385,14 @@ th {
 }
 
 html {
-  font-size: 10px;
+  font-size: 100%;
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
   /* font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; */
   font-family: "Outfit", sans-serif;
-  font-size: 14px;
+  font-size: 100%;
   line-height: 1.428571429;
   color: #333333;
   background-color: #fff;

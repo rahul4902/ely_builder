@@ -13,6 +13,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
@@ -44,6 +45,12 @@ class CompanyLeadIntegrationTest extends TestCase
             $table->string('name');
             $table->string('slug')->unique();
             $table->boolean('is_active')->default(true);
+            $table->timestamps();
+        });
+
+        Schema::create('tenants', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->text('data')->nullable();
             $table->timestamps();
         });
 
@@ -275,6 +282,132 @@ XML;
 
         $integration->refresh();
         $this->assertSame('Connection timed out to 99acres', $integration->last_error);
+    }
+
+    public function test_signed_meta_webhook_creates_a_normal_lead_visible_in_all_leads_and_deduplicates_retries(): void
+    {
+        $company = Company::create(['name' => 'Meta Realty', 'slug' => 'meta-realty']);
+        $admin = User::create(['name' => 'Meta Admin', 'email' => 'meta-admin@test.test', 'password' => Hash::make('secret')]);
+        $admin->companies()->attach($company, ['role' => 'company_admin', 'is_active' => true]);
+
+        $integration = CompanyIntegration::create([
+            'company_id' => $company->id,
+            'provider' => 'meta_lead_ads',
+            'name' => 'Meta Main Page',
+            'sync_frequency' => 'manual',
+            'credentials' => [
+                'page_id' => 'page-123',
+                'access_token' => 'page-access-token',
+                'app_secret' => 'test-app-secret',
+                'webhook_verify_token' => 'verify-token-which-is-long',
+            ],
+            'is_active' => true,
+        ]);
+
+        $this->get('/webhooks/meta/' . $integration->id . '?hub.mode=subscribe&hub.verify_token=verify-token-which-is-long&hub.challenge=challenge-42')
+            ->assertOk()
+            ->assertSee('challenge-42');
+
+        Http::fake([
+            'https://graph.facebook.com/v22.0/meta-lead-123*' => Http::response([
+                'id' => 'meta-lead-123',
+                'field_data' => [
+                    ['name' => 'full_name', 'values' => ['Ananya Kapoor']],
+                    ['name' => 'phone_number', 'values' => ['+91 98765 43210']],
+                    ['name' => 'email', 'values' => ['ananya@example.test']],
+                    ['name' => 'project', 'values' => ['Orchid Heights']],
+                    ['name' => 'requirement', 'values' => ['3 BHK']],
+                    ['name' => 'budget', 'values' => ['1.25 Cr']],
+                ],
+            ]),
+        ]);
+
+        $payload = [
+            'object' => 'page',
+            'entry' => [[
+                'id' => 'page-123',
+                'changes' => [[
+                    'field' => 'leadgen',
+                    'value' => ['leadgen_id' => 'meta-lead-123', 'page_id' => 'page-123', 'form_id' => 'form-789'],
+                ]],
+            ]],
+        ];
+        $json = json_encode($payload, JSON_UNESCAPED_SLASHES);
+        $server = [
+            'CONTENT_TYPE' => 'application/json',
+            'HTTP_X_HUB_SIGNATURE_256' => 'sha256=' . hash_hmac('sha256', $json, 'test-app-secret'),
+        ];
+
+        $this->call('POST', '/webhooks/meta/' . $integration->id, [], [], [], $server, $json)->assertOk();
+        $lead = Lead::withoutGlobalScopes()->where('provider_lead_id', 'meta-lead-123')->firstOrFail();
+        $this->assertSame($company->id, $lead->company_id);
+        $this->assertSame('Ananya Kapoor', $lead->name);
+        $this->assertSame('9876543210', $lead->contact_no);
+        $this->assertSame('Meta Lead Ads', $lead->source);
+        $this->assertSame('meta_lead_ads', $lead->provider);
+        $this->assertSame($admin->id, $lead->user_assigned_id);
+        $this->assertSame('Orchid Heights', $lead->project);
+        $this->assertSame('3 BHK', $lead->requirement);
+        $this->assertSame('1.25 Cr', $lead->Budget);
+
+        // Meta can re-deliver a webhook. The provider's immutable lead ID
+        // guarantees the existing All Leads record is kept rather than copied.
+        $this->call('POST', '/webhooks/meta/' . $integration->id, [], [], [], $server, $json)->assertOk();
+        $this->assertSame(1, Lead::withoutGlobalScopes()->where('company_id', $company->id)->count());
+        Http::assertSentCount(2);
+
+        $invalidSignatureServer = $server;
+        $invalidSignatureServer['HTTP_X_HUB_SIGNATURE_256'] = 'sha256=invalid';
+        $this->call('POST', '/webhooks/meta/' . $integration->id, [], [], [], $invalidSignatureServer, $json)->assertStatus(401);
+        $this->assertSame(1, Lead::withoutGlobalScopes()->where('company_id', $company->id)->count());
+    }
+
+    public function test_google_forms_submit_payload_creates_an_all_leads_record_and_deduplicates_retries(): void
+    {
+        $company = Company::create(['name' => 'Google Form Realty', 'slug' => 'google-form-realty']);
+        $admin = User::create(['name' => 'Google Admin', 'email' => 'google-admin@test.test', 'password' => Hash::make('secret')]);
+        $admin->companies()->attach($company, ['role' => 'company_admin', 'is_active' => true]);
+
+        $integration = CompanyIntegration::create([
+            'company_id' => $company->id,
+            'provider' => 'google_forms',
+            'name' => 'Site Visit Enquiry Form',
+            'sync_frequency' => 'manual',
+            'credentials' => ['webhook_token' => 'google-form-test-token'],
+            'configuration' => ['field_map' => [
+                'name' => 'answers.Full Name',
+                'phone' => 'answers.Phone',
+                'email' => 'answers.Email',
+                'project' => 'answers.Project',
+                'requirement' => 'answers.Requirement',
+                'budget' => 'answers.Budget',
+            ]],
+            'is_active' => true,
+        ]);
+
+        $payload = [
+            'id' => 'form-response-sheet-21',
+            'answers' => [
+                'Full Name' => 'Rohan Malhotra', 'Phone' => '+91 99887 76655', 'Email' => 'rohan@example.test',
+                'Project' => 'Lake View Towers', 'Requirement' => '2 BHK', 'Budget' => '95 Lakh',
+            ],
+        ];
+        $json = json_encode($payload, JSON_UNESCAPED_SLASHES);
+        $server = ['CONTENT_TYPE' => 'application/json'];
+        $url = '/webhooks/leads/' . $integration->id . '/google-form-test-token';
+
+        $this->call('POST', $url, [], [], [], $server, $json)->assertStatus(202);
+        $lead = Lead::withoutGlobalScopes()->where('provider_lead_id', 'form-response-sheet-21')->firstOrFail();
+        $this->assertSame('Rohan Malhotra', $lead->name);
+        $this->assertSame('9988776655', $lead->contact_no);
+        $this->assertSame('Google Forms', $lead->source);
+        $this->assertSame('Lake View Towers', $lead->project);
+        $this->assertSame('2 BHK', $lead->requirement);
+        $this->assertSame('95 Lakh', $lead->Budget);
+        $this->assertSame($admin->id, $lead->user_assigned_id);
+
+        $this->call('POST', $url, [], [], [], $server, $json)->assertStatus(202);
+        $this->assertSame(1, Lead::withoutGlobalScopes()->where('company_id', $company->id)->count());
     }
 
     public function test_artisan_leads_sync_integrations_with_now_and_frequencies(): void

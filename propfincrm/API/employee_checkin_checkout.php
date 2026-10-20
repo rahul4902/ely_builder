@@ -41,7 +41,7 @@ if(isset($_POST['key']))
      }
      //print_r($user_id);
      //exit();
-     if($count == 1)
+     if($count >= 1)
      {
         
 		if ($type=='checkin')

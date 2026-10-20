@@ -25,7 +25,7 @@ if(isset($_POST['key']))
   
   $status=4;
   
-  if($num1= mysqli_num_rows( $res_token) == 1)
+  if($num1= mysqli_num_rows($res_token) >= 1)
   {
     
 	if ($status==4)

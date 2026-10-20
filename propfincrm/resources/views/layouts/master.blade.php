@@ -54,7 +54,35 @@
     <!-- jQuery 3.6 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    @php
+        $appGlobalSetting = \App\Models\Setting::query()->first();
+        $dbInitialTheme = $appGlobalSetting?->theme_mode ?? 'light';
+        $dbInitialAccent = $appGlobalSetting?->theme_accent ?? '#0B57D0';
+    @endphp
     <script>
+        // Apply the saved preference before the first paint so every screen opens
+        // in its intended theme without a visible flash.
+        (function() {
+            try {
+                var defaultDbTheme = @json($dbInitialTheme);
+                var defaultDbAccent = @json($dbInitialAccent);
+                var savedTheme = localStorage.getItem('crm_theme') || defaultDbTheme;
+                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.dataset.theme = savedTheme || (prefersDark ? 'dark' : 'light');
+                var savedAccent = localStorage.getItem('crm_accent') || defaultDbAccent;
+                if (/^#[0-9a-f]{6}$/i.test(savedAccent || '')) {
+                    document.documentElement.style.setProperty('--crm-primary', savedAccent);
+                    var rgb = [parseInt(savedAccent.slice(1, 3), 16), parseInt(savedAccent.slice(3, 5), 16), parseInt(savedAccent.slice(5, 7), 16)];
+                    document.documentElement.style.setProperty('--crm-primary-rgb', rgb.join(', '));
+                    var luminance = rgb.map(function(channel) {
+                        var value = channel / 255;
+                        return value <= .03928 ? value / 12.92 : Math.pow((value + .055) / 1.055, 2.4);
+                    }).reduce(function(total, value, index) { return total + value * [.2126, .7152, .0722][index]; }, 0);
+                    document.documentElement.style.setProperty('--crm-on-primary', luminance > .179 ? '#1F1F1F' : '#FFFFFF');
+                }
+            } catch(e) {}
+        })();
+
         // Pre-apply sidebar mini state to prevent layout shift
         (function() {
             try {
@@ -70,15 +98,18 @@
     </script>
 
     @yield('styles')
+    {{-- Always load the product theme last: individual legacy views cannot undo
+        the saved light/dark mode or the selected accent color. --}}
+    <link href="{{ asset('css/crm-zen.css') }}?v={{ filemtime(public_path('css/crm-zen.css')) }}" rel="stylesheet" type="text/css">
 </head>
 
-<body class="bg-white font-sans">
-    <div class="min-h-screen bg-white lg:flex">
+<body class="bg-white dark:bg-black font-sans">
+    <div class="min-h-screen bg-white dark:bg-black lg:flex">
         {{-- Modern Sidebar Component --}}
         @include('include.sidebar')
 
         {{-- Main Page Content Wrapper --}}
-        <div id="page-content-wrapper" class="min-w-0 flex-1 bg-white lg:ml-[220px]">
+        <div id="page-content-wrapper" class="min-w-0 flex-1 bg-white dark:bg-black lg:ml-[220px]">
             @if (session('impersonating_company_id'))
                 <div class="bg-amber-500 text-white px-4 py-2 text-xs font-medium flex items-center justify-between shadow-sm sticky top-0 z-50">
                     <div class="flex items-center gap-2">
@@ -140,6 +171,10 @@
                         </svg>
                     </button>
 
+                    <button type="button" class="topbar-action-icon topbar-theme-toggle" id="themeToggle" title="Switch color theme" aria-label="Switch color theme" aria-pressed="false">
+                        <i data-lucide="moon" class="h-4 w-4"></i>
+                    </button>
+
                     {{-- Company admins can open their company-specific settings here. --}}
                     @if (auth()->check() && auth()->user()->isCompanyAdmin())
                     <a href="{{ route('settings.company') }}" class="topbar-action-icon" title="Company Settings" aria-label="Company Settings">
@@ -175,6 +210,84 @@
                             </div>
                         </div>
                     </div>
+
+                    {{-- User Profile Dropdown in Topbar --}}
+                    @if (auth()->check())
+                    <div class="dropdown">
+                        <button class="topbar-action-icon rounded-full p-0 flex items-center justify-center border-0 bg-transparent cursor-pointer"
+                                type="button" id="topbarUserDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+                                aria-label="User Profile" title="{{ auth()->user()->name ?? 'User' }}"
+                                style="width: 34px; height: 34px; min-width: 34px; min-height: 34px;">
+                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-slate-800 text-[11.5px] font-bold text-white shadow-sm">
+                                {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-2xl p-2 mt-2 crm-profile-popover" aria-labelledby="topbarUserDropdown" style="width: 250px; min-width: 240px; border-radius: 20px; font-size: 13px; z-index: 1050;">
+                            <li class="crm-profile-user-tile px-3 py-2.5 mb-1.5 rounded-2xl">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold shadow-sm crm-tile-avatar">
+                                        {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
+                                    </span>
+                                    <div class="min-w-0 flex-1">
+                                        <div class="font-semibold text-[13px] truncate leading-tight crm-user-name">{{ auth()->user()->name ?? 'User' }}</div>
+                                        <div class="text-[11px] truncate leading-tight mt-0.5 crm-user-email">{{ auth()->user()->email ?? '' }}</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="dropdown-item crm-profile-item" href="{{ route('users.show', \Auth::id()) }}">
+                                    <i data-lucide="user" class="h-4 w-4 shrink-0"></i>
+                                    <span class="flex-1 truncate text-left">{{ __('My Profile') }}</span>
+                                </a>
+                            </li>
+                            @php
+                                $topbarActiveCompany = auth()->user()->activeCompany();
+                            @endphp
+                            @if ($topbarActiveCompany)
+                                <li>
+                                    <a class="dropdown-item crm-profile-item" href="{{ route('tenant.subscription') }}">
+                                        <i data-lucide="credit-card" class="h-4 w-4 shrink-0"></i>
+                                        <span class="flex-1 truncate text-left">{{ __('Billing & Subscription') }}</span>
+                                    </a>
+                                </li>
+                                @if (auth()->user()->isCompanyAdmin())
+                                <li>
+                                    <a class="dropdown-item crm-profile-item" href="{{ route('settings.company') }}">
+                                        <i data-lucide="settings" class="h-4 w-4 shrink-0"></i>
+                                        <span class="flex-1 truncate text-left">{{ __('Company Settings') }}</span>
+                                    </a>
+                                </li>
+                                @endif
+                            @endif
+                            <li>
+                                @php
+                                    $topbarThemeUrl = (auth()->user()->isCompanyAdmin()) ? route('settings.company') : route('settings.index');
+                                @endphp
+                                <a class="dropdown-item crm-profile-item" href="{{ $topbarThemeUrl }}#theme_settings">
+                                    <i data-lucide="palette" class="h-4 w-4 shrink-0"></i>
+                                    <span class="flex-1 truncate text-left">{{ __('Theme & Colors') }}</span>
+                                </a>
+                            </li>
+                            @if (auth()->user()->isPlatformSuperAdmin())
+                                <li>
+                                    <a class="dropdown-item crm-profile-item crm-platform-admin-item" href="{{ route('platform.companies.index') }}">
+                                        <i data-lucide="shield" class="h-4 w-4 shrink-0"></i>
+                                        <span class="flex-1 truncate text-left">{{ __('Platform Admin') }}</span>
+                                    </a>
+                                </li>
+                            @endif
+                            <li>
+                                <hr class="dropdown-divider my-1.5">
+                            </li>
+                            <li>
+                                <a class="dropdown-item crm-profile-item crm-logout-item" href="{{ url('/logout') }}">
+                                    <i data-lucide="log-out" class="h-4 w-4 shrink-0"></i>
+                                    <span class="flex-1 truncate text-left">{{ __('Logout') }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    @endif
 
                 </div>
             </header>
@@ -324,6 +437,65 @@
                 }, 220);
             });
 
+            var themeToggle = document.getElementById('themeToggle');
+            var updateThemeToggle = function() {
+                if (!themeToggle) return;
+                var isDark = document.documentElement.dataset.theme === 'dark';
+                themeToggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+                themeToggle.setAttribute('title', isDark ? 'Use light theme' : 'Use dark theme');
+                themeToggle.setAttribute('aria-label', isDark ? 'Use light theme' : 'Use dark theme');
+                themeToggle.innerHTML = '<i data-lucide="' + (isDark ? 'sun' : 'moon') + '" class="h-4 w-4"></i>';
+                if (window.lucide) window.lucide.createIcons();
+            };
+            updateThemeToggle();
+            $(document).on('click', '#themeToggle', function() {
+                var nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+                document.documentElement.dataset.theme = nextTheme;
+                try { localStorage.setItem('crm_theme', nextTheme); } catch(e) {}
+                try { applyAccent(localStorage.getItem('crm_accent') || '#0B57D0'); } catch(e) {}
+                updateThemeToggle();
+            });
+
+            var accentInput = document.getElementById('customAccent');
+            var applyAccent = function(color) {
+                if (!/^#[0-9a-f]{6}$/i.test(color || '')) return;
+                var root = document.documentElement;
+                var dark = root.dataset.theme === 'dark';
+                var hex = color.toUpperCase();
+                var rgb = [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)];
+                var mix = function(target, amount) {
+                    var result = rgb.map(function(channel, index) { return Math.round(channel * (1 - amount) + target[index] * amount); });
+                    return '#' + result.map(function(channel) { return channel.toString(16).padStart(2, '0'); }).join('');
+                };
+                var luminance = rgb.map(function(channel) {
+                    var value = channel / 255;
+                    return value <= .03928 ? value / 12.92 : Math.pow((value + .055) / 1.055, 2.4);
+                }).reduce(function(total, value, index) { return total + value * [.2126, .7152, .0722][index]; }, 0);
+                root.style.setProperty('--crm-primary', hex);
+                root.style.setProperty('--crm-primary-rgb', rgb.join(', '));
+                root.style.setProperty('--crm-primary-hover', mix(dark ? [255, 255, 255] : [0, 0, 0], dark ? .16 : .18));
+                root.style.setProperty('--crm-on-primary', luminance > .179 ? '#1F1F1F' : '#FFFFFF');
+                root.style.setProperty('--crm-primary-container', mix(dark ? [30, 31, 32] : [255, 255, 255], dark ? .72 : .86));
+                root.style.setProperty('--crm-on-primary-container', dark ? '#E3E3E3' : mix([0, 0, 0], .45));
+                root.style.setProperty('--crm-focus', '0 0 0 3px rgba(' + rgb.join(', ') + ', .24)');
+                if (accentInput) accentInput.value = hex;
+                $('.accent-swatches button').attr('aria-pressed', 'false');
+                $('.accent-swatches button[data-crm-accent="' + hex + '"]').attr('aria-pressed', 'true');
+                try { localStorage.setItem('crm_accent', hex); } catch(e) {}
+            };
+            window.applyCrmAccent = applyAccent;
+            window.applyCrmTheme = function(nextTheme) {
+                if (nextTheme !== 'light' && nextTheme !== 'dark') return;
+                document.documentElement.dataset.theme = nextTheme;
+                try { localStorage.setItem('crm_theme', nextTheme); } catch(e) {}
+                try { applyAccent(localStorage.getItem('crm_accent') || '#0B57D0'); } catch(e) {}
+                updateThemeToggle();
+            };
+            window.updateThemeToggle = updateThemeToggle;
+
+            $(document).on('click', '[data-crm-accent]', function() { applyAccent(this.getAttribute('data-crm-accent')); });
+            $(document).on('input change', '#customAccent', function() { applyAccent(this.value); });
+
             // When in sidebar-mini mode, clicking an expandable submenu group auto-expands the sidebar
             $(document).on('click', 'body.sidebar-mini #sidebar-wrapper button[data-bs-toggle="collapse"]', function() {
                 $('body').removeClass('sidebar-mini');
@@ -458,6 +630,35 @@
                 });
             }
         });
+    </script>
+
+    <!-- Google Pixel OS / Material You Tactile Interactions & Ripple Effect -->
+    <script>
+        document.addEventListener('pointerdown', function(e) {
+            var interactive = e.target.closest('.btn, .crm-btn, .topbar-action-icon, .topbar-icon-btn, #sidebarToggle, .btn-toggle-sidebar, .crm-menu-item, .crm-submenu-item, .page-link, .paginate_button, .dt-paging-button, .dropdown-item, .accent-swatches button, button:not(.btn-close), .card, .crm-card');
+            if (!interactive) return;
+
+            var rect = interactive.getBoundingClientRect();
+            var size = Math.max(rect.width, rect.height) * 1.8;
+            var x = e.clientX - rect.left - size / 2;
+            var y = e.clientY - rect.top - size / 2;
+
+            var ripple = document.createElement('span');
+            ripple.className = 'pixel-ripple';
+            ripple.style.width = size + 'px';
+            ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+
+            if (!interactive.classList.contains('pixel-ripple-host')) {
+                interactive.classList.add('pixel-ripple-host');
+            }
+
+            interactive.appendChild(ripple);
+            ripple.addEventListener('animationend', function() {
+                ripple.remove();
+            });
+        }, { passive: true });
     </script>
 
     @stack('scripts')

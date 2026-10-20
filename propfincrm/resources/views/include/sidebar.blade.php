@@ -233,6 +233,13 @@
                 <i data-lucide="life-buoy" class="h-[18px] w-[18px] shrink-0 text-slate-500"></i>
                 <span class="sidebar-text">{{ __('Support Tickets') }}</span>
             </a>
+            @if ($sidebarUser?->isCompanyAdmin())
+                <a href="{{ route('settings.company') }}" title="{{ __('Settings') }}"
+                   class="{{ request()->is('settings*') ? 'crm-menu-active' : 'crm-menu-item' }} flex h-9 items-center gap-2.5 rounded-lg px-2.5 text-[13.5px] font-medium no-underline transition">
+                    <i data-lucide="settings" class="h-[18px] w-[18px] shrink-0 text-slate-500"></i>
+                    <span class="sidebar-text">{{ __('Settings') }}</span>
+                </a>
+            @endif
         @endif
 
         {{-- PLATFORM SUPERADMIN SECTION --}}
@@ -272,73 +279,97 @@
     </nav>
 
     {{-- User Profile Card in Footer with Dropup Menu --}}
-    <div class="border-t border-slate-200 p-2.5 dropup position-relative bg-white">
+    <div class="border-t border-slate-200 p-2 dropup position-relative crm-profile-footer">
         <button type="button"
                 id="userProfileDropdown"
                 data-bs-toggle="dropdown"
                 data-bs-auto-close="true"
                 aria-expanded="false"
                 title="{{ auth()->user()->name ?? 'User' }}"
-                class="crm-user-card w-full flex items-center gap-2.5 p-2 text-left cursor-pointer border-0 bg-white">
-            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-800 text-xs font-semibold text-white">
+                class="crm-user-card w-full flex items-center gap-2.5 p-2 text-left cursor-pointer border-0">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-800 text-xs font-semibold text-white shadow-sm crm-avatar-badge">
                 {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
             </span>
             <span class="sidebar-user-details min-w-0 flex-1">
-                <span class="block truncate text-[13px] font-semibold text-slate-800 leading-tight">{{ auth()->user()->name ?? 'User' }}</span>
-                <span class="inline-block truncate text-[11px] font-medium text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded leading-none mt-1">{{ $activeCompany ? $activeCompany->name . ' · ' . ucwords(str_replace('_', ' ', $activeCompanyRole ?? 'member')) : ($sidebarUser?->isPlatformSuperAdmin() ? 'Platform Super Admin' : 'No active company') }}</span>
+                <span class="block truncate text-[13px] font-semibold leading-tight crm-user-card-name">{{ auth()->user()->name ?? 'User' }}</span>
+                <span class="inline-block truncate text-[11px] font-medium px-1.5 py-0.5 rounded leading-none mt-1 crm-user-card-role">{{ $activeCompany ? $activeCompany->name . ' · ' . ucwords(str_replace('_', ' ', $activeCompanyRole ?? 'member')) : ($sidebarUser?->isPlatformSuperAdmin() ? 'Platform Super Admin' : 'No active company') }}</span>
             </span>
-            <i data-lucide="chevron-up" class="h-4 w-4 text-slate-400 ms-1"></i>
+            <i data-lucide="chevron-up" class="h-4 w-4 ms-1 shrink-0 crm-user-card-chevron"></i>
         </button>
 
-        <ul class="dropdown-menu dropdown-menu-end shadow-lg border border-slate-200 p-1 mb-2 bg-white" aria-labelledby="userProfileDropdown" style="min-width: 210px; border-radius: 10px; font-size: 13px; z-index: 1050;">
-            <li class="px-3 py-2 border-b border-slate-100">
-                <div class="font-semibold text-slate-800 text-[13px] truncate">{{ auth()->user()->name ?? 'User' }}</div>
-                <div class="text-[11px] text-slate-400 truncate">{{ auth()->user()->email ?? '' }}</div>
+        <ul class="dropdown-menu dropdown-menu-end shadow-2xl p-2 mb-2 crm-profile-popover" aria-labelledby="userProfileDropdown">
+            <li class="crm-profile-user-tile px-3 py-2.5 mb-1.5 rounded-2xl">
+                <div class="flex items-center gap-2.5">
+                    <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold shadow-sm crm-tile-avatar">
+                        {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
+                    </span>
+                    <div class="min-w-0 flex-1">
+                        <div class="font-semibold text-[13px] truncate leading-tight crm-user-name">{{ auth()->user()->name ?? 'User' }}</div>
+                        <div class="text-[11px] truncate leading-tight mt-0.5 crm-user-email">{{ auth()->user()->email ?? '' }}</div>
+                    </div>
+                </div>
             </li>
             <li>
-                <a class="dropdown-item flex items-center gap-2 py-2 px-3 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition text-[12.5px] font-medium no-underline" href="{{ route('users.show', \Auth::id()) }}">
-                    <i data-lucide="user" class="h-4 w-4 text-slate-400"></i>
-                    <span>{{ __('My Profile') }}</span>
+                <a class="dropdown-item crm-profile-item" href="{{ route('users.show', \Auth::id()) }}">
+                    <i data-lucide="user" class="h-4 w-4 shrink-0"></i>
+                    <span class="flex-1 truncate text-left">{{ __('My Profile') }}</span>
                 </a>
             </li>
             @if ($activeCompany)
                 <li>
-                    <a class="dropdown-item flex items-center gap-2 py-2 px-3 rounded-md text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition text-[12.5px] font-medium no-underline" href="{{ route('tenant.subscription') }}">
-                        <i data-lucide="credit-card" class="h-4 w-4 text-slate-400"></i>
-                        <span>{{ __('Billing & Subscription') }}</span>
+                    <a class="dropdown-item crm-profile-item" href="{{ route('tenant.subscription') }}">
+                        <i data-lucide="credit-card" class="h-4 w-4 shrink-0"></i>
+                        <span class="flex-1 truncate text-left">{{ __('Billing & Subscription') }}</span>
                     </a>
                 </li>
+                @if ($sidebarUser?->isCompanyAdmin())
+                <li>
+                    <a class="dropdown-item crm-profile-item" href="{{ route('settings.company') }}">
+                        <i data-lucide="settings" class="h-4 w-4 shrink-0"></i>
+                        <span class="flex-1 truncate text-left">{{ __('Company Settings') }}</span>
+                    </a>
+                </li>
+                @endif
             @endif
+            <li>
+                @php
+                    $themeSettingsUrl = ($sidebarUser?->isCompanyAdmin()) ? route('settings.company') : route('settings.index');
+                @endphp
+                <a class="dropdown-item crm-profile-item" href="{{ $themeSettingsUrl }}#theme_settings">
+                    <i data-lucide="palette" class="h-4 w-4 shrink-0"></i>
+                    <span class="flex-1 truncate text-left">{{ __('Theme & Colors') }}</span>
+                </a>
+            </li>
             @if ($sidebarUser?->isPlatformSuperAdmin())
                 <li>
-                    <a class="dropdown-item flex items-center gap-2 py-2 px-3 rounded-md text-orange-600 hover:bg-orange-50 transition text-[12.5px] font-medium no-underline" href="{{ route('platform.companies.index') }}">
-                        <i data-lucide="shield" class="h-4 w-4 text-orange-500"></i>
-                        <span>{{ __('Platform Admin') }}</span>
+                    <a class="dropdown-item crm-profile-item crm-platform-admin-item" href="{{ route('platform.companies.index') }}">
+                        <i data-lucide="shield" class="h-4 w-4 shrink-0"></i>
+                        <span class="flex-1 truncate text-left">{{ __('Platform Admin') }}</span>
                     </a>
                 </li>
             @endif
             @if ($availableCompanies->count() > 1)
-                <li><hr class="dropdown-divider my-1 border-slate-100"></li>
-                <li class="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Switch company</li>
+                <li><hr class="dropdown-divider my-1.5"></li>
+                <li class="px-3 pt-1 pb-1 text-[10px] font-bold uppercase tracking-wider crm-section-label">Switch company</li>
                 @foreach ($availableCompanies as $companyOption)
                     <li>
-                        <form method="POST" action="{{ route('companies.switch') }}">@csrf
+                        <form method="POST" action="{{ route('companies.switch') }}" class="m-0">@csrf
                             <input type="hidden" name="company_id" value="{{ $companyOption->id }}">
-                            <button type="submit" class="flex w-full items-center justify-between gap-2 rounded-md px-3 py-2 text-left text-[12.5px] font-medium no-underline {{ $activeCompany?->id === $companyOption->id ? 'bg-slate-100 text-slate-800' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                                <span class="truncate">{{ $companyOption->name }}</span>
-                                @if ($activeCompany?->id === $companyOption->id)<i data-lucide="check" class="h-3.5 w-3.5 shrink-0 text-slate-600"></i>@endif
+                            <button type="submit" class="dropdown-item crm-switch-company-btn {{ $activeCompany?->id === $companyOption->id ? 'is-active' : '' }}">
+                                <span class="truncate flex-1 text-left">{{ $companyOption->name }}</span>
+                                @if ($activeCompany?->id === $companyOption->id)<i data-lucide="check" class="h-3.5 w-3.5 shrink-0 text-emerald-500"></i>@endif
                             </button>
                         </form>
                     </li>
                 @endforeach
             @endif
             <li>
-                <hr class="dropdown-divider my-1 border-slate-100">
+                <hr class="dropdown-divider my-1.5">
             </li>
             <li>
-                <a class="dropdown-item flex items-center gap-2 py-2 px-3 rounded-md text-rose-600 hover:bg-rose-50 hover:text-rose-700 transition text-[12.5px] font-medium no-underline" href="{{ url('/logout') }}">
-                    <i data-lucide="log-out" class="h-4 w-4 text-rose-500"></i>
-                    <span>{{ __('Logout') }}</span>
+                <a class="dropdown-item crm-profile-item crm-logout-item" href="{{ url('/logout') }}">
+                    <i data-lucide="log-out" class="h-4 w-4 shrink-0"></i>
+                    <span class="flex-1 truncate text-left">{{ __('Logout') }}</span>
                 </a>
             </li>
         </ul>

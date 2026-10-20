@@ -22,7 +22,7 @@ if(isset($_POST['key']))
      }
 
   
-  if($num1= mysqli_num_rows( $res_token) == 1)
+  if($num1= mysqli_num_rows($res_token) >= 1)
   {
      
 	$sql="SELECT project_name FROM `project_master` where 1=1 order by id desc";

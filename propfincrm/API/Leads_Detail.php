@@ -24,15 +24,10 @@ if(isset($_POST['key']))
   
   
   
-  if($num1= mysqli_num_rows( $res_token) == 1)
+  if($num1= mysqli_num_rows($res_token) >= 1)
   {
-		// Resolve company
-		$company_id = 1;
-		$comp_q = mysqli_query($con, "SELECT company_id, role FROM company_user WHERE user_id = '$user_id' AND is_active = 1 LIMIT 1");
-		if ($comp_q && ($comp_row = mysqli_fetch_assoc($comp_q))) {
-			$company_id = (int)$comp_row['company_id'];
-		}
-		$scope = "(`leads`.`company_id` = '$company_id' OR `leads`.`user_assigned_id` = '$user_id')";
+		// Member-only scoping: only fetch leads belonging to this specific member/user
+		$scope = "(`leads`.`user_assigned_id` = '$user_id' OR `leads`.`user_created_id` = '$user_id')";
 
 		$sql = "SELECT `leads`.*, `leads`.`Budget` as budget, COALESCE(`users`.`name`, 'Unassigned') as user_name 
 		        FROM `leads` 

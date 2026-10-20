@@ -1,0 +1,22 @@
+/* The account flow uses the same calm visual language as the application. */
+:root { font-size: 100% !important; --auth-bg:#f7f9fc; --auth-surface:#fff; --auth-text:#1f1f1f; --auth-subtle:#5f6368; --auth-border:#c4c7c5; --auth-primary:#0b57d0; --auth-primary-hover:#0842a0; --auth-focus:0 0 0 3px rgba(11,87,208,.22); }
+html[data-theme="dark"] { --auth-bg:#000; --auth-surface:#0d0e10; --auth-text:#f1f3f4; --auth-subtle:#d1d3d7; --auth-border:#51535a; --auth-primary:#a8c7fa; --auth-primary-hover:#d3e3fd; --auth-focus:0 0 0 3px rgba(168,199,250,.25); color-scheme:dark; }
+html { font-size: 100% !important; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { background:var(--auth-bg) !important; color:var(--auth-text) !important; font-size: 100% !important; }
+.auth-page, .login-container { background:var(--auth-bg) !important; }
+.auth-panel, .login-form, .panel, .auth-card { background:var(--auth-surface) !important; color:var(--auth-text) !important; border-radius: 24px !important; }
+.auth-card h2, .auth-card .mobile-brand-name, .mobile-brand-name, .panel-heading { color:var(--auth-text) !important; }
+.auth-card .intro, .intro, .auth-footer, .terms { color:var(--auth-subtle) !important; }
+.auth-field label, .form-group .control-label, .form-label { color:var(--auth-text) !important; }
+.auth-control input, .auth-control select, .auth-control textarea, .form-control { background:var(--auth-surface) !important; border-color:var(--auth-border) !important; color:var(--auth-text) !important; border-radius: 16px !important; }
+.auth-control input:focus, .auth-control select:focus, .auth-control textarea:focus, .form-control:focus { border-color:var(--auth-primary) !important; box-shadow:var(--auth-focus) !important; }
+.auth-submit, .Send-Password { background:var(--auth-primary) !important; box-shadow:none !important; border-radius:999px !important; }
+.auth-submit:hover, .Send-Password:hover { background:var(--auth-primary-hover) !important; color:#fff !important; transform:translateY(-2px) !important; }
+.auth-row a, .auth-footer a { color:var(--auth-primary) !important; }
+.auth-theme-toggle { position:fixed; z-index:10; top:18px; right:18px; width:40px; height:40px; border:1px solid var(--auth-border); border-radius:50%; background:var(--auth-surface); color:var(--auth-text); display:grid; place-items:center; box-shadow:0 1px 3px rgba(60,64,67,.16); }
+.auth-theme-toggle:hover { background:#24252b; color:#fff; }
+.auth-theme-toggle:focus-visible { outline:none; box-shadow:var(--auth-focus); }
+.auth-submit, .Send-Password, .auth-theme-toggle, .auth-control input, .auth-control select { transition: background-color .16s ease, border-color .16s ease, color .16s ease, box-shadow .16s ease, transform .2s cubic-bezier(0.2, 0, 0, 1) !important; }
+@media (hover:hover) { .auth-submit:hover, .Send-Password:hover, .auth-theme-toggle:hover { transform:translateY(-2px) !important; } }
+.auth-submit:active, .Send-Password:active, .auth-theme-toggle:active { transform:scale(.95) !important; }
+@media (max-width:850px) { .auth-theme-toggle { top:14px; right:14px; } .auth-panel { background:var(--auth-bg) !important; } }

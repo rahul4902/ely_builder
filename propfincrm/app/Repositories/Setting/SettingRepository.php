@@ -46,6 +46,8 @@ class SettingRepository implements SettingRepositoryContract
                 'time_change_allowed' => 2,
                 'comment_allowed' => 2,
                 'timezone' => 'Asia/Kolkata',
+                'theme_mode' => 'light',
+                'theme_accent' => '#0B57D0',
             ]);
         }
 

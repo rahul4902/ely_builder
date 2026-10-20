@@ -32,6 +32,13 @@ Route::get('register-company', 'CompanyRegistrationController@create')->name('co
 Route::post('register-company', 'CompanyRegistrationController@store')
     ->middleware('throttle:6,1')
     ->name('companies.register');
+
+// These endpoints intentionally sit outside the signed-in area: Meta and website
+// servers must be able to deliver leads. Each request is verified against the
+// individual encrypted integration secret before it can create a lead.
+Route::get('webhooks/meta/{integration}', 'LeadWebhookController@verifyMeta')->name('webhooks.meta.verify');
+Route::post('webhooks/meta/{integration}', 'LeadWebhookController@receiveMeta')->name('webhooks.meta.receive');
+Route::post('webhooks/leads/{integration}/{token}', 'LeadWebhookController@receiveGeneric')->name('webhooks.leads.receive');
 //Route::auth();
 Auth::routes(['register' => false]);
 Route::get('/logout', 'UsersController@logoutsession');
@@ -266,6 +273,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     // HR
     Route::get('/ta-da', 'HrController@ta_da')->name('ta_da');
+    Route::post('/ta-da', 'HrController@storeTaDa')->name('ta_da.store');
+    Route::delete('/ta-da/{id}', 'HrController@destroyTaDa')->name('ta_da.destroy');
     Route::get('/leaves', 'HrController@leaves')->name('leaves');
 
     Route::any('all_lead_list', 'LeadsController@getAllLeadList');

@@ -20,19 +20,14 @@ if(isset($_POST['status'])&& isset($_POST['key']))
 
 	}
 
-	if(mysqli_num_rows($res_key) == 1)
+	if(mysqli_num_rows($res_key) >= 1)
 	{
 		$data= array();
 		global $sql;
 
-		// Resolve company
-		$company_id = 1;
-		$comp_q = mysqli_query($con, "SELECT company_id, role FROM company_user WHERE user_id = '$user_id' AND is_active = 1 LIMIT 1");
-		if ($comp_q && ($comp_row = mysqli_fetch_assoc($comp_q))) {
-			$company_id = (int)$comp_row['company_id'];
-		}
-		$scope = "(`leads`.`company_id` = '$company_id' OR `leads`.`user_assigned_id` = '$user_id')";
-		$scope_t2 = "(`t2`.`company_id` = '$company_id' OR `t2`.`user_assigned_id` = '$user_id')";
+		// Member-only scoping: only fetch leads belonging to this specific member/user
+		$scope = "(`leads`.`user_assigned_id` = '$user_id' OR `leads`.`user_created_id` = '$user_id')";
+		$scope_t2 = "(`t2`.`user_assigned_id` = '$user_id' OR `t2`.`user_created_id` = '$user_id')";
 
 		$start_of_today = "$current_date 00:00:00";
 		$end_of_today = "$current_date 23:59:59";

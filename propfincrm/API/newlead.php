@@ -43,7 +43,7 @@ if(isset($_POST['key']))
    $lead_type=mysqli_real_escape_string($con,$_POST['lead_type']);
   
   
-  if($num1= mysqli_num_rows( $res_token) == 1)
+  if($num1= mysqli_num_rows($res_token) >= 1)
   {
 	  
 	date_default_timezone_set('Asia/Kolkata'); 
